@@ -15,6 +15,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 
 source ~/.rake_cap_bash_autocomplete.sh
 alias bd='cd ~/RubymineProjects/BetDash'
+alias memkeys='.list_memcache_keys.rb'
 alias vi=vim
 alias data_import='bundle exec rake event_data:import[beta]'
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages/
