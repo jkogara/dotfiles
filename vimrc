@@ -100,4 +100,5 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
 vmap <C-c> "+y
-nmap <D-S-F> :Ack<space>
+nmap <D-F> :Ack<space>
+set clipboard=unnamed
