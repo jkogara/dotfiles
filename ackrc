@@ -1,4 +1,4 @@
---ignore-dir logs
+--ignore-dir=logs
 --type-set=haml=.haml
 --type-set=sass=.sass
 --type-set=scss=.scss
