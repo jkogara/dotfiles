@@ -11,7 +11,7 @@
  " My Bundles here:
  "
  " original repos on github
- Bundle 'tpope/vim-fugitive'
+ Bundle 'git://github.com/tpope/vim-fugitive.git'
  Bundle 'vim-ruby/vim-ruby.git'
  Bundle 'ervandew/supertab.git'
  Bundle 'Lokaltog/vim-easymotion'
@@ -26,9 +26,14 @@
  Bundle 'git@github.com:tpope/vim-rvm.git'
  Bundle 'git@github.com:skwp/vim-rspec.git'
  Bundle 'git@github.com:Keithbsmiley/rspec.vim.git'
+ Bundle 'git@github.com:tsaleh/vim-matchit.git'
+ Bundle 'git@github.com:kana/vim-textobj-user.git'
+ Bundle 'git@github.com:nelstrom/vim-textobj-rubyblock.git'
+ Bundle 'git@github.com:scrooloose/nerdtree.git'
  " vim-scripts repos
- Bundle 'L9'
+ Bundle 'git@github.com:vim-scripts/L9.git'
  Bundle 'nextfile'
+ Bundle 'git@github.com:vim-scripts/ruby-matchit.git'
  Bundle 'FuzzyFinder'
  " non github repos
  Bundle 'git://github.com/tpope/vim-tbone.git'
@@ -102,7 +107,8 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
 vmap <C-c> "+y
-nmap <D-F> :Ack<space>
+nmap <C-F> :Ack<space>
+map <C-n> :NERDTreeToggle<CR>
 set clipboard=unnamed
 set tags+=gems.tags
 highlight def link rubyRspec Function

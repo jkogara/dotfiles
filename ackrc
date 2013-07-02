@@ -1,4 +1,5 @@
 --ignore-dir=logs
+--ignore-dir=vcr_cassettes
 --ignore-dir=tmp
 --ignore-dir=.idea
 --ignore-dir=.git
