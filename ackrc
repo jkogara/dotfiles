@@ -1,4 +1,7 @@
 --ignore-dir=logs
+--ignore-dir=tmp
+--ignore-dir=.idea
+--ignore-dir=.git
 --type-set=haml=.haml
 --type-set=sass=.sass
 --type-set=scss=.scss

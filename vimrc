@@ -24,6 +24,8 @@
  Bundle 'git@github.com:mileszs/ack.vim.git'
  Bundle 'git@github.com:t9md/vim-ruby-xmpfilter.git'
  Bundle 'git@github.com:tpope/vim-rvm.git'
+ Bundle 'git@github.com:skwp/vim-rspec.git'
+ Bundle 'git@github.com:Keithbsmiley/rspec.vim.git'
  " vim-scripts repos
  Bundle 'L9'
  Bundle 'nextfile'
@@ -102,3 +104,5 @@ highlight Pmenu ctermbg=238 gui=bold
 vmap <C-c> "+y
 nmap <D-F> :Ack<space>
 set clipboard=unnamed
+set tags+=gems.tags
+highlight def link rubyRspec Function
