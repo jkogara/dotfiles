@@ -1,5 +1,5 @@
  set nocompatible               " be iMproved
- filetype off                   " required!
+ filetype plugin on             " required!
 
  set rtp+=~/.vim/bundle/vundle/
  call vundle#rc()
@@ -17,6 +17,7 @@
  Bundle 'Lokaltog/vim-easymotion'
  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  Bundle 'tpope/vim-rails.git'
+ Bundle 'KurtPreston/vim-autoformat-rails'
  Bundle 'jelera/vim-gummybears-colorscheme.git'
  Bundle 'tpope/vim-surround.git'
  Bundle 'git://github.com/kien/ctrlp.vim.git'
@@ -112,3 +113,6 @@ map <C-n> :NERDTreeToggle<CR>
 set clipboard=unnamed
 set tags+=gems.tags
 highlight def link rubyRspec Function
+imap <S-CR> <CR><CR>end<Esc>-cc
+
+source ~/.vim/plugins/autoTag.vim

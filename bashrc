@@ -1,5 +1,5 @@
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:/usr/local/sbin:/Applications
+PATH=$PATH:/usr/local/sbin:/Applications:/user/local/bin
 PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin
 PATH=$PATH:/Applications/SenchaSDKTools-2.0.0-beta3
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
