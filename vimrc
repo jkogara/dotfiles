@@ -107,9 +107,18 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
+
 vmap <C-c> "+y
+" search with Ack
 nmap <C-F> :Ack<space>
+"toggle nerdtree
 map <C-n> :NERDTreeToggle<CR>
+"paste at end of line
+nmap , $p
+" shortcut for wrap word - vim surround
+nmap <C-m> ysiw
+" shortcut for wrap line - vim surround
+nmap <C-l> yss
 set clipboard=unnamed
 set tags+=gems.tags
 highlight def link rubyRspec Function
