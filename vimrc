@@ -115,7 +115,6 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
 "Visual Mode Maps
-vmap <C-P> '<,'>diffput
 vmap <C-c> "+y
 " search with Ack
 nmap <C-F> :Ack<space>
