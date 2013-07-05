@@ -1,0 +1,49 @@
+[user]
+	name = John O'Gara
+	email = johnogara@gmail.com
+[branch]
+	autosetupmerge = true
+[core]
+	editor = /usr/bin/vim
+  excludesfile = /Users/jogara/.gitignore_global
+  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+  pager = less -FRSX
+[apply]
+  whitespace = fix
+[merge]
+  tool = meld
+[diff]
+  tool = vimdiff
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Users/jogara/Library/Application Support/SourceTree/SourceTree 1.6.2/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[http]
+	proxy = http://localhost:3128
+[credential]
+  helper = osxkeychain
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    interactive = auto
+    ui = true
+    pager = true
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = green
+    changed = yellow
+  untracked = red
+[alias]
+  co = checkout
+  br = branch
