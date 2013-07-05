@@ -18,7 +18,7 @@
  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  Bundle 'tpope/vim-rails.git'
  Bundle 'KurtPreston/vim-autoformat-rails'
- Bundle 'jelera/vim-gummybears-colorscheme.git'
+ Bundle 'git@github.com:altercation/vim-colors-solarized.git'
  Bundle 'tpope/vim-surround.git'
  Bundle 'git://github.com/kien/ctrlp.vim.git'
  Bundle 'git://github.com/epmatsw/ag.vim.git'
@@ -50,7 +50,14 @@
  " see :h vundle for more details or wiki for FAQ
  " NOTE: comments after Bundle command are not allowed..
 
-colorscheme Tomorrow-Night
+if has('gui_running')
+  set background=light
+  colorscheme solarized
+else
+  set background=dark
+  colorscheme railscasts
+endif
+
 " Add recently accessed projects menu (project plugin)
 set viminfo^=!
 set guifont=Source\ Code\ Pro:h12
@@ -107,7 +114,8 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
-
+"Visual Mode Maps
+vmap <C-P> '<,'>diffput
 vmap <C-c> "+y
 " search with Ack
 nmap <C-F> :Ack<space>
