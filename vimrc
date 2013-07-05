@@ -13,7 +13,7 @@ endif
 set viminfo^=!
 set guifont=Source\ Code\ Pro:h12
 
-filetype plugin on             " required!
+filetype plugin on
 
 call vundle#rc()
 
@@ -140,3 +140,5 @@ highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
 source ~/.vim/plugins/autoTag.vim
+set cursorline
+set colorcolumn=120
