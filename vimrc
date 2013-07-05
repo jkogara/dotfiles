@@ -1,8 +1,21 @@
- set nocompatible               " be iMproved
- filetype plugin on             " required!
+set nocompatible               " be iMproved
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set tags+=gems.tags
+set rtp+=~/.vim/bundle/vundle/
+if has('gui_running')
+  set background=light
+  colorscheme solarized
+else
+  set background=dark
+  colorscheme railscasts
+endif
 
- set rtp+=~/.vim/bundle/vundle/
- call vundle#rc()
+set viminfo^=!
+set guifont=Source\ Code\ Pro:h12
+
+filetype plugin on             " required!
+
+call vundle#rc()
 
  " let Vundle manage Vundle
  " required! 
@@ -12,6 +25,7 @@
  "
  " original repos on github
  Bundle 'git://github.com/tpope/vim-fugitive.git'
+ Bundle 'git://github.com/tpope/vim-unimpaired.git'
  Bundle 'vim-ruby/vim-ruby.git'
  Bundle 'ervandew/supertab.git'
  Bundle 'Lokaltog/vim-easymotion'
@@ -50,18 +64,8 @@
  " see :h vundle for more details or wiki for FAQ
  " NOTE: comments after Bundle command are not allowed..
 
-if has('gui_running')
-  set background=light
-  colorscheme solarized
-else
-  set background=dark
-  colorscheme railscasts
-endif
 
 " Add recently accessed projects menu (project plugin)
-set viminfo^=!
-set guifont=Source\ Code\ Pro:h12
-
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
@@ -113,6 +117,11 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd User fugitive
+  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  \ nnoremap <buffer> .. :edit %:h<CR> |
+  \ endif
+autocmd BufReadPost fugitive://* set bufhidden=delete
 highlight Pmenu ctermbg=238 gui=bold
 "Visual Mode Maps
 vmap <C-c> "+y
@@ -127,7 +136,6 @@ nmap <C-m> ysiw
 " shortcut for wrap line - vim surround
 nmap <C-l> yss
 set clipboard=unnamed
-set tags+=gems.tags
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
