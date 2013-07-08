@@ -1,0 +1,89 @@
+<div class="contact_details" xmlns="http://www.w3.org/1999/html">
+  <h1><%= t(:text_contact_us) %></h1>
+
+  <div class="contact_details_block">
+    <%= t('postal_address_web') %>
+
+  </div>
+  <div class="socialicons">
+    <%= t('twitter_details') %>
+    <%= t('facebook_details') %>
+    <div class="clear"></div>
+  </div>
+  <%= t('opening_hours') %>
+</div>
+
+<% if params[:action] == "index" %>
+
+    <%= javascript_include_tag "swfobject" %>
+    <div id="vidcontainer">
+      <iframe class="youtube-player" type="text/html"
+              width="190" height="188" src='http://www.youtube.com/embed/<%= @video_feed.blank? ? "" : @video_feed.unique_id %>?wmode=opaque' frameborder="0"></iframe>
+      <a href="#myModal" data-reveal-id="myModal" data-closeonbackgroundclick="false">
+        <div id="clickvid"></div>
+      </a>
+    </div>
+
+    <div id="myModal" class="reveal-modal">
+      <h1><%= @video_feed.blank? ? "Update Youtube Settings" : @video_feed.title %></h1>
+
+      <p id="youtube_player_div">You need Flash player 8+ and JavaScript enabled to view this video.</p>
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <script type="text/javascript">
+
+        var params = { allowScriptAccess:"always" };
+        var atts = { id:"youtube-vid" };
+        swfobject.embedSWF('http://www.youtube.com/v/<%= @video_feed.blank? ? "" : @video_feed.unique_id %>?enablejsapi=1&playerapiid=ytplayer&version=3',
+                "youtube_player_div", "520", "398", "8", null, null, params, atts);
+
+    </script>
+
+    <script type="text/javascript">
+        jQuery('.close-reveal-modal').click(function () {
+            document.getElementById('youtube-vid').stopVideo();
+        });
+    </script>
+
+
+    <div id='home_satisfaction_guaranteed' style="padding-top: 25px;">
+      <ul>
+        <li><%= link_to(t('text_satisfaction_guaranteed'), :controller => :home, :action => :feed_back) %></li>
+      </ul>
+    </div>
+    <div style="padding-top: 25px;">
+      <a class="twitter-timeline" href="https://twitter.com/dublintranslate" data-widget-id="354149536450625536">Tweets by @dublintranslate</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      </script>
+
+      <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+      <script>
+          new TWTR.Widget({
+              version:2,
+              type:'profile',
+              rpp:6,
+              interval:30000,
+              width:200,
+              height:300,
+              theme:{
+                  shell:{
+                      background:'#C0C0C0',
+                      color:'#F5F5F5',
+                      zoom:0
+                  },
+                  tweets:{
+                      background:'#F5F5F5',
+                      color:'#666',
+                      links:'#40CFB5'
+                  }
+              },
+              features:{
+                  scrollbar:true,
+                  loop:false,
+                  live:true,
+                  behavior:'all'
+              }
+          }).render().setUser('dublintranslate').start();
+      </script>
+    </div>
+<% end %>
