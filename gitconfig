@@ -21,7 +21,7 @@
 	cmd = /Users/jogara/Library/Application Support/SourceTree/SourceTree 1.6.2/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [http]
-	proxy = http://localhost:3128
+  proxy = http://localhost:3128
 [credential]
   helper = osxkeychain
 [color]

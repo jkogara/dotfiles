@@ -5,6 +5,9 @@ set rtp+=~/.vim/bundle/vundle/
 if has('gui_running')
   set background=light
   colorscheme solarized
+  let g:solarized_contrast = "high"
+  let g:solarized_visibility = "high"
+  set scrolloff=3
 else
   set background=dark
   colorscheme railscasts
@@ -12,9 +15,10 @@ endif
 
 set viminfo^=!
 set guifont=Source\ Code\ Pro:h12
+let mapleader=","  
 
 filetype plugin on
-
+  
 call vundle#rc()
 
  " let Vundle manage Vundle
@@ -24,34 +28,33 @@ call vundle#rc()
  " My Bundles here:
  "
  " original repos on github
- Bundle 'git://github.com/tpope/vim-fugitive.git'
- Bundle 'git://github.com/tpope/vim-unimpaired.git'
- Bundle 'vim-ruby/vim-ruby.git'
- Bundle 'ervandew/supertab.git'
- Bundle 'Lokaltog/vim-easymotion'
- Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+ Bundle 'tpope/vim-fugitive.git'
+ Bundle 'tpope/vim-unimpaired.git'
  Bundle 'tpope/vim-rails.git'
- Bundle 'KurtPreston/vim-autoformat-rails'
- Bundle 'git@github.com:altercation/vim-colors-solarized.git'
+ Bundle 'tpope/vim-rake.git'
  Bundle 'tpope/vim-surround.git'
- Bundle 'git://github.com/kien/ctrlp.vim.git'
- Bundle 'git://github.com/epmatsw/ag.vim.git'
- Bundle 'git@github.com:mileszs/ack.vim.git'
- Bundle 'git@github.com:t9md/vim-ruby-xmpfilter.git'
- Bundle 'git@github.com:tpope/vim-rvm.git'
- Bundle 'git@github.com:skwp/vim-rspec.git'
- Bundle 'git@github.com:Keithbsmiley/rspec.vim.git'
- Bundle 'git@github.com:tsaleh/vim-matchit.git'
- Bundle 'git@github.com:kana/vim-textobj-user.git'
- Bundle 'git@github.com:nelstrom/vim-textobj-rubyblock.git'
- Bundle 'git@github.com:scrooloose/nerdtree.git'
- " vim-scripts repos
- Bundle 'git@github.com:vim-scripts/L9.git'
- Bundle 'nextfile'
- Bundle 'git@github.com:vim-scripts/ruby-matchit.git'
+ Bundle 'tpope/vim-tbone.git'
+ Bundle 'tpope/vim-haml.git'
+ Bundle 'tpope/vim-rvm.git'
+ Bundle 'tpope/vim-sensible.git'
+ Bundle 'vim-ruby/vim-ruby.git'
+ Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+ Bundle 'KurtPreston/vim-autoformat-rails'
+ Bundle 'altercation/vim-colors-solarized.git'
+ Bundle 'wincent/Command-T'
+ Bundle 'epmatsw/ag.vim.git'
+ Bundle 't9md/vim-ruby-xmpfilter.git'
+ Bundle 'skwp/vim-rspec.git'
+ Bundle 'Keithbsmiley/rspec.vim.git'
+ Bundle 'tsaleh/vim-matchit.git'
+ Bundle 'kana/vim-textobj-user.git'
+ Bundle 'nelstrom/vim-textobj-rubyblock.git'
+ Bundle 'vim-scripts/ruby-matchit.git'
+
+ Bundle 'L9'
+ "Bundle 'rubycomplete'
+ Bundle 'SuperTab'
  Bundle 'FuzzyFinder'
- " non github repos
- Bundle 'git://github.com/tpope/vim-tbone.git'
 
  filetype plugin indent on     " required!
  "
@@ -93,14 +96,13 @@ set ts=2  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
 set shiftwidth=2  " Tabs under smart indent
 set nocp incsearch
-set cinoptions=:0,p0,t0
-set cinwords=if,else,while,do,for,switch,case
-set formatoptions=tcqr
+" set cinoptions=:0,p0,t0
+" set cinwords=if,else,while,do,for,switch,case
+" set formatoptions=tcqr
 set cindent
 set autoindent
 set smarttab
 set expandtab
-
 set showmatch  " Show matching brackets.
 set showcmd
 set mat=5  " Bracket blinking.
@@ -125,10 +127,13 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 highlight Pmenu ctermbg=238 gui=bold
 "Visual Mode Maps
 vmap <C-c> "+y
-" search with Ack
-nmap <C-F> :Ack<space>
-"toggle nerdtree
-map <C-n> :NERDTreeToggle<CR>
+" search with Ag
+nmap <C-F> :Ag<space>
+nmap <C-G> :FufBuffer<space>
+nnoremap <silent> <C-R> :CommandT<CR>
+nnoremap <leader>v :vsplit<cr>  " Split pane vertically
+"nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+
 "paste at end of line
 nmap , $p
 " shortcut for wrap word - vim surround
@@ -142,3 +147,11 @@ imap <S-CR> <CR><CR>end<Esc>-cc
 source ~/.vim/plugins/autoTag.vim
 set cursorline
 set colorcolumn=120
+set undodir^=~/.vim/undo
+set splitbelow
+set splitright
+
+set wildmenu
+set wildmode=list:longest
+set wildignore+=node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.rvmrc,.gitignore,.DS_Store
+
