@@ -1,12 +1,12 @@
 set nocompatible               " be iMproved
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
 set rtp+=~/.vim/bundle/vundle/
 if has('gui_running')
   set background=light
   colorscheme solarized
-  let g:solarized_contrast = "high"
-  let g:solarized_visibility = "high"
+  let g:solarized_contrast="high"
+  let g:solarized_visibility="high"
   set scrolloff=3
 else
   set background=dark
@@ -17,8 +17,8 @@ set viminfo^=!
 set guifont=Source\ Code\ Pro:h12
 let mapleader=","  
 
-filetype plugin on
-  
+syntax on
+filetype off "This need to be set before running bundle stuff
 call vundle#rc()
 
  " let Vundle manage Vundle
@@ -37,6 +37,7 @@ call vundle#rc()
  Bundle 'tpope/vim-haml.git'
  Bundle 'tpope/vim-rvm.git'
  Bundle 'tpope/vim-sensible.git'
+ Bundle 'kchmck/vim-coffee-script'
  Bundle 'vim-ruby/vim-ruby.git'
  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  Bundle 'KurtPreston/vim-autoformat-rails'
@@ -52,21 +53,11 @@ call vundle#rc()
  Bundle 'vim-scripts/ruby-matchit.git'
 
  Bundle 'L9'
- "Bundle 'rubycomplete'
  Bundle 'SuperTab'
  Bundle 'FuzzyFinder'
+ Bundle 'Tabular'
 
- filetype plugin indent on     " required!
- "
- " Brief help
- " :BundleList          - list configured bundles
- " :BundleInstall(!)    - install(update) bundles
- " :BundleSearch(!) foo - search(or refresh cache first) for foo
- " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
- "
- " see :h vundle for more details or wiki for FAQ
- " NOTE: comments after Bundle command are not allowed..
-
+filetype plugin indent on "Only set this after all the bundle stuff has run
 
 " Add recently accessed projects menu (project plugin)
 " Minibuffer Explorer Settings
@@ -82,39 +73,6 @@ let g:miniBufExplModSelTarget = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
 
-syntax enable
-
-set cf  " Enable error files & error jumping.
-set history=5000  " Number of things to remember in history.
-set autowrite  " Writes on make/shell commands
-set ruler  " Ruler on
-set nu  " Line numbers on
-set nowrap  " Line wrapping off
-set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
-
-set ts=2  " Tabs are 2 spaces
-set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
-set nocp incsearch
-" set cinoptions=:0,p0,t0
-" set cinwords=if,else,while,do,for,switch,case
-" set formatoptions=tcqr
-set cindent
-set autoindent
-set smarttab
-set expandtab
-set showmatch  " Show matching brackets.
-set showcmd
-set mat=5  " Bracket blinking.
-set nolist
-
-set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
-set novisualbell  " No blinking .
-set noerrorbells  " No noise.
-
-set backup                     " Enable creation of backup file.
-set backupdir=~/.vim/backups " Where backups will go.
-set directory=~/.vim/tmp     " Where temporary files will go.
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
@@ -155,3 +113,38 @@ set wildmenu
 set wildmode=list:longest
 set wildignore+=node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.rvmrc,.gitignore,.DS_Store
 
+let g:ConqueTerm_CloseOnEnd=1
+let g:ConqueTerm_CWInsert=1
+set cf  " Enable error files & error jumping.
+set history=5000  " Number of things to remember in history.
+set autowrite  " Writes on make/shell commands
+set ruler  " Ruler on
+set nu  " Line numbers on
+set nowrap  " Line wrapping off
+set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
+
+set ts=2  " Tabs are 2 spaces
+set bs=2  " Backspace over everything in insert mode
+set shiftwidth=2  " Tabs under smart indent
+set nocp incsearch
+" set cinoptions=:0,p0,t0
+" set cinwords=if,else,while,do,for,switch,case
+" set formatoptions=tcqr
+set cindent
+set autoindent
+set smarttab
+set expandtab
+set showmatch  " Show matching brackets.
+set showcmd
+set mat=5  " Bracket blinking.
+set nolist
+
+set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
+set novisualbell  " No blinking .
+set noerrorbells  " No noise.
+
+set backup                     " Enable creation of backup file.
+set backupdir=~/.vim/backups " Where backups will go.
+set directory=~/.vim/tmp     " Where temporary files will go.
+
+cd /Users/jogara/RubymineProjects/BetDash
