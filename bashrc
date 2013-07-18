@@ -62,5 +62,5 @@ _complete_hosts () {
     COMPREPLY=( $(compgen -W "${host_list}" -- $cur))
     return 0
 }
-complete -F _complete_hosts ssh
-complete -F _complete_hosts host
+complete -F _complete_hosts ssh traceroute host scp
+#complete -F _complete_hosts 

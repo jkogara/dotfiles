@@ -32,12 +32,14 @@ call vundle#rc()
  Bundle 'tpope/vim-unimpaired.git'
  Bundle 'tpope/vim-rails.git'
  Bundle 'tpope/vim-rake.git'
+ Bundle 'johnogara/vim-bundler'
  Bundle 'tpope/vim-surround.git'
  Bundle 'tpope/vim-tbone.git'
  Bundle 'tpope/vim-haml.git'
  Bundle 'tpope/vim-rvm.git'
  Bundle 'tpope/vim-sensible.git'
  Bundle 'kchmck/vim-coffee-script'
+ Bundle 'scrooloose/syntastic'
  Bundle 'vim-ruby/vim-ruby.git'
  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  Bundle 'KurtPreston/vim-autoformat-rails'
@@ -89,6 +91,7 @@ vmap <C-c> "+y
 nmap <C-F> :Ag<space>
 nmap <C-G> :FufBuffer<space>
 nnoremap <silent> <C-R> :CommandT<CR>
+nnoremap <C-c> ciw<C-r>
 nnoremap <leader>v :vsplit<cr>  " Split pane vertically
 "nnoremap <silent> <Leader>b :CommandTBuffer<CR>
 
@@ -148,3 +151,9 @@ set backupdir=~/.vim/backups " Where backups will go.
 set directory=~/.vim/tmp     " Where temporary files will go.
 
 cd /Users/jogara/RubymineProjects/BetDash
+
+"Disable the arrow keys
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
