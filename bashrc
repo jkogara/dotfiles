@@ -21,7 +21,9 @@ alias data_import='bundle exec rake event_data:import[beta]'
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages/
 export EDITOR=vim
 export http_proxy="http://localhost:3128"
+export https_proxy=$http_proxy
 alias migrate='rake db:migrate; rake db:migrate RAILS_ENV=test'
+alias rollback='rake db:rollback; rake db:rollback RAILS_ENV=test'
 alias rebuild_db='rake db:drop && rake db:create && rake db:migrate && rake db:seed_fu;RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:create && RAILS_ENV=test rake db:migrate && RAILS_ENV=test rake db:seed_fu'
 alias rollback='rake db:rollback; rake db:rollback RAILS_ENV=test'
 alias restart_memcache='launchctl unload -w /System/Library/LaunchDaemons/com.danga.memcached.plist;launchctl load -w /System/Library/LaunchDaemons/com.danga.memcached.plist'

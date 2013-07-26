@@ -53,11 +53,16 @@ call vundle#rc()
  Bundle 'kana/vim-textobj-user.git'
  Bundle 'nelstrom/vim-textobj-rubyblock.git'
  Bundle 'vim-scripts/ruby-matchit.git'
+ Bundle 'scrooloose/nerdtree'
 
  Bundle 'L9'
  Bundle 'SuperTab'
  Bundle 'FuzzyFinder'
  Bundle 'Tabular'
+ Bundle 'SuperTab'
+ Bundle 'majutsushi/tagbar'
+ Bundle 'Townk/vim-autoclose'
+ Bundle 'SearchComplete'
 
 filetype plugin indent on "Only set this after all the bundle stuff has run
 
@@ -75,10 +80,6 @@ let g:miniBufExplModSelTarget = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
 
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \ nnoremap <buffer> .. :edit %:h<CR> |
@@ -89,6 +90,7 @@ highlight Pmenu ctermbg=238 gui=bold
 vmap <C-c> "+y
 " search with Ag
 nmap <C-F> :Ag<space>
+nmap <F8> :TagbarToggle<CR>
 nmap <C-G> :FufBuffer<space>
 nnoremap <silent> <C-R> :CommandT<CR>
 nnoremap <C-c> ciw<C-r>
@@ -153,7 +155,13 @@ set directory=~/.vim/tmp     " Where temporary files will go.
 cd /Users/jogara/RubymineProjects/BetDash
 
 "Disable the arrow keys
-map <Left> <Nop>
-map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
+"map <Left> <Nop>
+"map <Right> <Nop>
+"map <Up> <Nop>
+"map <Down> <Nop>
+map <C-n> :NERDTreeToggle<CR>
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+highlight Pmenu ctermbg=238 gui=bold
