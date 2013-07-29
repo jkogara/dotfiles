@@ -65,4 +65,4 @@ _complete_hosts () {
     return 0
 }
 complete -F _complete_hosts ssh traceroute host scp
-#complete -F _complete_hosts 
+alias sw='cd ~/personal/swrve'

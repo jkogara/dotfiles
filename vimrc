@@ -54,6 +54,7 @@ call vundle#rc()
  Bundle 'nelstrom/vim-textobj-rubyblock.git'
  Bundle 'vim-scripts/ruby-matchit.git'
  Bundle 'scrooloose/nerdtree'
+ Bundle 'myusuf3/numbers'
 
  Bundle 'L9'
  Bundle 'SuperTab'
@@ -154,14 +155,25 @@ set directory=~/.vim/tmp     " Where temporary files will go.
 
 cd /Users/jogara/RubymineProjects/BetDash
 
-"Disable the arrow keys
-"map <Left> <Nop>
-"map <Right> <Nop>
-"map <Up> <Nop>
-"map <Down> <Nop>
 map <C-n> :NERDTreeToggle<CR>
+noremap <C-p> :NumbersToggle<CR>
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
+if executable('coffeetags')
+  let g:tagbar_type_coffee = {
+        \ 'ctagsbin' : 'coffeetags',
+        \ 'ctagsargs' : '',
+        \ 'kinds' : [
+        \ 'f:functions',
+        \ 'o:object',
+        \ ],
+        \ 'sro' : ".",
+        \ 'kind2scope' : {
+        \ 'f' : 'object',
+        \ 'o' : 'object',
+        \ }
+        \ }
+endif
