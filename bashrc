@@ -20,8 +20,6 @@ alias vi=vim
 alias data_import='bundle exec rake event_data:import[beta]'
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages/
 export EDITOR=vim
-export http_proxy="http://localhost:3128"
-export https_proxy=$http_proxy
 alias migrate='rake db:migrate; rake db:migrate RAILS_ENV=test'
 alias rollback='rake db:rollback; rake db:rollback RAILS_ENV=test'
 alias rebuild_db='rake db:drop && rake db:create && rake db:migrate && rake db:seed_fu;RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:create && RAILS_ENV=test rake db:migrate && RAILS_ENV=test rake db:seed_fu'
@@ -66,3 +64,15 @@ _complete_hosts () {
 }
 complete -F _complete_hosts ssh traceroute host scp
 alias sw='cd ~/personal/swrve'
+
+function work_proxy {
+export http_proxy="http://localhost:3128"
+export https_proxy=$http_proxy
+}
+
+function home_proxy {
+export http_proxy=""
+export https_proxy=$http_proxy
+}
+
+work_proxy
