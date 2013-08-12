@@ -11,10 +11,7 @@ export BASH_IT=$HOME/.bash_it
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='bobby'
-
-# Your place for hosting Git repos. I use this for private repos.
-export GIT_HOSTING='git@git.domain.com'
+export BASH_IT_THEME='clean'
 
 # Set my editor and git editor
 export EDITOR="vim"
@@ -40,4 +37,5 @@ export TODO="t"
 #export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
 
 # Load Bash It
+source ~/dotfiles/bash-john
 source $BASH_IT/bash_it.sh
