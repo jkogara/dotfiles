@@ -32,6 +32,7 @@ call vundle#rc()
  Bundle 'tpope/vim-unimpaired.git'
  Bundle 'tpope/vim-rails.git'
  Bundle 'tpope/vim-rake.git'
+ Bundle 'othree/javascript-libraries-syntax.vim.git'
  Bundle 'johnogara/vim-bundler'
  Bundle 'tpope/vim-surround.git'
  Bundle 'tpope/vim-tbone.git'
@@ -181,3 +182,8 @@ command WQ wq
 command Wq wq
 command W w
 command Q q
+autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
