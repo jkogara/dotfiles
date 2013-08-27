@@ -54,13 +54,13 @@ alias sw='cd ~/personal/swrve'
 function work_proxy {
 export http_proxy="http://localhost:3128"
 export https_proxy=$http_proxy
-export DRIVE_SYNC_FORCE_PROXY=$http_proxy
 }
 
 function home_proxy {
-export http_proxy=""
-export https_proxy=$http_proxy
-export DRIVE_SYNC_FORCE_PROXY=$http_proxy
+unset http_proxy
+unset https_proxy
 }
 
 work_proxy
+
+export BROWSER=Chrome

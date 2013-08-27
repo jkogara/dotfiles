@@ -32,7 +32,7 @@ call vundle#rc()
  Bundle 'tpope/vim-unimpaired.git'
  Bundle 'tpope/vim-rails.git'
  Bundle 'tpope/vim-rake.git'
- Bundle 'othree/javascript-libraries-syntax.vim.git'
+ Bundle "pangloss/vim-javascript"
  Bundle 'johnogara/vim-bundler'
  Bundle 'tpope/vim-surround.git'
  Bundle 'tpope/vim-tbone.git'

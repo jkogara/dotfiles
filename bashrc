@@ -11,7 +11,7 @@ export BASH_IT=$HOME/.bash_it
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='clean'
+export BASH_IT_THEME='n0qorg'
 
 # Set my editor and git editor
 export EDITOR="vim"
@@ -39,3 +39,8 @@ export TODO="t"
 # Load Bash It
 source ~/dotfiles/bash-john
 source $BASH_IT/bash_it.sh
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
