@@ -15,7 +15,6 @@ endif
 
 set viminfo^=!
 set guifont=Source\ Code\ Pro:h12
-let mapleader=","  
 
 syntax on
 filetype off "This need to be set before running bundle stuff
@@ -36,6 +35,7 @@ call vundle#rc()
  Bundle 'johnogara/vim-bundler'
  Bundle 'tpope/vim-surround.git'
  Bundle 'tpope/vim-tbone.git'
+ Bundle 'marijnh/tern_for_vim'
  Bundle 'tpope/vim-haml.git'
  Bundle 'tpope/vim-rvm.git'
  Bundle 'tpope/vim-sensible.git'
@@ -178,12 +178,16 @@ if executable('coffeetags')
         \ }
 endif
 set nowrap  " Line wrapping off
-command WQ wq
-command Wq wq
-command W w
-command Q q
+"command WQ wq
+"command Wq wq
+"command W w
+"command Q q
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
+
+let g:tern_map_keys=1
+let g:tern_show_arguement_hints='on_hold'
+

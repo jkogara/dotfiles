@@ -10,6 +10,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 alias bd='cd ~/RubymineProjects/BetDash'
 alias memkeys='.list_memcache_keys.rb'
 alias vi=vim
+alias st=stree
 alias data_import='bundle exec rake event_data:import[beta]'
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages/
 alias migrate='rake db:migrate; rake db:migrate RAILS_ENV=test'
