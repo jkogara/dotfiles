@@ -1,3 +1,4 @@
+python import sys; print(sys.path)
 set nocompatible               " be iMproved
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
