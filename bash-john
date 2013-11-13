@@ -2,6 +2,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:/usr/local/sbin:/Applications:/user/local/bin
 PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin
 PATH=$PATH:/Applications/SenchaSDKTools-2.0.0-beta3
+PATH=$PATH:/Users/jogara/dotfiles
 # Set the MySQL Home environment variable to point to the root directory of the MySQL installation.
  
 # Add the /bin directory from the MYSQL_HOME location into your $PATH environment variable.
@@ -65,3 +66,10 @@ unset https_proxy
 work_proxy
 
 export BROWSER=Chrome
+
+tag_links (){
+  BASEURL="http://git.cirrus.inhouse.paddypower.com/"
+  REPOURL=`git remote show -n origin | grep Fetch | cut -d: -f2- | sed s/:/\ /g | awk '{ print $NF }' | sed s/\.git//g`
+  for file in `git log --all --oneline --graph --decorate | grep $1 | awk '{ print $2}'`; do echo $BASEURL/$REPOURL/commit/$file;done
+}
+

@@ -1,7 +1,8 @@
 begin
   require 'irbtools/configure'
-  Irbtools.add_package :more
+  require 'boson/console'
   Irbtools.start
 rescue LoadError => e
+  puts e
   warn "unable to load irbtools"
 end

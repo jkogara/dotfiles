@@ -66,6 +66,7 @@ call vundle#rc()
  Bundle 'majutsushi/tagbar'
  Bundle 'Townk/vim-autoclose'
  Bundle 'SearchComplete'
+ Bundle 'YouCompleteMe'
 
 filetype plugin indent on "Only set this after all the bundle stuff has run
 
