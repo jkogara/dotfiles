@@ -49,3 +49,5 @@
   br = branch
 [push]
 	default = simple
+[heroku]
+	account = personal

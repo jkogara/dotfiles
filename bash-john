@@ -67,9 +67,15 @@ work_proxy
 
 export BROWSER=Chrome
 
+#Print http links to commits with matching comments
+#Usage: tag_links STORY_NUMBER_OR_QUOTED_GIT_COMMENT_TEXT
 tag_links (){
   BASEURL="http://git.cirrus.inhouse.paddypower.com/"
   REPOURL=`git remote show -n origin | grep Fetch | cut -d: -f2- | sed s/:/\ /g | awk '{ print $NF }' | sed s/\.git//g`
-  for file in `git log --all --oneline --graph --decorate | grep $1 | awk '{ print $2}'`; do echo $BASEURL/$REPOURL/commit/$file;done
+  for file in `git log --all --oneline --graph --decorate --grep $1 | awk '{ print $2}'`; do echo $BASEURL/$REPOURL/commit/$file;done
+}
+
+open_tag_links (){
+  for file in `tag_links $1`; do open -a Google\ Chrome $file; done
 }
 
