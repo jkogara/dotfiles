@@ -1,4 +1,3 @@
-python import sys; print(sys.path)
 set nocompatible               " be iMproved
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
@@ -29,6 +28,7 @@ call vundle#rc()
  "
  " original repos on github
  Bundle 'tpope/vim-fugitive.git'
+ Bundle 'jiangmiao/auto-pairs.git'
  Bundle 'tpope/vim-unimpaired.git'
  Bundle 'tpope/vim-rails.git'
  Bundle 'tpope/vim-rake.git'
@@ -42,11 +42,12 @@ call vundle#rc()
  Bundle 'tpope/vim-sensible.git'
  Bundle 'kchmck/vim-coffee-script'
  Bundle 'scrooloose/syntastic'
+ Bundle 'aurigadl/vim-angularjs'
  Bundle 'vim-ruby/vim-ruby.git'
  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  Bundle 'KurtPreston/vim-autoformat-rails'
  Bundle 'altercation/vim-colors-solarized.git'
- Bundle 'wincent/Command-T'
+ Bundle 'kien/ctrlp.vim'
  Bundle 'epmatsw/ag.vim.git'
  Bundle 't9md/vim-ruby-xmpfilter.git'
  Bundle 'skwp/vim-rspec.git'
@@ -59,14 +60,11 @@ call vundle#rc()
  Bundle 'myusuf3/numbers'
 
  Bundle 'L9'
- Bundle 'SuperTab'
+" Bundle 'SuperTab'
  Bundle 'FuzzyFinder'
- Bundle 'Tabular'
- Bundle 'SuperTab'
- Bundle 'majutsushi/tagbar'
- Bundle 'Townk/vim-autoclose'
- Bundle 'SearchComplete'
- Bundle 'YouCompleteMe'
+ Bundle 'AutoTag'
+ Bundle 'Proj'
+ Bundle 'Valloric/YouCompleteMe'
 
 filetype plugin indent on "Only set this after all the bundle stuff has run
 
@@ -88,7 +86,9 @@ autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \ nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
+
 autocmd BufReadPost fugitive://* set bufhidden=delete
+
 highlight Pmenu ctermbg=238 gui=bold
 "Visual Mode Maps
 vmap <C-c> "+y
@@ -96,7 +96,7 @@ vmap <C-c> "+y
 nmap <C-F> :Ag<space>
 nmap <F8> :TagbarToggle<CR>
 nmap <C-G> :FufBuffer<space>
-nnoremap <silent> <C-R> :CommandT<CR>
+nnoremap <silent> <C-R> :CtrlPMixed<CR>
 nnoremap <C-c> ciw<C-r>
 nnoremap <leader>v :vsplit<cr>  " Split pane vertically
 "nnoremap <silent> <Leader>b :CommandTBuffer<CR>
@@ -111,7 +111,6 @@ set clipboard=unnamed
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
-source ~/.vim/plugins/autoTag.vim
 set cursorline
 set colorcolumn=120
 set undodir^=~/.vim/undo
@@ -155,8 +154,6 @@ set backup                     " Enable creation of backup file.
 set backupdir=~/.vim/backups " Where backups will go.
 set directory=~/.vim/tmp     " Where temporary files will go.
 
-cd /Users/jogara/RubymineProjects/BetDash
-
 map <C-n> :NERDTreeToggle<CR>
 noremap <C-p> :NumbersToggle<CR>
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -179,17 +176,42 @@ if executable('coffeetags')
         \ }
         \ }
 endif
+
 set nowrap  " Line wrapping off
-"command WQ wq
-"command Wq wq
-"command W w
-"command Q q
+
+" Alias commonly mistyped write and quit command
+if !(exists(":WQ"))
+command WQ wq
+endif
+if !(exists(":Wq"))
+command Wq wq
+endif
+if !(exists(":W"))
+command W w
+endif
+if !(exists(":Q"))
+command Q q
+endif
+
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1 
+
+let g:syntastic_javascript_syntax_checker = 'jshint'
+let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.0.0-p247/bin/ruby"
+let g:syntastic_ruby_syntax_checker = ['macruby']
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
 
+let mapleader="-"
+
+source /Users/jogara/.vim/bundle/AutoTag/plugin/autotag.vim
