@@ -1,3 +1,5 @@
+" profile start syntastic.log
+" profile! file */syntastic/*
 set nocompatible               " be iMproved
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
@@ -32,7 +34,12 @@ call vundle#rc()
  Bundle 'tpope/vim-unimpaired.git'
  Bundle 'tpope/vim-rails.git'
  Bundle 'tpope/vim-rake.git'
- Bundle "pangloss/vim-javascript"
+ Bundle 'tpope/vim-commentary.git'
+ Bundle 'kana/vim-textobj-entire.git'
+ Bundle 'jelera/vim-javascript-syntax'
+ Bundle 'pangloss/vim-javascript'
+ Bundle 'othree/javascript-libraries-syntax.vim'
+ Bundle 'nathanaelkane/vim-indent-guides'
  Bundle 'johnogara/vim-bundler'
  Bundle 'tpope/vim-surround.git'
  Bundle 'tpope/vim-tbone.git'
@@ -156,10 +163,10 @@ set directory=~/.vim/tmp     " Where temporary files will go.
 
 map <C-n> :NERDTreeToggle<CR>
 noremap <C-p> :NumbersToggle<CR>
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 highlight Pmenu ctermbg=238 gui=bold
 if executable('coffeetags')
   let g:tagbar_type_coffee = {
@@ -205,9 +212,12 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.0.0-p247/bin/ruby"
-let g:syntastic_ruby_syntax_checker = ['macruby']
+" let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.0.0-p247/bin/ruby"
+let g:syntastic_ruby_exec = "/usr/bin/ruby"
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haml'] }
+let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_aggregate_errors = 0
 
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
@@ -215,3 +225,5 @@ let g:tern_show_arguement_hints='on_hold'
 let mapleader="-"
 
 source /Users/jogara/.vim/bundle/AutoTag/plugin/autotag.vim
+
+
