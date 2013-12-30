@@ -1,9 +1,90 @@
+" Uncomment the following lines when debugging, edit second to debug
+" particular plugin
 " profile start syntastic.log
 " profile! file */syntastic/*
+
+set shell=/bin/bash
+
 set nocompatible               " be iMproved
+set ignorecase                 " self explanitory
+set smartcase                  " Match case if the search pattern has uppercase
+set hidden                     " Don't force non-visible buffers to be written
+set showmode                   " show mode
+set wildmenu                   " Enhanced command completition
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
+
 set rtp+=~/.vim/bundle/vundle/
+
+set viminfo^=!
+"More useable timeouts for leaders etc.
+set timeout timeoutlen=3000 ttimeoutlen=100
+
+set guifont=Source\ Code\ Pro:h12
+
+syntax on
+filetype off "This need to be set before running bundle stuff
+
+set number
+set numberwidth=5
+
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+Bundle 'AutoTag'
+Bundle 'FuzzyFinder'
+Bundle 'Keithbsmiley/rspec.vim.git'
+Bundle 'KurtPreston/vim-autoformat-rails'
+Bundle 'L9'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Proj'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'aurigadl/vim-angularjs'
+Bundle 'epmatsw/ag.vim.git'
+Bundle 'godlygeek/tabular'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'jiangmiao/auto-pairs.git'
+Bundle 'johnogara/vim-bundler'
+Bundle 'kana/vim-textobj-entire.git'
+Bundle 'kana/vim-textobj-user.git'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'kien/ctrlp.vim'
+Bundle 'marijnh/tern_for_vim'
+Bundle 'myusuf3/numbers.vim'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'nelstrom/vim-textobj-rubyblock.git'
+Bundle 'othree/javascript-libraries-syntax.vim'
+Bundle 'pangloss/vim-javascript'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+Bundle 'sjl/gundo.vim'
+Bundle 'skwp/vim-rspec.git'
+Bundle 't9md/vim-ruby-xmpfilter.git'
+Bundle 'tpope/vim-commentary.git'
+Bundle 'tpope/vim-cucumber.git'
+Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-endwise.git'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-haml.git'
+Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-rake.git'
+Bundle 'tpope/vim-rvm.git'
+Bundle 'tpope/vim-sensible.git'
+Bundle 'tpope/vim-surround.git'
+Bundle 'tpope/vim-tbone.git'
+Bundle 'tpope/vim-unimpaired.git'
+Bundle 'tsaleh/vim-matchit.git'
+Bundle 'vim-scripts/ruby-matchit.git'
+
+filetype plugin indent on
+
+" Conditionally set theme and windows
 if has('gui_running')
   set background=light
   colorscheme solarized
@@ -15,73 +96,6 @@ else
   set background=dark
   colorscheme railscasts
 endif
-
-set viminfo^=!
-"More useable timeouts for leaders etc.
-set timeout timeoutlen=3000 ttimeoutlen=100
-
-set guifont=Source\ Code\ Pro:h12
-
-syntax on
-filetype off "This need to be set before running bundle stuff
-call vundle#rc()
-
- " let Vundle manage Vundle
- " required! 
- Bundle 'gmarik/vundle'
-
- " My Bundles here:
- "
- " original repos on github
- Bundle 'tpope/vim-fugitive.git'
- Bundle 'tpope/vim-endwise.git'
- Bundle 'tpope/vim-cucumber.git'
- Bundle 'tpope/vim-dispatch'
- Bundle 'tpope/vim-unimpaired.git'
- Bundle 'tpope/vim-rails.git'
- Bundle 'tpope/vim-rake.git'
- Bundle 'tpope/vim-commentary.git'
- Bundle 'tpope/vim-haml.git'
- Bundle 'tpope/vim-rvm.git'
- Bundle 'tpope/vim-sensible.git'
- Bundle 'tpope/vim-surround.git'
- Bundle 'tpope/vim-tbone.git'
- Bundle 'jiangmiao/auto-pairs.git'
- Bundle 'kana/vim-textobj-entire.git'
- Bundle 'jelera/vim-javascript-syntax'
- Bundle 'pangloss/vim-javascript'
- Bundle 'othree/javascript-libraries-syntax.vim'
- Bundle 'nathanaelkane/vim-indent-guides'
- Bundle 'johnogara/vim-bundler'
- Bundle 'marijnh/tern_for_vim'
- Bundle 'kchmck/vim-coffee-script'
- Bundle 'scrooloose/syntastic'
- Bundle 'aurigadl/vim-angularjs'
- Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
- Bundle 'KurtPreston/vim-autoformat-rails'
- Bundle 'altercation/vim-colors-solarized.git'
- Bundle 'kien/ctrlp.vim'
- Bundle 'epmatsw/ag.vim.git'
- Bundle 't9md/vim-ruby-xmpfilter.git'
- Bundle 'skwp/vim-rspec.git'
- Bundle 'Keithbsmiley/rspec.vim.git'
- Bundle 'tsaleh/vim-matchit.git'
- Bundle 'kana/vim-textobj-user.git'
- Bundle 'nelstrom/vim-textobj-rubyblock.git'
- Bundle 'vim-scripts/ruby-matchit.git'
- Bundle 'scrooloose/nerdtree'
- Bundle 'myusuf3/numbers.vim'
-
- Bundle 'L9'
- Bundle 'FuzzyFinder'
- Bundle 'AutoTag'
- Bundle 'Proj'
- Bundle 'godlygeek/tabular'
- Bundle 'Valloric/YouCompleteMe'
- Bundle 'Lokaltog/vim-easymotion'
- Bundle 'sjl/gundo.vim'
-
-filetype plugin indent on
 
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
@@ -105,7 +119,7 @@ nnoremap <F5> :GundoToggle<CR>
 "paste at end of line
 nmap , $p
 " shortcut for wrap word - vim surround
-nmap <C-w> ysiw
+nmap <C-q> ysiw
 " shortcut for wrap line - vim surround
 nmap <C-l> yss
 
@@ -121,7 +135,7 @@ set splitright
 
 set wildmenu
 set wildmode=list:longest
-set wildignore+=node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.rvmrc,.gitignore,.DS_Store
+set wildignore+=bower_components,node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.rvmrc,.gitignore,.DS_Store
 
 let g:ConqueTerm_CloseOnEnd=1
 let g:ConqueTerm_CWInsert=1
@@ -219,3 +233,7 @@ map <C-n> :NERDTreeToggle<CR>
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
 let g:numbers_exclude = ['tagbar', 'gundo', 'nerdtree']
+
+let g:gitgutter_eager = 1
+let g:gitgutter_realtime = 1
+
