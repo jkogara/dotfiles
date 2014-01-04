@@ -30,4 +30,3 @@ export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
 export CHROMEDRIVER=true
 export GEMTAGS=true
 
-eval "$(grunt --completion=bash)"
