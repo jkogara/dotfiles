@@ -1,0 +1,35 @@
+Encoding:
+  Enabled: false
+
+LineLength:
+  Max: 121
+
+TrailingBlankLines:
+  Enabled: false
+
+MethodLength:
+  CountComments: false
+  Max: 15
+
+# Avoid more than `Max` levels of nesting.
+BlockNesting:
+  Max: 3
+
+# Align with the style guide.
+CollectionMethods:
+  PreferredMethods:
+    collect:  'map'
+    inject:   'reduce'
+    find:     'detect'
+    find_all: 'select'
+
+Documentation:
+  Enabled: false
+
+# Allow dots at the end of lines
+DotPosition:
+  Enabled: false
+
+# Don't require magic comment at thte top of every file
+Encoding:
+  Enabled: false
