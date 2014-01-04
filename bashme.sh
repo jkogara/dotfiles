@@ -1,4 +1,4 @@
-PATH=$PATH:/usr/local/sbin:/Applications:/user/local/bin
+PATH=/usr/local/sbin:/usr/local/bin:$PATH
 PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin
 # Add the /bin directory from the MYSQL_HOME location into your $PATH environment variable.
 export PATH=$PATH:$MYSQL_HOME/bin
