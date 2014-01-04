@@ -1,9 +1,10 @@
 " Uncomment the following lines when debugging, edit second to debug
 " particular plugin
 " profile start syntastic.log
+" profile func *
+" profile file *
+" At this point do slow actions
 " profile! file */syntastic/*
-
-set shell=/bin/bash
 
 set nocompatible               " be iMproved
 set ignorecase                 " self explanitory
@@ -110,7 +111,6 @@ highlight Pmenu ctermbg=238 gui=bold
 vmap <C-c> "+y
 " search with Ag
 nmap <C-F> :Ag<space>
-nmap <F8> :TagbarToggle<CR>
 nmap <C-G> :FufBuffer<space>
 nnoremap <silent> <C-R> :CtrlPMixed<CR>
 nnoremap <C-c> ciw<C-r>
@@ -172,21 +172,6 @@ set backupdir=~/.vim/backups " Where backups will go.
 set directory=~/.vim/tmp     " Where temporary files will go.
 
 highlight Pmenu ctermbg=238 gui=bold
-if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '',
-        \ 'kinds' : [
-        \ 'f:functions',
-        \ 'o:object',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
-endif
 
 set nowrap  " Line wrapping off
 
@@ -211,15 +196,18 @@ autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
-let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_collect_identifiers_from_tags_files = 0
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1 
+let g:ycm_confirm_extra_conf = 0
 
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_ruby_exec = "/usr/bin/ruby"
+let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haml'] }
-let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_c_checkers = ['make', 'splint']
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_aggregate_errors = 0
 
@@ -228,8 +216,6 @@ let g:tern_show_arguement_hints='on_hold'
 
 let mapleader="-"
 
-source /Users/jogara/.vim/bundle/AutoTag/plugin/autotag.vim
-
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
@@ -237,4 +223,5 @@ let g:numbers_exclude = ['tagbar', 'gundo', 'nerdtree']
 
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
+
 
