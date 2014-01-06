@@ -42,3 +42,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 # Load Bash It
 source $BASH_IT/bash_it.sh
 
+

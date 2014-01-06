@@ -202,7 +202,7 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
 
 let g:syntastic_javascript_syntax_checker = 'jshint'
-let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
+" let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haml'] }

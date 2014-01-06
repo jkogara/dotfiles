@@ -10,7 +10,12 @@ else
   FULL_URL=$BASEURL/`echo $REPOURL | sed s/:/\ /g | awk '{ print $NF }'`/commit
 fi
 
-for file in `git log --all --oneline --graph --decorate --grep $1 | awk '{ print $2}'`; do echo $FULL_URL/$file;done
+for file in `git log --all --oneline --graph --decorate --grep $1 | sed -e 's/[\||\/]//g' | awk '{ print $2}'`; 
+do
+  if [ -n "$file"  ]; then
+    echo $FULL_URL/$file;
+  fi
+done
 }
 
 function open_tag_links (){
