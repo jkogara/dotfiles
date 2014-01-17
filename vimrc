@@ -96,7 +96,7 @@ if has('gui_running')
   au VimEnter * vsplit
 else
   set background=dark
-  colorscheme codeschool
+  colorscheme railscasts
 endif
 
 autocmd User fugitive
