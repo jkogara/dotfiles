@@ -32,7 +32,7 @@ set numberwidth=5
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 
 Bundle 'AutoTag'
@@ -45,7 +45,7 @@ Bundle 'Proj'
 Bundle 'Valloric/YouCompleteMe'
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_seed_identifiers_with_syntax = 1 
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
 Bundle 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
@@ -210,6 +210,8 @@ if !(exists(":Q"))
 command Q q
 endif
 
+" auto delete trailing whitespace
+autocmd BufWritePre * :%s/\s\+$//e
 
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
