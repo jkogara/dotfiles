@@ -43,7 +43,13 @@ Bundle 'L9'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Proj'
 Bundle 'Valloric/YouCompleteMe'
+let g:ycm_collect_identifiers_from_tags_files = 0
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_seed_identifiers_with_syntax = 1 
+let g:ycm_confirm_extra_conf = 0
 Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_eager = 1
+let g:gitgutter_realtime = 1
 Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'aurigadl/vim-angularjs'
 Bundle 'cakebaker/scss-syntax.vim'
@@ -57,7 +63,10 @@ Bundle 'kana/vim-textobj-user.git'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'marijnh/tern_for_vim'
+let g:tern_map_keys=1
+let g:tern_show_arguement_hints='on_hold'
 Bundle 'myusuf3/numbers.vim'
+let g:numbers_exclude = ['tagbar', 'gundo', 'nerdtree']
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'nelstrom/vim-textobj-rubyblock.git'
 Bundle 'othree/javascript-libraries-syntax.vim'
@@ -65,6 +74,18 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+let g:syntastic_javascript_syntax_checker = 'jshint'
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haml'] }
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_c_checkers = ['make', 'splint']
+let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
+let g:syntastic_aggregate_errors = 0
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_auto_jump=1
+let g:syntastic_style_error_symbol='✗'
 Bundle 'sjl/gundo.vim'
 Bundle 'skwp/vim-rspec.git'
 Bundle 't9md/vim-ruby-xmpfilter.git'
@@ -196,32 +217,9 @@ autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
-let g:ycm_collect_identifiers_from_tags_files = 0
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_seed_identifiers_with_syntax = 1 
-let g:ycm_confirm_extra_conf = 0
-
-let g:syntastic_javascript_syntax_checker = 'jshint'
-" let g:syntastic_javascript_jshint_conf = "~/.jshintrc"
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haml'] }
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-let g:syntastic_c_checkers = ['make', 'splint']
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_aggregate_errors = 0
-
-let g:tern_map_keys=1
-let g:tern_show_arguement_hints='on_hold'
-
 let mapleader="-"
 
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
-let g:numbers_exclude = ['tagbar', 'gundo', 'nerdtree']
-
-let g:gitgutter_eager = 1
-let g:gitgutter_realtime = 1
-
 
