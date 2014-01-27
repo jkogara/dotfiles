@@ -1,11 +1,11 @@
 [user]
 	name = John O'Gara
-	email = johnogara@gmail.com
+	email = jogara@paddypower.com
 [branch]
 	autosetupmerge = true
 [core]
 	editor = /usr/bin/vim
-  excludesfile = /Users/jogara/.gitignore_global
+	excludesfile = /Users/jogara/.gitignore_global
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   pager = less -FRSX
 [apply]
@@ -18,7 +18,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Users/jogara/Library/Application Support/SourceTree/SourceTree 1.8.0.3 1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [http]
   #proxy = http://localhost:3128
