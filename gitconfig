@@ -47,7 +47,10 @@
 [alias]
   co = checkout
   br = branch
+	ctags = !.git/hooks/ctags
 [push]
 	default = simple
 [heroku]
 	account = personal
+[init]
+	templatedir = ~/.git_template

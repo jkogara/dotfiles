@@ -35,7 +35,6 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 
-Bundle 'AutoTag'
 Bundle 'FuzzyFinder'
 Bundle 'Keithbsmiley/rspec.vim.git'
 Bundle 'KurtPreston/vim-autoformat-rails'
@@ -84,7 +83,6 @@ let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
 let g:syntastic_aggregate_errors = 0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
-let g:syntastic_auto_jump=1
 let g:syntastic_style_error_symbol='✗'
 Bundle 'sjl/gundo.vim'
 Bundle 'skwp/vim-rspec.git'
