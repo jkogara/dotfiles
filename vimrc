@@ -84,6 +84,7 @@ let g:syntastic_aggregate_errors = 0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol='✗'
+Bundle 'sheerun/vim-polyglot'
 Bundle 'sjl/gundo.vim'
 Bundle 'skwp/vim-rspec.git'
 Bundle 't9md/vim-ruby-xmpfilter.git'
@@ -228,4 +229,7 @@ noremap <C-h>  <C-w>h
 noremap <C-j>  <C-w>j
 noremap <C-k>  <C-w>k
 noremap <C-l>  <C-w>l
+
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 
