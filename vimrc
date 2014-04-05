@@ -1,12 +1,11 @@
 " Uncomment the following lines when debugging, edit second to debug
 " particular plugin
-" profile start syntastic.log
+" profile start coffee.log
 " profile func *
 " profile file *
 " At this point do slow actions
-" profile! file */syntastic/*
+" profile! file */coffee/*
 
-set nocompatible               " be iMproved
 set ignorecase                 " self explanitory
 set smartcase                  " Match case if the search pattern has uppercase
 set hidden                     " Don't force non-visible buffers to be written
@@ -14,21 +13,20 @@ set showmode                   " show mode
 set wildmenu                   " Enhanced command completition
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
+set ff=unix                    " Convert line endings to unix
 
-set rtp+=~/.vim/bundle/vundle/
 
 set viminfo^=!
 "More useable timeouts for leaders etc.
 set timeout timeoutlen=3000 ttimeoutlen=100
 
 set guifont=Source\ Code\ Pro:h12
-
-syntax on
-filetype off "This need to be set before running bundle stuff
-
 set number
 set numberwidth=5
 
+set nocompatible               " be iMproved
+filetype off "This need to be set before running bundle stuff
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
@@ -50,7 +48,6 @@ Bundle 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
 Bundle 'altercation/vim-colors-solarized.git'
-Bundle 'aurigadl/vim-angularjs'
 Bundle 'cakebaker/scss-syntax.vim'
 Bundle 'epmatsw/ag.vim.git'
 Bundle 'godlygeek/tabular'
@@ -59,11 +56,11 @@ Bundle 'jiangmiao/auto-pairs.git'
 Bundle 'johnogara/vim-bundler'
 Bundle 'kana/vim-textobj-entire.git'
 Bundle 'kana/vim-textobj-user.git'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'marijnh/tern_for_vim'
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
+Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'myusuf3/numbers.vim'
 let g:numbers_exclude = ['tagbar', 'gundo', 'nerdtree']
 Bundle 'nathanaelkane/vim-indent-guides'
@@ -84,7 +81,6 @@ let g:syntastic_aggregate_errors = 0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol='✗'
-Bundle 'sheerun/vim-polyglot'
 Bundle 'sjl/gundo.vim'
 Bundle 'skwp/vim-rspec.git'
 Bundle 't9md/vim-ruby-xmpfilter.git'
@@ -103,8 +99,9 @@ Bundle 'tpope/vim-tbone.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'tsaleh/vim-matchit.git'
 Bundle 'vim-scripts/ruby-matchit.git'
-
-filetype plugin indent on
+Bundle 'kchmck/vim-coffee-script'
+Bundle "tpope/vim-pathogen"
+execute pathogen#infect()
 
 " Conditionally set theme and windows
 if has('gui_running')
@@ -120,11 +117,12 @@ else
 endif
 
 autocmd User fugitive
-  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-  \ nnoremap <buffer> .. :edit %:h<CR> |
-  \ endif
+   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+   \ nnoremap <buffer> .. :edit %:h<CR> |
+   \ endif
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 highlight Pmenu ctermbg=238 gui=bold
 "Visual Mode Maps
@@ -232,4 +230,8 @@ noremap <C-l>  <C-w>l
 
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
+
+syntax on
+filetype plugin indent on
+
 
