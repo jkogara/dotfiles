@@ -57,7 +57,6 @@ Bundle 'johnogara/vim-bundler'
 Bundle 'kana/vim-textobj-entire.git'
 Bundle 'kana/vim-textobj-user.git'
 Bundle 'kien/ctrlp.vim'
-Bundle 'marijnh/tern_for_vim'
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
 Bundle 'mustache/vim-mustache-handlebars'
@@ -110,7 +109,6 @@ if has('gui_running')
   let g:solarized_contrast="high"
   let g:solarized_visibility="high"
   set scrolloff=3
-  au VimEnter * vsplit
 else
   set background=dark
   colorscheme railscasts
@@ -234,4 +232,15 @@ let g:session_autoload = 'yes'
 syntax on
 filetype plugin indent on
 
-
+if &term =~ '^xterm'
+  " solid underscore
+  let &t_SI .= "\<Esc>[5 q"
+  " solid block
+  let &t_EI .= "\<Esc>[0 q"
+  " 1 or 0 -> blinking block
+  " 3 -> blinking underscore
+  " Recent versions of xterm (282 or above) also support
+  " 5 -> blinking vertical bar
+  " 6 -> solid vertical bar
+endif
+set smartindent
