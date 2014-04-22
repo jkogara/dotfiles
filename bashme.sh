@@ -32,6 +32,7 @@ export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
 export CHROMEDRIVER=true
 export GEMTAGS=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
+export TERM=xterm-256color
 
 eval "$(fasd --init auto)"
 
