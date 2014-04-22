@@ -15,10 +15,10 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=gems.tags
 set ff=unix                    " Convert line endings to unix
 
-
-set viminfo^=!
 "More useable timeouts for leaders etc.
 set timeout timeoutlen=3000 ttimeoutlen=100
+
+set viminfo^=!
 
 set guifont=Source\ Code\ Pro:h12
 set number
@@ -38,6 +38,12 @@ Bundle 'Keithbsmiley/rspec.vim.git'
 Bundle 'KurtPreston/vim-autoformat-rails'
 Bundle 'L9'
 Bundle 'Lokaltog/vim-easymotion'
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
+nmap s <Plug>(easymotion-s2)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
 Bundle 'Proj'
 Bundle 'Valloric/YouCompleteMe'
 let g:ycm_collect_identifiers_from_tags_files = 0
@@ -91,6 +97,7 @@ Bundle 'tpope/vim-fugitive.git'
 Bundle 'tpope/vim-haml.git'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-rake.git'
+Bundle 'tpope/vim-repeat.git'
 Bundle 'tpope/vim-rvm.git'
 Bundle 'tpope/vim-sensible.git'
 Bundle 'tpope/vim-surround.git'
@@ -100,6 +107,7 @@ Bundle 'vim-scripts/ruby-matchit.git'
 Bundle 'kchmck/vim-coffee-script'
 Bundle "tpope/vim-pathogen"
 execute pathogen#infect()
+
 
 " Conditionally set theme and windows
 if has('gui_running')
@@ -132,12 +140,10 @@ nnoremap <C-c> ciw<C-r>
 nnoremap <leader>v :vsplit<cr>  " Split pane vertically
 nnoremap <F5> :GundoToggle<CR>
 
-"paste at end of line
-nmap , $p
 " shortcut for wrap word - vim surround
-nmap <C-q> ysiw
+nmap <leader>s ysiw
 " shortcut for wrap line - vim surround
-nmap <C-l> yss
+nmap <leader>l yss
 
 set clipboard=unnamed
 highlight def link rubyRspec Function
