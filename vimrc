@@ -4,7 +4,7 @@
 " profile func *
 " profile file *
 " At this point do slow actions
-" profile! file */coffee/*
+" profile! file */coffee/
 
 set ignorecase                 " self explanitory
 set smartcase                  " Match case if the search pattern has uppercase
@@ -47,12 +47,12 @@ let g:ycm_confirm_extra_conf = 0
 Bundle 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
-Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'cakebaker/scss-syntax.vim'
+Bundle 'flazz/vim-colorschemes'
 Bundle 'epmatsw/ag.vim.git'
 Bundle 'godlygeek/tabular'
 Bundle 'jelera/vim-javascript-syntax'
-Bundle 'jiangmiao/auto-pairs.git'
+Bundle 'Townk/vim-autoclose'
 Bundle 'johnogara/vim-bundler'
 Bundle 'kana/vim-textobj-entire.git'
 Bundle 'kana/vim-textobj-user.git'
@@ -96,7 +96,6 @@ Bundle 'tpope/vim-sensible.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-tbone.git'
 Bundle 'tpope/vim-unimpaired.git'
-Bundle 'tsaleh/vim-matchit.git'
 Bundle 'vim-scripts/ruby-matchit.git'
 Bundle 'kchmck/vim-coffee-script'
 Bundle "tpope/vim-pathogen"
@@ -111,7 +110,7 @@ if has('gui_running')
   set scrolloff=3
 else
   set background=dark
-  colorscheme railscasts
+  colorscheme codeschool
 endif
 
 autocmd User fugitive
@@ -154,8 +153,6 @@ set wildmenu
 set wildmode=list:longest
 set wildignore+=bower_components,node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.rvmrc,.gitignore,.DS_Store
 
-let g:ConqueTerm_CloseOnEnd=1
-let g:ConqueTerm_CWInsert=1
 set cf  " Enable error files & error jumping.
 set history=5000  " Number of things to remember in history.
 set autowrite  " Writes on make/shell commands
@@ -231,16 +228,4 @@ let g:session_autoload = 'yes'
 
 syntax on
 filetype plugin indent on
-
-if &term =~ '^xterm'
-  " solid underscore
-  let &t_SI .= "\<Esc>[5 q"
-  " solid block
-  let &t_EI .= "\<Esc>[0 q"
-  " 1 or 0 -> blinking block
-  " 3 -> blinking underscore
-  " Recent versions of xterm (282 or above) also support
-  " 5 -> blinking vertical bar
-  " 6 -> solid vertical bar
-endif
 set smartindent
