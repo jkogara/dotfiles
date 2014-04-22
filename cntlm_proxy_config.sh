@@ -10,7 +10,7 @@ unset https_proxy
 
 if [[ `hostname` == *think*  ]]
 then
-  home
+  home_proxy
 else
   work_proxy
 fi

@@ -35,6 +35,6 @@ export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 
 eval "$(fasd --init auto)"
 
-if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
+if [ -n "`command -v brew`" ] && [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
     source `brew --prefix`/etc/bash_completion.d/vagrant
 fi
