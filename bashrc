@@ -30,15 +30,14 @@ export TODO="t"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+# Load Bash It
+source $BASH_IT/bash_it.sh
+
+
 # Load my bash scripts
 source ~/dotfiles/bashme.sh
 source ~/dotfiles/cntlm_proxy_config.sh
 source ~/dotfiles/tag_links.sh
 
-# Load RVM, if you are using it
-[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-# Load Bash It
-source $BASH_IT/bash_it.sh
 

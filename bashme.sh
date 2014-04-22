@@ -2,6 +2,9 @@ PATH=/usr/local/sbin:/usr/local/bin:$PATH
 PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin
 # Add the /bin directory from the MYSQL_HOME location into your $PATH environment variable.
 export PATH=$PATH:$MYSQL_HOME/bin
+# Load RVM, if you are using it
+[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
+PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 
 alias bd='cd ~/RubymineProjects/BetDash'
 alias vi=vim
@@ -39,3 +42,9 @@ eval "$(fasd --init auto)"
 if [ -n "`command -v brew`" ] && [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
     source `brew --prefix`/etc/bash_completion.d/vagrant
 fi
+function prompt_command() {
+  PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
+}
+
+prompt_command
+
