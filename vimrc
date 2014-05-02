@@ -12,7 +12,7 @@ set hidden                     " Don't force non-visible buffers to be written
 set showmode                   " show mode
 set wildmenu                   " Enhanced command completition
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
-set tags+=gems.tags
+set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
 
 "More useable timeouts for leaders etc.
@@ -38,12 +38,11 @@ Bundle 'Keithbsmiley/rspec.vim.git'
 Bundle 'KurtPreston/vim-autoformat-rails'
 Bundle 'L9'
 Bundle 'Lokaltog/vim-easymotion'
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-nmap s <Plug>(easymotion-s2)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
+" let g:EasyMotion_do_mapping = 0
+" let g:EasyMotion_smartcase = 1
+" map <Leader>x <Plug>(easymotion-s2)
+" map <Leader>j <Plug>(easymotion-j)
+" map <Leader>k <Plug>(easymotion-k)
 Bundle 'Proj'
 Bundle 'Valloric/YouCompleteMe'
 let g:ycm_collect_identifiers_from_tags_files = 0
@@ -58,7 +57,7 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'epmatsw/ag.vim.git'
 Bundle 'godlygeek/tabular'
 Bundle 'jelera/vim-javascript-syntax'
-Bundle 'Townk/vim-autoclose'
+Bundle 'jiangmiao/auto-pairs.git'
 Bundle 'johnogara/vim-bundler'
 Bundle 'kana/vim-textobj-entire.git'
 Bundle 'kana/vim-textobj-user.git'

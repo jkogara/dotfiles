@@ -5,7 +5,7 @@ export BASH_IT=$HOME/.bash-it
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='n0qorg'
+export BASH_IT_THEME='doubletime'
 
 # Set my editor and git editor
 export EDITOR="vim"
@@ -33,6 +33,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # Load Bash It
 source $BASH_IT/bash_it.sh
 
+export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 
 # Load my bash scripts
 source ~/dotfiles/bashme.sh

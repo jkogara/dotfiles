@@ -1,11 +1,11 @@
 [user]
 	name = John O'Gara
-	email = jogara@paddypower.com
+	email = johnogara@gmail.com
 [branch]
 	autosetupmerge = true
 [core]
 	editor = /usr/bin/vim
-	excludesfile = /Users/jogara/.gitignore_global
+	excludesfile = /opt/boxen/config/git/gitignore
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   pager = less -FRSX
 [apply]
@@ -23,7 +23,7 @@
 [http]
   #proxy = http://localhost:3128
 [credential]
-  helper = osxkeychain
+  helper = /opt/boxen/bin/boxen-git-credential
 [color]
     branch = auto
     diff = auto
@@ -54,3 +54,6 @@
 	account = personal
 [init]
 	templatedir = ~/.git_template
+
+[hub]
+protocol = https

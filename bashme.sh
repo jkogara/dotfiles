@@ -6,18 +6,22 @@ export PATH=$PATH:$MYSQL_HOME/bin
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 
+
+PATH=$PATH:/opt/boxen/homebrew/Cellar/macvim/7.4-72/bin/
+
+source  /opt/boxen/env.sh
+
 alias bd='cd ~/RubymineProjects/BetDash'
 alias vi=vim
 alias st=stree
 alias data_import='bundle exec rake event_data:import[beta]'
 
-alias migrate='rake db:migrate; rake db:migrate RAILS_ENV=test'
-alias rollback='rake db:rollback; rake db:rollback RAILS_ENV=test'
+alias migrate='bundle exec rake db:migrate; bundle exec rake db:migrate RAILS_ENV=test'
+alias rollback='bundle exec rake db:rollback; bundle exec rake db:rollback RAILS_ENV=test'
 function rebuild_db (){
-`rake db:drop && rake db:create && rake db:migrate && rake db:seed`
-`RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:create && RAILS_ENV=test rake db:migrate && RAILS_ENV=test rake db:seed`
+`bundle exec rake db:drop && bundle exec rake db:setup`
+`RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:setup`
 }
-alias rollback='rake db:rollback; rake db:rollback RAILS_ENV=test'
 alias restart_memcache='launchctl unload -w /System/Library/LaunchDaemons/com.danga.memcached.plist;\
   launchctl load -w /System/Library/LaunchDaemons/com.danga.memcached.plist'
 alias rebuild_betpage='rake redis:rebuild; rake redis:rebuild_bet_page'
@@ -31,11 +35,12 @@ alias tail_mysql='tail -f /usr/local/var/mysql/mac-bd-jo-0113.log'
 
 export BROWSER=Chrome
 export USE_MEMCACHE=true
-export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 export CHROMEDRIVER=true
 export GEMTAGS=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 export TERM=xterm-256color
+source ~/.ec2-credentials
+export JAVA_HOME=`/usr/libexec/java_home`
 
 eval "$(fasd --init auto)"
 
@@ -45,6 +50,5 @@ fi
 function prompt_command() {
   PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
 }
-
-prompt_command
+PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command';
 

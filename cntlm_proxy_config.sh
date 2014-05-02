@@ -8,10 +8,5 @@ unset http_proxy
 unset https_proxy
 }
 
-if [[ `hostname` == *think*  ]]
-then
-  home_proxy
-else
-  work_proxy
-fi
+home_proxy
 
