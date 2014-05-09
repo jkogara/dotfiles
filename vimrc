@@ -115,9 +115,15 @@ if has('gui_running')
   let g:solarized_contrast="high"
   let g:solarized_visibility="high"
   set scrolloff=3
+  set vb t_vb=
 else
   set background=dark
   colorscheme codeschool
+  set noerrorbells visualbell t_vb=
+  if has('autocmd')
+    autocmd GUIEnter * set visualbell t_vb=
+endif
+
 endif
 
 autocmd User fugitive
@@ -182,9 +188,6 @@ set mat=5  " Bracket blinking.
 set nolist
 
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
-set novisualbell  " No blinking .
-set noerrorbells  " No noise.
-
 set backup                     " Enable creation of backup file.
 set backupdir=~/.vim/backups " Where backups will go.
 set directory=~/.vim/tmp     " Where temporary files will go.
@@ -231,6 +234,26 @@ noremap <C-l>  <C-w>l
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
+nnoremap <leader>1 :call MakeSession()<cr>
+nnoremap <leader><leader>1 :call RestoreSession()<cr>
+
+function! RestoreSession()
+  let b:sessiondir = getcwd()
+  let b:filename = b:sessiondir . '/session.vim'
+  exe 'source ' . b:filename
+endfunction
+
+function! MakeSession()
+  let b:sessiondir = getcwd()
+  let b:filename = b:sessiondir . '/session.vim'
+  exe "mksession! " . b:filename
+  exe "edit! " . b:filename
+  exe "g:^cd :d"
+  exe "w"
+  exe "bprevious"
+endfunction
+
 syntax on
 filetype plugin indent on
 set smartindent
+

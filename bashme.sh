@@ -19,9 +19,14 @@ alias data_import='bundle exec rake event_data:import[beta]'
 alias migrate='bundle exec rake db:migrate; bundle exec rake db:migrate RAILS_ENV=test'
 alias rollback='bundle exec rake db:rollback; bundle exec rake db:rollback RAILS_ENV=test'
 function rebuild_db (){
-`bundle exec rake db:drop && bundle exec rake db:setup`
-`RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:setup`
+bundle exec rake db:drop && bundle exec rake db:setup
+RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:setup
 }
+
+function inter_tunnel (){
+  ssh -f -L 3000:muster.cgb0vvdbrqcr.us-east-1.rds.amazonaws.com:3306  console.intercom.io  -N
+}
+
 alias restart_memcache='launchctl unload -w /System/Library/LaunchDaemons/com.danga.memcached.plist;\
   launchctl load -w /System/Library/LaunchDaemons/com.danga.memcached.plist'
 alias rebuild_betpage='rake redis:rebuild; rake redis:rebuild_bet_page'
@@ -51,4 +56,5 @@ function prompt_command() {
   PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
 }
 PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command';
+
 
