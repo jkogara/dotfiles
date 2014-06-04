@@ -1,6 +1,4 @@
  # === EDITOR ===
-$LOAD_PATH << '~/.rvm/gems/ruby-2.0.0-p353@global/gems/awesome_print-1.2.0/lib/'
-$LOAD_PATH << '~/.rvm/gems/ruby-2.0.0-p353@global/gems/hirb-0.7.1/lib/'
 Pry.editor = 'vim'
 
 # === CUSTOM PROMPT ===
@@ -76,7 +74,9 @@ end
  end
 
 Pry.config.commands.import default_command_set
-Pry.commands.alias_command 'c', 'continue'
-Pry.commands.alias_command 's', 'step'
-Pry.commands.alias_command 'n', 'next'
+
+
+Pry.commands.alias_command 'c', 'continue' if Pry.commands.commands.keys.include?('continue')
+Pry.commands.alias_command 's', 'step' if Pry.commands.commands.keys.include?('step')
+Pry.commands.alias_command 'n', 'next' if Pry.commands.commands.keys.include?('next')
 

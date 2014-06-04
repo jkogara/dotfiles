@@ -1,20 +1,12 @@
 PATH=/usr/local/sbin:/usr/local/bin:$PATH
 PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin
-# Add the /bin directory from the MYSQL_HOME location into your $PATH environment variable.
 export PATH=$PATH:$MYSQL_HOME/bin
-# Load RVM, if you are using it
-[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
-PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-
-
-PATH=$PATH:/opt/boxen/homebrew/Cellar/macvim/7.4-72/bin/
-
 source  /opt/boxen/env.sh
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-alias bd='cd ~/RubymineProjects/BetDash'
 alias vi=vim
+alias mvim=vim
 alias st=stree
-alias data_import='bundle exec rake event_data:import[beta]'
 
 alias migrate='bundle exec rake db:migrate; bundle exec rake db:migrate RAILS_ENV=test'
 alias rollback='bundle exec rake db:rollback; bundle exec rake db:rollback RAILS_ENV=test'
@@ -24,6 +16,7 @@ RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:setup
 }
 
 function inter_tunnel (){
+  sed -i -e '/console/d' ~/.ssh/known_hosts
   ssh -f -L 3000:muster.cgb0vvdbrqcr.us-east-1.rds.amazonaws.com:3306  console.intercom.io  -N
 }
 
@@ -43,7 +36,7 @@ export USE_MEMCACHE=true
 export CHROMEDRIVER=true
 export GEMTAGS=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
-export TERM=xterm-256color
+# export TERM=xterm-256color
 source ~/.ec2-credentials
 export JAVA_HOME=`/usr/libexec/java_home`
 
@@ -57,4 +50,26 @@ function prompt_command() {
 }
 PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command';
 
+alias stop_cassandra="launchctl stop homebrew.mxcl.cassandra"
+alias start_cassandra="launchctl start homebrew.mxcl.cassandra"
+export CLICOLOR=1
 
+alias be='bundle exec'
+alias ber='bundle exec rspec'
+
+export PATH=$PATH:/opt/boxen/nodenv/versions/v0.10.26/bin/
+
+function clean_remote_branches(){
+  for branch in `git branch --merged | egrep -v "\*|master"`;
+  do
+    git branch -D $branch;
+  done;
+  git remote prune origin
+  for branch in `git branch -r --merged | grep $1`; do git push origin :`echo $branch | sed 's/origin\///'`; done
+}
+
+function heroku(){
+   echo 'running heroku function'
+   `which heroku` $@ --app intercom-muster
+}
+export DOCKER_HOST=tcp://127.0.0.1:4243

@@ -22,6 +22,7 @@ set viminfo^=!
 
 set guifont=Source\ Code\ Pro:h12
 set number
+set relativenumber
 set numberwidth=5
 
 set nocompatible               " be iMproved
@@ -65,8 +66,6 @@ Bundle 'kien/ctrlp.vim'
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
 Bundle 'mustache/vim-mustache-handlebars'
-Bundle 'myusuf3/numbers.vim'
-let g:numbers_exclude = ['tagbar', 'gundo', 'nerdtree']
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'nelstrom/vim-textobj-rubyblock.git'
 Bundle 'othree/javascript-libraries-syntax.vim'
@@ -86,6 +85,7 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol='✗'
 Bundle 'sjl/gundo.vim'
+Bundle 'skalnik/vim-vroom'
 Bundle 'skwp/vim-rspec.git'
 Bundle 't9md/vim-ruby-xmpfilter.git'
 Bundle 'tpope/vim-commentary.git'
@@ -108,24 +108,6 @@ Bundle "tpope/vim-pathogen"
 execute pathogen#infect()
 
 
-" Conditionally set theme and windows
-if has('gui_running')
-  set background=light
-  colorscheme solarized
-  let g:solarized_contrast="high"
-  let g:solarized_visibility="high"
-  set scrolloff=3
-  set vb t_vb=
-else
-  set background=dark
-  colorscheme codeschool
-  set noerrorbells visualbell t_vb=
-  if has('autocmd')
-    autocmd GUIEnter * set visualbell t_vb=
-endif
-
-endif
-
 autocmd User fugitive
    \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
    \ nnoremap <buffer> .. :edit %:h<CR> |
@@ -135,10 +117,9 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 highlight Pmenu ctermbg=238 gui=bold
-"Visual Mode Maps
-vmap <C-c> "+y
 " search with Ag
 nmap <C-F> :Ag<space>
+inoremap kk <Esc>
 nmap <C-G> :FufBuffer<space>
 nnoremap <silent> <C-R> :CtrlPMixed<CR>
 nnoremap <C-c> ciw<C-r>
@@ -219,11 +200,9 @@ autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
-let mapleader="-"
+let mapleader="\<Space>"
 
 map <C-n> :NERDTreeToggle<CR>
-nnoremap <F3> :NumbersToggle<CR>
-nnoremap <F4> :NumbersOnOff<CR>
 
 " fast split window navigation
 noremap <C-h>  <C-w>h
@@ -244,7 +223,6 @@ function! RestoreSession()
 endfunction
 
 function! MakeSession()
-  let b:sessiondir = getcwd()
   let b:filename = b:sessiondir . '/session.vim'
   exe "mksession! " . b:filename
   exe "edit! " . b:filename
@@ -256,4 +234,9 @@ endfunction
 syntax on
 filetype plugin indent on
 set smartindent
+set background=light
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
+colorscheme solarized
+set scrolloff=3
 

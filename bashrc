@@ -27,9 +27,6 @@ export TODO="t"
 # https://github.com/xvzf/vcprompt
 #export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
 # Load Bash It
 source $BASH_IT/bash_it.sh
 
@@ -42,3 +39,5 @@ source ~/dotfiles/tag_links.sh
 
 
 
+
+export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
