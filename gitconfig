@@ -57,3 +57,6 @@
 
 [hub]
 protocol = https
+[git-up "bundler"]
+	check = true
+	autoinstall = false

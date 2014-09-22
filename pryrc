@@ -10,10 +10,19 @@ Pry.config.ls.public_method_color = :green
 Pry.config.ls.protected_method_color = :yellow
 Pry.config.ls.private_method_color = :bright_black
 
-require 'awesome_print'
-Pry.config.print = proc { |output, value| output.puts value.ai }
 
-require 'hirb'
+begin
+  require 'awesome_print'
+  Pry.config.print = proc { |output, value| output.puts value.ai }
+rescue LoadError
+  puts 'please install awesome_print'
+end
+
+begin
+  require 'hirb'
+rescue LoadError
+  puts 'please install hirb'
+end
 
 if defined? Hirb
   # Dirty hack to support in-session Hirb.disable/enable
@@ -35,18 +44,18 @@ end
 # === CUSTOM COMMANDS ===
 # from: https://gist.github.com/1297510
  default_command_set = Pry::CommandSet.new do
-   command "copy", "Copy argument to the clip-board" do |str|
+   block_command "copy", "Copy argument to the clip-board" do |str|
      IO.popen('pbcopy', 'w') { |f| f << str.to_s }
    end
 
-  command "clear" do
+  create_command "clear" do
     system 'clear'
     if ENV['RAILS_ENV']
       output.puts "Rails Environment: " + ENV['RAILS_ENV']
     end
   end
 
-   command "sql", "Send sql over AR." do |query|
+   block_command "sql", "Send sql over AR." do |query|
      if ENV['RAILS_ENV'] || defined?(Rails)
        pp ActiveRecord::Base.connection.select_all(query)
      else
@@ -54,15 +63,7 @@ end
      end
    end
 
-   command "oxi_setup" do |stuff|
-     require 'oxi'
-     Oxi.password='testing'
-     Oxi.username='pplotto'
-     @oxi = Oxi::Client.new()
-     @token = 'bde83IdQKu6fhp4PWRgaJfANYY8Oy17323bQcWHH+FGbbjRFih+zegGKfdRjMbLesgSnnBR42A=='
-     return @oxi
-   end
-   command "caller_method" do |depth|
+   block_command "caller_method" do |depth|
      depth = depth.to_i || 1
      if /^(.+?):(\d+)(?::in `(.*)')?/ =~ caller(depth+1).first
        file   = Regexp.last_match[1]
@@ -76,7 +77,7 @@ end
 Pry.config.commands.import default_command_set
 
 
-Pry.commands.alias_command 'c', 'continue' if Pry.commands.commands.keys.include?('continue')
-Pry.commands.alias_command 's', 'step' if Pry.commands.commands.keys.include?('step')
-Pry.commands.alias_command 'n', 'next' if Pry.commands.commands.keys.include?('next')
+Pry.commands.alias_command 'c', 'continue' if Pry.commands.keys.include?('continue')
+Pry.commands.alias_command 's', 'step' if Pry.commands.keys.include?('step')
+Pry.commands.alias_command 'n', 'next' if Pry.commands.keys.include?('next')
 

@@ -5,7 +5,6 @@ source  /opt/boxen/env.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 alias vi=vim
-alias mvim=vim
 alias st=stree
 
 alias migrate='bundle exec rake db:migrate; bundle exec rake db:migrate RAILS_ENV=test'
@@ -18,6 +17,7 @@ RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:setup
 function inter_tunnel (){
   sed -i -e '/console/d' ~/.ssh/known_hosts
   ssh -f -L 3000:muster.cgb0vvdbrqcr.us-east-1.rds.amazonaws.com:3306  console.intercom.io  -N
+  ssh -f -L 3001:intercom-production.cgb0vvdbrqcr.us-east-1.rds.amazonaws.com:3306  console.intercom.io  -N
 }
 
 alias restart_memcache='launchctl unload -w /System/Library/LaunchDaemons/com.danga.memcached.plist;\
@@ -65,7 +65,13 @@ function clean_remote_branches(){
     git branch -D $branch;
   done;
   git remote prune origin
-  for branch in `git branch -r --merged | grep $1`; do git push origin :`echo $branch | sed 's/origin\///'`; done
+}
+
+function expand-asg(){
+for i in `aws ec2 describe-instances --filters  "Name=tag-value,Values=$1" "Name=instance-state-name,Values=running"  --query 'Reservations[*].Instances[*].PublicDnsName' --output text`
+do
+echo $i
+done
 }
 
 function heroku(){
@@ -73,3 +79,6 @@ function heroku(){
    `which heroku` $@ --app intercom-muster
 }
 export DOCKER_HOST=tcp://127.0.0.1:4243
+export GOPATH=/Users/jogara/gopath/
+export M2_HOME=/opt/boxen/homebrew/Cellar/maven/3.2.2/libexec
+export M2=/opt/boxen/homebrew/Cellar/maven/3.2.2/libexec/bin

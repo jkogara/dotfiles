@@ -22,57 +22,64 @@ set viminfo^=!
 
 set guifont=Source\ Code\ Pro:h12
 set number
-set relativenumber
+set norelativenumber
 set numberwidth=5
 
 set nocompatible               " be iMproved
 filetype off "This need to be set before running bundle stuff
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
-Bundle 'FuzzyFinder'
-Bundle 'Keithbsmiley/rspec.vim.git'
-Bundle 'KurtPreston/vim-autoformat-rails'
-Bundle 'L9'
-Bundle 'Lokaltog/vim-easymotion'
+
+
+Plugin 'codegram/vim-codereview'
+Plugin 'FuzzyFinder'
+Plugin 'Keithbsmiley/rspec.vim.git'
+Plugin 'KurtPreston/vim-autoformat-rails'
+Plugin 'L9'
+Plugin 'auto-pairs'
+Plugin 'Lokaltog/vim-easymotion'
 " let g:EasyMotion_do_mapping = 0
 " let g:EasyMotion_smartcase = 1
 " map <Leader>x <Plug>(easymotion-s2)
 " map <Leader>j <Plug>(easymotion-j)
 " map <Leader>k <Plug>(easymotion-k)
-Bundle 'Proj'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Proj'
+Plugin 'Valloric/YouCompleteMe'
+" Plugin 'supertab'
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
-Bundle 'airblade/vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'epmatsw/ag.vim.git'
-Bundle 'godlygeek/tabular'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'jiangmiao/auto-pairs.git'
-Bundle 'johnogara/vim-bundler'
-Bundle 'kana/vim-textobj-entire.git'
-Bundle 'kana/vim-textobj-user.git'
-Bundle 'kien/ctrlp.vim'
+Plugin 'gregsexton/gitv'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'epmatsw/ag.vim.git'
+Plugin 'fatih/vim-go'
+Plugin 'godlygeek/tabular'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'johnogara/vim-bundler'
+Plugin 'junkblocker/patchreview-vim'
+Plugin 'kana/vim-textobj-entire.git'
+Plugin 'kana/vim-textobj-user.git'
+Plugin 'kien/ctrlp.vim'
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
-Bundle 'mustache/vim-mustache-handlebars'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'nelstrom/vim-textobj-rubyblock.git'
-Bundle 'othree/javascript-libraries-syntax.vim'
-Bundle 'pangloss/vim-javascript'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nelstrom/vim-textobj-rubyblock.git'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
@@ -84,28 +91,31 @@ let g:syntastic_aggregate_errors = 0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol='✗'
-Bundle 'sjl/gundo.vim'
-Bundle 'skalnik/vim-vroom'
-Bundle 'skwp/vim-rspec.git'
-Bundle 't9md/vim-ruby-xmpfilter.git'
-Bundle 'tpope/vim-commentary.git'
-Bundle 'tpope/vim-cucumber.git'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-endwise.git'
-Bundle 'tpope/vim-fugitive.git'
-Bundle 'tpope/vim-haml.git'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-rake.git'
-Bundle 'tpope/vim-repeat.git'
-Bundle 'tpope/vim-rvm.git'
-Bundle 'tpope/vim-sensible.git'
-Bundle 'tpope/vim-surround.git'
-Bundle 'tpope/vim-tbone.git'
-Bundle 'tpope/vim-unimpaired.git'
-Bundle 'vim-scripts/ruby-matchit.git'
-Bundle 'kchmck/vim-coffee-script'
-Bundle "tpope/vim-pathogen"
-execute pathogen#infect()
+Plugin 'sjl/gundo.vim'
+Plugin 'skalnik/vim-vroom'
+Plugin 'skwp/vim-rspec.git'
+Plugin 't9md/vim-ruby-xmpfilter.git'
+Plugin 'tpope/vim-commentary.git'
+Plugin 'tpope/vim-cucumber.git'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-endwise.git'
+Plugin 'tpope/vim-fugitive.git'
+Plugin 'tpope/vim-haml.git'
+Plugin 'tpope/vim-rails.git'
+Plugin 'tpope/vim-rake.git'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-rvm.git'
+Plugin 'tpope/vim-sensible.git'
+Plugin 'tpope/vim-surround.git'
+Plugin 'tpope/vim-tbone.git'
+Plugin 'tpope/vim-unimpaired.git'
+Plugin 'vim-scripts/ruby-matchit.git'
+Plugin 'vim-rooter'
+let g:rooter_patterns = ['Rakefile', '.git/']
+let g:rooter_use_lcd = 1
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-pathogen'
+call vundle#end()
 
 
 autocmd User fugitive
@@ -121,8 +131,6 @@ highlight Pmenu ctermbg=238 gui=bold
 nmap <C-F> :Ag<space>
 inoremap kk <Esc>
 nmap <C-G> :FufBuffer<space>
-nnoremap <silent> <C-R> :CtrlPMixed<CR>
-nnoremap <C-c> ciw<C-r>
 nnoremap <leader>v :vsplit<cr>  " Split pane vertically
 nnoremap <F5> :GundoToggle<CR>
 
@@ -172,6 +180,7 @@ set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 set backup                     " Enable creation of backup file.
 set backupdir=~/.vim/backups " Where backups will go.
 set directory=~/.vim/tmp     " Where temporary files will go.
+set noswapfile
 
 highlight Pmenu ctermbg=238 gui=bold
 
@@ -223,6 +232,7 @@ function! RestoreSession()
 endfunction
 
 function! MakeSession()
+  let b:sessiondir = getcwd()
   let b:filename = b:sessiondir . '/session.vim'
   exe "mksession! " . b:filename
   exe "edit! " . b:filename
@@ -234,9 +244,14 @@ endfunction
 syntax on
 filetype plugin indent on
 set smartindent
-set background=light
+" set background=light
 let g:solarized_contrast="high"
 let g:solarized_visibility="high"
 colorscheme solarized
 set scrolloff=3
 
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+nnoremap <Leader>e :SyntasticCheck<CR>
+
+source ~/dotfiles/vim/regexlist.vim
+set vb
