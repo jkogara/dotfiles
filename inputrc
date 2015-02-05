@@ -5,7 +5,6 @@
 set input-meta on
 set output-meta on
 set convert-meta off
-
 # To use these in ITerm2 you may also need to configure preferences to send the correct escape
 # code for the key combination.
 

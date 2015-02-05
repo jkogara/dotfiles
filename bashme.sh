@@ -37,8 +37,7 @@ export CHROMEDRIVER=true
 export GEMTAGS=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 # export TERM=xterm-256color
-source ~/.ec2-credentials
-export JAVA_HOME=`/usr/libexec/java_home`
+# export JAVA_HOME=`/usr/libexec/java_home`
 
 eval "$(fasd --init auto)"
 
@@ -50,8 +49,6 @@ function prompt_command() {
 }
 PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command';
 
-alias stop_cassandra="launchctl stop homebrew.mxcl.cassandra"
-alias start_cassandra="launchctl start homebrew.mxcl.cassandra"
 export CLICOLOR=1
 
 alias be='bundle exec'
@@ -66,7 +63,6 @@ function clean_remote_branches(){
   done;
   git remote prune origin
 }
-
 function expand-asg(){
 for i in `aws ec2 describe-instances --filters  "Name=tag-value,Values=$1" "Name=instance-state-name,Values=running"  --query 'Reservations[*].Instances[*].PublicDnsName' --output text`
 do
@@ -74,11 +70,16 @@ echo $i
 done
 }
 
-function heroku(){
-   echo 'running heroku function'
-   `which heroku` $@ --app intercom-muster
-}
+# function heroku(){
+#    echo 'running heroku function defaulting to intercom'
+#    `which heroku` $@ --app intercom-muster
+# }
 export DOCKER_HOST=tcp://127.0.0.1:4243
 export GOPATH=/Users/jogara/gopath/
 export M2_HOME=/opt/boxen/homebrew/Cellar/maven/3.2.2/libexec
 export M2=/opt/boxen/homebrew/Cellar/maven/3.2.2/libexec/bin
+export JENV_ROOT=/opt/boxen/homebrew/opt/jenv
+export GRADLE_HOME=/opt/gradle-2.2.1
+export PATH=$PATH:$GRADLE_HOME/bin
+source ~/.ec2-credentials
+source /opt/boxen/homebrew/etc/bash_completion.d/hub.bash_completion.sh

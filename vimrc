@@ -78,12 +78,13 @@ Plugin 'nelstrom/vim-textobj-rubyblock.git'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'wting/rust.vim'
+Plugin 'cespare/vim-toml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haml'] }
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_c_checkers = ['make', 'splint']
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
@@ -100,6 +101,8 @@ Plugin 'tpope/vim-cucumber.git'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise.git'
 Plugin 'tpope/vim-fugitive.git'
+Plugin 'vim-git-log'
+Plugin 'dbakker/vim-lint'
 Plugin 'tpope/vim-haml.git'
 Plugin 'tpope/vim-rails.git'
 Plugin 'tpope/vim-rake.git'
@@ -250,7 +253,7 @@ let g:solarized_visibility="high"
 colorscheme solarized
 set scrolloff=3
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript'],'passive_filetypes': [] }
 nnoremap <Leader>e :SyntasticCheck<CR>
 
 source ~/dotfiles/vim/regexlist.vim

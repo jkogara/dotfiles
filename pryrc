@@ -1,4 +1,7 @@
- # === EDITOR ===
+require 'readline'
+require 'pry-doc'
+include Readline
+# === EDITOR ===
 Pry.editor = 'vim'
 
 # === CUSTOM PROMPT ===
@@ -48,7 +51,7 @@ end
      IO.popen('pbcopy', 'w') { |f| f << str.to_s }
    end
 
-  create_command "clear" do
+  block_command "clear" do
     system 'clear'
     if ENV['RAILS_ENV']
       output.puts "Rails Environment: " + ENV['RAILS_ENV']
