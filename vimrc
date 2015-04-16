@@ -14,6 +14,7 @@ set wildmenu                   " Enhanced command completition
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
+set tw=120
 
 "More useable timeouts for leaders etc.
 set timeout timeoutlen=3000 ttimeoutlen=100
@@ -84,8 +85,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.1.0/bin/ruby"
-let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.2.0/bin/ruby"
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 let g:syntastic_c_checkers = ['make', 'splint']
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
 let g:syntastic_aggregate_errors = 0
@@ -211,8 +212,12 @@ autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
+autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
+autocmd BufRead,BufNewFile *.js.erb set filetype=eruby.javascript
+autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
+autocmd BufRead,BufNewFile *.scss.erb set filetype=eruby.scss
 
-let mapleader="\<Space>"
+let mapleader="'"
 
 map <C-n> :NERDTreeToggle<CR>
 
@@ -253,8 +258,34 @@ let g:solarized_visibility="high"
 colorscheme solarized
 set scrolloff=3
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript'],'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'ruby', 'python', 'eruby'],'passive_filetypes': [] }
 nnoremap <Leader>e :SyntasticCheck<CR>
 
 source ~/dotfiles/vim/regexlist.vim
 set vb
+let g:rails_projections = {
+      \ "app/serializers/*_serializer.rb": {
+      \   "command": "serializer",
+      \   "affinity": "model",
+      \   "test": "spec/serializers/%s_spec.rb",
+      \   "related": "app/models/%s.rb",
+      \   "template": "class %SSerializer < ActiveModel::Serializer\nend"
+      \ },
+      \ "app/workers/*.rb": {
+      \   "command": "worker",
+      \   "test": "spec/workers/%s_spec.rb",
+      \   "template": "class %S\ninclude Sidekiq::Worker\nend"
+      \ },
+      \ "app/admin/*.rb": {
+      \   "command": "admin",
+      \   "affinity": "controller",
+      \   "related": "app/models/%s.rb"
+      \ },
+      \ "app/services/*.rb": {
+      \   "command": "service",
+      \   "affinity": "model",
+      \   "related": "app/models/%s.rb",
+      \   "test": "spec/services/%s_spec.rb",
+      \   "template": "module Services\nmodule %Ss\nend\nend"
+      \ }
+      \ }

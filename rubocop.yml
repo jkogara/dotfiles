@@ -2,7 +2,7 @@ Encoding:
   Enabled: false
 
 LineLength:
-  Max: 121
+  Max: 120
 
 TrailingBlankLines:
   Enabled: false
@@ -24,10 +24,6 @@ CollectionMethods:
     find_all: 'select'
 
 Documentation:
-  Enabled: false
-
-# Allow dots at the end of lines
-DotPosition:
   Enabled: false
 
 # Don't require magic comment at thte top of every file

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Path to the bash it configuration
-export BASH_IT=$HOME/.bash-it
+export BASH_IT=$HOME/.bash_it
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
-export BASH_IT_THEME='doubletime'
+export BASH_IT_THEME='bakke'
 
 # Set my editor and git editor
 export EDITOR="vim"
@@ -34,10 +34,8 @@ export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
 
 # Load my bash scripts
 source ~/dotfiles/bashme.sh
-source ~/dotfiles/cntlm_proxy_config.sh
-source ~/dotfiles/tag_links.sh
-
-
-
 
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+
+export NVM_DIR="/Users/jogara/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

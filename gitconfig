@@ -1,13 +1,13 @@
 [user]
-	name = jkogara
+	name = John O'Gara
 	email = johnogara@gmail.com
 [branch]
 	autosetupmerge = true
 [core]
 	editor = /usr/bin/vim
-	excludesfile = /opt/boxen/config/git/gitignore
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   pager = less -FRSX
+	excludesfile = /Users/jogara/.gitignore_global
 [apply]
   whitespace = fix
 [merge]
@@ -18,12 +18,10 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Users/jogara/Library/Application Support/SourceTree/SourceTree 1.9.3.1/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [http]
   #proxy = http://localhost:3128
-[credential]
-  helper = /opt/boxen/bin/boxen-git-credential
 [color]
     branch = auto
     diff = auto
@@ -60,3 +58,5 @@ protocol = https
 [git-up "bundler"]
 	check = true
 	autoinstall = false
+[credential]
+	helper = osxkeychain
