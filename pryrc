@@ -1,5 +1,5 @@
 require 'readline'
-require 'pry-doc'
+# require 'pry-doc'
 include Readline
 # === EDITOR ===
 Pry.editor = 'vim'

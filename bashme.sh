@@ -65,7 +65,7 @@ done
 }
 
 function kill_spring(){
-  ps ax | grep [s]pring | awk '{print $1}' | xargs kill
+  ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
 }
 
 # function heroku(){
@@ -93,3 +93,16 @@ export ZOOMER_URL=http://app.zoomer.local
 export ZOOMER_API=http://app.zoomer.local/api/v1
 export DONT_OPEN_BROWSER=true
 export PATH=$PATH:/Users/jogara/Library/Android/sdk/platform-tools/
+source ~/.aws_instant_details
+export DERBY_HOME=/Users/jogara/personal/COMP40010/jpetstore/db-derby
+export J2EE_TUTORIAL=/Users/jogara/personal/COMP40010/jpetstore/java_ee_sdk-5_07-mac-nojdk
+alias  vim='/usr/local/bin/vim'
+
+function start_bosun(){
+  docker run -d -p 8070:8070 stackexchange/bosun
+}
+
+function stop_bosun(){
+  docker stop `docker ps | grep bosun | awk '{ print $1 }' | egrep -v CONTAINER`
+}
+export COMP40550_PROJECT_ROOT=/Users/jogara/COMP40550/

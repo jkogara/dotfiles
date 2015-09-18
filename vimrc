@@ -22,6 +22,9 @@ set timeout timeoutlen=3000 ttimeoutlen=100
 set viminfo^=!
 
 set guifont=Source\ Code\ Pro:h12
+if has("gui_running")
+  set background=dark
+endif
 set number
 set norelativenumber
 set numberwidth=5
@@ -29,20 +32,21 @@ set numberwidth=5
 set nocompatible               " be iMproved
 filetype off "This need to be set before running bundle stuff
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/Users/jogara/.vim/bundle/typescript-tools.vim/
 call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
 Plugin 'gmarik/Vundle.vim'
+Plugin 'clausreinke/typescript-tools.vim'
 
+Plugin 'dsawardekar/ember.vim'
 
-
-Plugin 'codegram/vim-codereview'
+Plugin 'bruno-/vim-ruby-fold'
 Plugin 'FuzzyFinder'
-Plugin 'Keithbsmiley/rspec.vim.git'
-Plugin 'KurtPreston/vim-autoformat-rails'
-Plugin 'L9'
+Plugin 'L9' "Required by FuzzyFinder
 Plugin 'auto-pairs'
+Plugin 'splitjoin.vim'
 Plugin 'Lokaltog/vim-easymotion'
 " let g:EasyMotion_do_mapping = 0
 " let g:EasyMotion_smartcase = 1
@@ -96,8 +100,10 @@ let g:syntastic_style_error_symbol='✗'
 Plugin 'sjl/gundo.vim'
 Plugin 'skalnik/vim-vroom'
 Plugin 'skwp/vim-rspec.git'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 't9md/vim-ruby-xmpfilter.git'
 Plugin 'tpope/vim-commentary.git'
+Plugin 'tpope/vim-rvm.git'
 Plugin 'tpope/vim-cucumber.git'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise.git'
@@ -108,7 +114,6 @@ Plugin 'tpope/vim-haml.git'
 Plugin 'tpope/vim-rails.git'
 Plugin 'tpope/vim-rake.git'
 Plugin 'tpope/vim-repeat.git'
-Plugin 'tpope/vim-rvm.git'
 Plugin 'tpope/vim-sensible.git'
 Plugin 'tpope/vim-surround.git'
 Plugin 'tpope/vim-tbone.git'
@@ -216,6 +221,8 @@ autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
 autocmd BufRead,BufNewFile *.js.erb set filetype=eruby.javascript
 autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
 autocmd BufRead,BufNewFile *.scss.erb set filetype=eruby.scss
+autocmd BufRead,BufNewFile *.html.arb set filetype=ruby
+autocmd BufRead,BufNewFile *.arb set filetype=ruby
 
 let mapleader="'"
 
@@ -260,9 +267,24 @@ set scrolloff=3
 
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'ruby', 'python', 'eruby'],'passive_filetypes': [] }
 nnoremap <Leader>e :SyntasticCheck<CR>
+nnoremap <Space> za
 
 source ~/dotfiles/vim/regexlist.vim
 set vb
+filetype plugin on
+au BufRead,BufNewFile *.ts        setlocal filetype=typescript
+
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 let g:rails_projections = {
       \ "app/serializers/*_serializer.rb": {
       \   "command": "serializer",
@@ -279,13 +301,20 @@ let g:rails_projections = {
       \ "app/admin/*.rb": {
       \   "command": "admin",
       \   "affinity": "controller",
+      \   "test": "spec/controllers/admin/%s_spec.rb",
       \   "related": "app/models/%s.rb"
+      \ },
+      \ "spec/factories/*.rb": {
+      \   "command": "factory",
+      \   "affinity": "model",
+      \   "related": "app/models/%s.rb",
+      \   "template": "FactoryGirl.define do\nfactory :%s do\nend\nend"
       \ },
       \ "app/services/*.rb": {
       \   "command": "service",
       \   "affinity": "model",
       \   "related": "app/models/%s.rb",
       \   "test": "spec/services/%s_spec.rb",
-      \   "template": "module Services\nmodule %Ss\nend\nend"
+      \   "template": "module Services\nmodule %S\nend\nend"
       \ }
       \ }
