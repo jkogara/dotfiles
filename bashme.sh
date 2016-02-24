@@ -1,5 +1,6 @@
 PATH=/usr/local/sbin:/usr/local/bin:$PATH
 PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin:/usr/local/lib/node_modules/n/bin/
+PATH=/Users/jogara/.cargo/bin:$PATH
 export PATH=$PATH:$MYSQL_HOME/bin
 
 alias migrate='bundle exec rake db:migrate; bundle exec rake db:schema:load RAILS_ENV=test'
@@ -51,7 +52,7 @@ source ~/dotfiles/z.sh
 
 
 function clean_remote_branches(){
-  for branch in `git branch --merged | egrep -v "\*|master"`;
+  for branch in `git branch --merged | egrep -v "\*|master" | egrep -v "\*|ready_to_go"`;
   do
     git branch -D $branch;
   done;
@@ -77,7 +78,6 @@ export GOPATH=/Users/jogara/gopath/
 export GRADLE_HOME=/opt/gradle-2.2.1
 export PATH=$PATH:$GRADLE_HOME/bin
 export PORT=9000
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 alias man='_() { echo $1; man -M $(brew --prefix)/opt/coreutils/libexec/gnuman $1 1>/dev/null 2>&1;  if [ "$?" -eq 0 ]; then man -M $(brew --prefix)/opt/coreutils/libexec/gnuman $1; else man $1; fi }; _'
 export DOCKER_CERT_PATH=/Users/jogara/.boot2docker/certs/boot2docker-vm
@@ -106,3 +106,6 @@ function stop_bosun(){
   docker stop `docker ps | grep bosun | awk '{ print $1 }' | egrep -v CONTAINER`
 }
 export COMP40550_PROJECT_ROOT=/Users/jogara/COMP40550/
+source /usr/local/etc/bash_completion.d/cargo
+export PATH=./bin:$PATH
+export LOGENTRIES_ACCOUNT_KEY=e9b1c7b7-6ee7-4977-9ee4-731e374d5d64

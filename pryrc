@@ -1,5 +1,5 @@
 require 'readline'
-# require 'pry-doc'
+require 'pry-doc'
 include Readline
 # === EDITOR ===
 Pry.editor = 'vim'
@@ -56,6 +56,14 @@ end
     if ENV['RAILS_ENV']
       output.puts "Rails Environment: " + ENV['RAILS_ENV']
     end
+  end
+
+  block_command 'disable_awesomeprint' do
+    Pry.print = Pry::DEFAULT_PRINT
+  end
+
+  block_command 'enable_awesome_print' do
+    Pry.config.print = proc { |output, value| output.puts value.ai }
   end
 
    block_command "sql", "Send sql over AR." do |query|

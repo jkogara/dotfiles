@@ -60,3 +60,5 @@ protocol = https
 	autoinstall = false
 [credential]
 	helper = osxkeychain
+[help]
+	autocorrect = 3

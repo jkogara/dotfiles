@@ -32,10 +32,10 @@ source $BASH_IT/bash_it.sh
 
 export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 
-# Load my bash scripts
-source ~/dotfiles/bashme.sh
-
-export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 
 export NVM_DIR="/Users/jogara/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Load my bash scripts
+source ~/dotfiles/bashme.sh
+

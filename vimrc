@@ -21,9 +21,9 @@ set timeout timeoutlen=3000 ttimeoutlen=100
 
 set viminfo^=!
 
-set guifont=Source\ Code\ Pro:h12
+set guifont=Source\ Code\ Pro\ Medium:h12
 if has("gui_running")
-  set background=dark
+  set background=light
 endif
 set number
 set norelativenumber
@@ -43,6 +43,7 @@ Plugin 'clausreinke/typescript-tools.vim'
 Plugin 'dsawardekar/ember.vim'
 
 Plugin 'bruno-/vim-ruby-fold'
+Plugin 'artnez/vim-wipeout'
 Plugin 'FuzzyFinder'
 Plugin 'L9' "Required by FuzzyFinder
 Plugin 'auto-pairs'
@@ -65,6 +66,7 @@ let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
 Plugin 'gregsexton/gitv'
 Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'skammer/vim-css-color.git'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'epmatsw/ag.vim.git'
 Plugin 'fatih/vim-go'
@@ -83,13 +85,14 @@ Plugin 'nelstrom/vim-textobj-rubyblock.git'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'wting/rust.vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
 Plugin 'cespare/vim-toml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_ruby_exec = "/Users/jogara/.rvm/rubies/ruby-2.2.0/bin/ruby"
+let g:syntastic_ruby_exec = "/Users/jogara/.rbenv/shims/ruby"
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 let g:syntastic_c_checkers = ['make', 'splint']
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
@@ -103,11 +106,11 @@ Plugin 'skwp/vim-rspec.git'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 't9md/vim-ruby-xmpfilter.git'
 Plugin 'tpope/vim-commentary.git'
-Plugin 'tpope/vim-rvm.git'
 Plugin 'tpope/vim-cucumber.git'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise.git'
 Plugin 'tpope/vim-fugitive.git'
+Plugin 'tpope/vim-rbenv.git'
 Plugin 'vim-git-log'
 Plugin 'dbakker/vim-lint'
 Plugin 'tpope/vim-haml.git'
@@ -160,7 +163,7 @@ set splitright
 
 set wildmenu
 set wildmode=list:longest
-set wildignore+=bower_components,node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.rvmrc,.gitignore,.DS_Store
+set wildignore+=bower_components,node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.gitignore,.DS_Store
 
 set cf  " Enable error files & error jumping.
 set history=5000  " Number of things to remember in history.
@@ -265,7 +268,7 @@ let g:solarized_visibility="high"
 colorscheme solarized
 set scrolloff=3
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'ruby', 'python', 'eruby'],'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'rust', 'ruby', 'python', 'eruby'],'passive_filetypes': [] }
 nnoremap <Leader>e :SyntasticCheck<CR>
 nnoremap <Space> za
 
@@ -285,13 +288,34 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+function s:WipeBuffersWithoutFiles()
+    let bufs=filter(range(1, bufnr('$')), 'bufexists(v:val) && '.
+                                          \'empty(getbufvar(v:val, "&buftype")) && '.
+                                          \'!filereadable(bufname(v:val))')
+    if !empty(bufs)
+        execute 'bwipeout' join(bufs)
+    endif
+endfunction
+command BWnex call s:WipeBuffersWithoutFiles()
+
+" Rust auto completition
+let g:racer_cmd = "/Users/jogara/.cargo/bin/racer"
+let $RUST_SRC_PATH="/usr/local/src/rust/src"
+
 let g:rails_projections = {
+      \ "app/validators/*_validator.rb": {
+      \   "command": "validator",
+      \   "affinity": "model",
+      \   "test": "spec/validators/%s_spec.rb",
+      \   "related": "app/models/%s.rb",
+      \   "template": "class %SValidator < ActiveModel::Validator\nend"
+      \ },
       \ "app/serializers/*_serializer.rb": {
       \   "command": "serializer",
       \   "affinity": "model",
       \   "test": "spec/serializers/%s_spec.rb",
       \   "related": "app/models/%s.rb",
-      \   "template": "class %SSerializer < ActiveModel::Serializer\nend"
+      \   "template": "class %SSerializer < Api::V1::BaseSerializer\nend"
       \ },
       \ "app/workers/*.rb": {
       \   "command": "worker",
@@ -309,6 +333,13 @@ let g:rails_projections = {
       \   "affinity": "model",
       \   "related": "app/models/%s.rb",
       \   "template": "FactoryGirl.define do\nfactory :%s do\nend\nend"
+      \ },
+      \ "app/decorators/*.rb": {
+      \   "command": "decorator",
+      \   "affinity": "model",
+      \   "related": "app/models/%s.rb",
+      \   "test": "spec/decorators/%s_spec.rb",
+      \   "template": "class %SDecorator < Draper::Decorator\n  delegate_all\nend"
       \ },
       \ "app/services/*.rb": {
       \   "command": "service",
