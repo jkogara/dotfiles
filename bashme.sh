@@ -109,3 +109,9 @@ export COMP40550_PROJECT_ROOT=/Users/jogara/COMP40550/
 source /usr/local/etc/bash_completion.d/cargo
 export PATH=./bin:$PATH
 export LOGENTRIES_ACCOUNT_KEY=e9b1c7b7-6ee7-4977-9ee4-731e374d5d64
+
+# Avoid duplicates
+export HISTCONTROL=ignoredups:erasedups
+
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend

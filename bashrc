@@ -38,4 +38,5 @@ export NVM_DIR="/Users/jogara/.nvm"
 
 # Load my bash scripts
 source ~/dotfiles/bashme.sh
+source ~/.heroku_shorts.sh
 

@@ -40,6 +40,8 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'clausreinke/typescript-tools.vim'
 
+Plugin 'rizzatti/dash.vim'
+
 Plugin 'dsawardekar/ember.vim'
 
 Plugin 'bruno-/vim-ruby-fold'
@@ -57,10 +59,23 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Proj'
 Plugin 'Valloric/YouCompleteMe'
 " Plugin 'supertab'
-let g:ycm_collect_identifiers_from_tags_files = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
@@ -226,6 +241,7 @@ autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
 autocmd BufRead,BufNewFile *.scss.erb set filetype=eruby.scss
 autocmd BufRead,BufNewFile *.html.arb set filetype=ruby
 autocmd BufRead,BufNewFile *.arb set filetype=ruby
+autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 let mapleader="'"
 
@@ -268,7 +284,7 @@ let g:solarized_visibility="high"
 colorscheme solarized
 set scrolloff=3
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'rust', 'ruby', 'python', 'eruby'],'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'rust', 'ruby', 'python', 'eruby', 'c'],'passive_filetypes': [] }
 nnoremap <Leader>e :SyntasticCheck<CR>
 nnoremap <Space> za
 
@@ -297,6 +313,11 @@ function s:WipeBuffersWithoutFiles()
     endif
 endfunction
 command BWnex call s:WipeBuffersWithoutFiles()
+" spelling
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd Filetype gitcommit setlocal spell
+set complete+=kspell
 
 " Rust auto completition
 let g:racer_cmd = "/Users/jogara/.cargo/bin/racer"
@@ -325,7 +346,7 @@ let g:rails_projections = {
       \ "app/admin/*.rb": {
       \   "command": "admin",
       \   "affinity": "controller",
-      \   "test": "spec/controllers/admin/%s_spec.rb",
+      \   "test": "spec/controllers/admin/%ss_controller_spec.rb",
       \   "related": "app/models/%s.rb"
       \ },
       \ "spec/factories/*.rb": {

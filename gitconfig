@@ -47,7 +47,7 @@
   br = branch
 	ctags = !.git/hooks/ctags
 [push]
-	default = simple
+	default = current
 [heroku]
 	account = personal
 [init]
