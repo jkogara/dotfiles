@@ -22,9 +22,7 @@ set timeout timeoutlen=3000 ttimeoutlen=100
 set viminfo^=!
 
 set guifont=Source\ Code\ Pro\ Medium:h12
-if has("gui_running")
-  set background=light
-endif
+set background=light
 set number
 set norelativenumber
 set numberwidth=5
@@ -38,7 +36,19 @@ call vundle#begin()
 " let Vundle manage Vundle
 " required!
 Plugin 'gmarik/Vundle.vim'
+Plugin 'vim-latex/vim-latex'
 Plugin 'clausreinke/typescript-tools.vim'
+
+Plugin 'rizzatti/dash.vim'
+
+" Vundle
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'avdgaag/vim-phoenix'
+Plugin 'elmcast/elm-vim'
+
+let g:elm_format_autosave = 1
+
+Plugin 'hashivim/vim-terraform'
 
 Plugin 'dsawardekar/ember.vim'
 
@@ -57,10 +67,24 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Proj'
 Plugin 'Valloric/YouCompleteMe'
 " Plugin 'supertab'
-let g:ycm_collect_identifiers_from_tags_files = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'elm' : ['.'],
+  \   'erlang' : [':'],
+  \ }
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
@@ -92,14 +116,18 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_always_populate_loc_list=1
+let g:syntastic_auto_loc_list=0
 let g:syntastic_ruby_exec = "/Users/jogara/.rbenv/shims/ruby"
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_elixir_checkers = ['elixir']
+let g:syntastic_enable_elixir_checker = 1
 let g:syntastic_c_checkers = ['make', 'splint']
 let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
 let g:syntastic_aggregate_errors = 0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_style_error_symbol='✗'
+let g:elm_syntastic_show_warnings=1
 Plugin 'sjl/gundo.vim'
 Plugin 'skalnik/vim-vroom'
 Plugin 'skwp/vim-rspec.git'
@@ -115,6 +143,7 @@ Plugin 'vim-git-log'
 Plugin 'dbakker/vim-lint'
 Plugin 'tpope/vim-haml.git'
 Plugin 'tpope/vim-rails.git'
+Plugin 'tpope/vim-projectionist.git'
 Plugin 'tpope/vim-rake.git'
 Plugin 'tpope/vim-repeat.git'
 Plugin 'tpope/vim-sensible.git'
@@ -226,6 +255,7 @@ autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
 autocmd BufRead,BufNewFile *.scss.erb set filetype=eruby.scss
 autocmd BufRead,BufNewFile *.html.arb set filetype=ruby
 autocmd BufRead,BufNewFile *.arb set filetype=ruby
+autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 let mapleader="'"
 
@@ -268,7 +298,10 @@ let g:solarized_visibility="high"
 colorscheme solarized
 set scrolloff=3
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['javascript', 'rust', 'ruby', 'python', 'eruby'],'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'mode': 'passive',
+      \ 'active_filetypes': ['javascript', 'elm', 'elixir', 'rust', 'ruby', 'python', 'eruby', 'c'],
+      \ 'passive_filetypes': []
+      \ }
 nnoremap <Leader>e :SyntasticCheck<CR>
 nnoremap <Space> za
 
@@ -288,15 +321,23 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-function s:WipeBuffersWithoutFiles()
+if !exists("*WipeBuffersWithoutFiles")
+  function! s:WipeBuffersWithoutFiles()
     let bufs=filter(range(1, bufnr('$')), 'bufexists(v:val) && '.
-                                          \'empty(getbufvar(v:val, "&buftype")) && '.
-                                          \'!filereadable(bufname(v:val))')
+          \'empty(getbufvar(v:val, "&buftype")) && '.
+          \'!filereadable(bufname(v:val))')
     if !empty(bufs)
-        execute 'bwipeout' join(bufs)
+      execute 'bwipeout' join(bufs)
     endif
-endfunction
-command BWnex call s:WipeBuffersWithoutFiles()
+  endfunction
+  command! BWnex call s:WipeBuffersWithoutFiles()
+endif
+
+" spelling
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd Filetype gitcommit setlocal spell
+set complete+=kspell
 
 " Rust auto completition
 let g:racer_cmd = "/Users/jogara/.cargo/bin/racer"
@@ -325,7 +366,7 @@ let g:rails_projections = {
       \ "app/admin/*.rb": {
       \   "command": "admin",
       \   "affinity": "controller",
-      \   "test": "spec/controllers/admin/%s_spec.rb",
+      \   "test": "spec/controllers/admin/%ss_controller_spec.rb",
       \   "related": "app/models/%s.rb"
       \ },
       \ "spec/factories/*.rb": {

@@ -5,6 +5,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 
 alias migrate='bundle exec rake db:migrate; bundle exec rake db:schema:load RAILS_ENV=test'
 alias rollback='bundle exec rake db:rollback; bundle exec rake db:schema:load RAILS_ENV=test'
+alias ber='bundle exec rspec'
 function rebuild_db (){
 bundle exec rake db:drop && bundle exec rake db:setup
 RAILS_ENV=test rake db:drop && RAILS_ENV=test rake db:setup
@@ -41,6 +42,53 @@ fi
 function prompt_command() {
   PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
 }
+
+ZOOMER_CONTAINERS=(web rconsole sidekiq scheduler)
+
+function zoomer_production_scale(){
+  zoomer-devops.rb container scale -e production -p zoomer -r web $1
+}
+
+function zoomer_production_ps(){
+  zoomer-devops.rb container ps -e production -p zoomer -r web
+}
+
+function zoomer_production_events(){
+  zoomer-devops.rb container events -e production -p zoomer -r web
+}
+
+function zoomer_production_config(){
+  for container in "${ZOOMER_CONTAINERS[@]}"
+  do
+    :
+    zoomer-devops.rb container config -e production -p zoomer -r $container $1 $2
+  done
+}
+
+function zoomer_staging_config(){
+  for container in "${ZOOMER_CONTAINERS[@]}"
+  do
+    :
+    zoomer-devops.rb container config -e staging -p zoomer -r $container $1 $2
+  done
+}
+
+function zoomer_production_deployment(){
+  for container in "${ZOOMER_CONTAINERS[@]}"
+  do
+    :
+    zoomer-devops.rb container deployment -e production -p zoomer -r $container
+  done
+}
+
+function zoomer_staging_deployment(){
+  for container in "${ZOOMER_CONTAINERS[@]}"
+  do
+    :
+    zoomer-devops.rb container deployment -e staging -p zoomer -r $container
+  done
+}
+
 PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command';
 
 export CLICOLOR=1
@@ -51,7 +99,7 @@ alias vi='vim'
 source ~/dotfiles/z.sh
 
 
-function clean_remote_branches(){
+function clean_merged_branches(){
   for branch in `git branch --merged | egrep -v "\*|master" | egrep -v "\*|ready_to_go"`;
   do
     git branch -D $branch;
@@ -69,10 +117,6 @@ function kill_spring(){
   ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
 }
 
-# function heroku(){
-#    echo 'running heroku function defaulting to intercom'
-#    `which heroku` $@ --app intercom-muster
-# }
 export DOCKER_HOST=tcp://127.0.0.1:4243
 export GOPATH=/Users/jogara/gopath/
 export GRADLE_HOME=/opt/gradle-2.2.1
@@ -93,7 +137,6 @@ export ZOOMER_URL=http://app.zoomer.local
 export ZOOMER_API=http://app.zoomer.local/api/v1
 export DONT_OPEN_BROWSER=true
 export PATH=$PATH:/Users/jogara/Library/Android/sdk/platform-tools/
-source ~/.aws_instant_details
 export DERBY_HOME=/Users/jogara/personal/COMP40010/jpetstore/db-derby
 export J2EE_TUTORIAL=/Users/jogara/personal/COMP40010/jpetstore/java_ee_sdk-5_07-mac-nojdk
 alias  vim='/usr/local/bin/vim'
@@ -106,6 +149,34 @@ function stop_bosun(){
   docker stop `docker ps | grep bosun | awk '{ print $1 }' | egrep -v CONTAINER`
 }
 export COMP40550_PROJECT_ROOT=/Users/jogara/COMP40550/
-source /usr/local/etc/bash_completion.d/cargo
-export PATH=./bin:$PATH
+export PATH=./bin:$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
 export LOGENTRIES_ACCOUNT_KEY=e9b1c7b7-6ee7-4977-9ee4-731e374d5d64
+
+# Avoid duplicates
+export HISTCONTROL=ignoredups:erasedups
+
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+export NO_AUTOCORRECT_RUBOCOP=true
+source ~/.env
+source ~/.heroku_shorts.sh
+source ~/.all_elixir_auto_complete.bash
+
+if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
+  source ~/.gnupg/.gpg-agent-info
+  export GPG_AGENT_INFO
+else
+  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+fi
+# Source chtf
+if [[ -f /usr/local/share/chtf/chtf.sh ]]; then
+    source "/usr/local/share/chtf/chtf.sh"
+fi
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export NO_AUTOCORRECT_RUBOCOP=true
+
+function run_app_in_sim(){
+  xcrun simctl install booted $1
+}
+export PATH=/usr/local/Caskroom/terraform-0.6.9/0.6.9:/Users/jogara/.rbenv/shims:/Users/jogara/.rbenv/bin:/Users/jogara/.pyenv/bin:/usr/local/bin:./node_modules/.bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
