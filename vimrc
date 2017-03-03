@@ -35,16 +35,21 @@ call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
+" Vundle
 Plugin 'gmarik/Vundle.vim'
+
+" Latex tools
 Plugin 'vim-latex/vim-latex'
 Plugin 'clausreinke/typescript-tools.vim'
 
+" Dash documentation
 Plugin 'rizzatti/dash.vim'
 
-" Vundle
+" Elixir related
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'avdgaag/vim-phoenix'
 Plugin 'elmcast/elm-vim'
+Plugin 'slashmili/alchemist.vim'
 
 let g:elm_format_autosave = 1
 
