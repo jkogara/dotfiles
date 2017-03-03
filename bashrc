@@ -26,6 +26,9 @@ export TODO="t"
 # Set vcprompt executable path for scm advance info in prompt (demula theme)
 # https://github.com/xvzf/vcprompt
 #export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
+PATH=/usr/local/sbin:/usr/local/bin:$PATH
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+
 
 # Load Bash It
 source $BASH_IT/bash_it.sh
@@ -37,4 +40,6 @@ export NVM_DIR="/Users/jogara/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Load my bash scripts
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 source ~/.bashme.sh

@@ -1,8 +1,3 @@
-PATH=/usr/local/sbin:/usr/local/bin:$PATH
-PATH=/opt/local/bin/:/opt/local/sbin/:$PATH:/usr/local/share/npm/bin:/usr/local/lib/node_modules/n/bin/
-PATH=/Users/jogara/.cargo/bin:$PATH
-export PATH=$PATH:$MYSQL_HOME/bin
-
 alias migrate='bundle exec rake db:migrate; bundle exec rake db:schema:load RAILS_ENV=test'
 alias rollback='bundle exec rake db:rollback; bundle exec rake db:schema:load RAILS_ENV=test'
 alias ber='bundle exec rspec'
@@ -39,6 +34,7 @@ export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 if [ -n "`command -v brew`" ] && [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
     source `brew --prefix`/etc/bash_completion.d/vagrant
 fi
+
 function prompt_command() {
   PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
 }
@@ -75,20 +71,16 @@ export GOPATH=/Users/jogara/gopath/
 export GRADLE_HOME=/opt/gradle-2.2.1
 export PATH=$PATH:$GRADLE_HOME/bin
 export PORT=9000
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 alias man='_() { echo $1; man -M $(brew --prefix)/opt/coreutils/libexec/gnuman $1 1>/dev/null 2>&1;  if [ "$?" -eq 0 ]; then man -M $(brew --prefix)/opt/coreutils/libexec/gnuman $1; else man $1; fi }; _'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 export BUILD_TARGET=development
 export ZOOMER_URL=http://app.zoomer.local
 export ZOOMER_API=http://app.zoomer.local/api/v1
 export DONT_OPEN_BROWSER=true
-export PATH=$PATH:/Users/jogara/Library/Android/sdk/platform-tools/
 export DERBY_HOME=/Users/jogara/personal/COMP40010/jpetstore/db-derby
-export J2EE_TUTORIAL=/Users/jogara/personal/COMP40010/jpetstore/java_ee_sdk-5_07-mac-nojdk
 alias  vim='/usr/local/bin/vim'
 
 export COMP40550_PROJECT_ROOT=/Users/jogara/COMP40550/
-export PATH=./bin:$PATH:/usr/local/texlive/2015/bin/x86_64-darwin
 export LOGENTRIES_ACCOUNT_KEY=e9b1c7b7-6ee7-4977-9ee4-731e374d5d64
 
 # Avoid duplicates
@@ -107,6 +99,7 @@ if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
 else
   eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
 fi
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export NO_AUTOCORRECT_RUBOCOP=true
