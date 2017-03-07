@@ -13,11 +13,11 @@ cd $dir
 echo "...done"
 
 for file in $files; do
-    if [ -a ~/.$file ]
-    then
-        echo "Moving .$file from ~ to $olddir"
-        mv ~/.$file ~/dotfiles_old/
-    fi
+    #if [ -a ~/.$file ]
+    #then
+    #    echo "Moving .$file from ~ to $olddir"
+    #    mv ~/.$file ~/dotfiles_old/
+    #fi
     if [ -a ~/.$file ]
     then
         echo "Symlink already exists"

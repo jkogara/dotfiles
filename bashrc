@@ -27,8 +27,18 @@ export TODO="t"
 # https://github.com/xvzf/vcprompt
 #export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
 
+PATH=/usr/local/sbin:/usr/local/bin:$PATH
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 # Load Bash It
 source $BASH_IT/bash_it.sh
 
+export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+
+
+export NVM_DIR="/Users/jogara/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 # Load my bash scripts
-source ~/.bashme.sh
+
+source ~/dotfiles/bashme.sh
+source ~/.grubhub_dev_setup.sh

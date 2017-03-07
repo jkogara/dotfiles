@@ -1,7 +1,7 @@
 [user]
-	name = John O'Gara
-	email = johnogara@gmail.com
-	signingkey = E232E598
+	name = 
+	email = 
+	; signingkey = E232E598
 [branch]
 	autosetupmerge = true
 [core]
@@ -44,7 +44,7 @@
     changed = yellow
   untracked = red
 [alias]
-  co = checkout
+	co = checkout
   br = branch
 	ctags = !.git/hooks/ctags
 	ls = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)'
@@ -67,4 +67,6 @@ protocol = https
 [include]
 	path = ~/.gitconfig.reflow
 [commit]
-	gpgsign = true
+	; gpgsign = true
+[commit]
+	template = /Users/jogara/.stCommitMsg

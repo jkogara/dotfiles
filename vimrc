@@ -15,13 +15,14 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
 set tw=120
+set diffopt+=vertical          " Always use a vertical diff
 
 "More useable timeouts for leaders etc.
 set timeout timeoutlen=3000 ttimeoutlen=100
 
 set viminfo^=!
-
-set guifont=Source\ Code\ Pro\ Medium:h12
+set anti enc=utf-8
+set guifont=Source\ Code\ Pro:h12
 set background=light
 set number
 set norelativenumber
@@ -50,6 +51,10 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'avdgaag/vim-phoenix'
 Plugin 'elmcast/elm-vim'
 Plugin 'slashmili/alchemist.vim'
+
+" Markdown support
+Plugin 'JamshedVesuna/vim-markdown-preview'
+let vim_markdown_preview_github=1
 
 let g:elm_format_autosave = 1
 
@@ -326,6 +331,8 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+let vim_markdown_preview_hotkey='<C-m>'
+
 if !exists("*WipeBuffersWithoutFiles")
   function! s:WipeBuffersWithoutFiles()
     let bufs=filter(range(1, bufnr('$')), 'bufexists(v:val) && '.
@@ -347,6 +354,11 @@ set complete+=kspell
 " Rust auto completition
 let g:racer_cmd = "/Users/jogara/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rust/src"
+
+augroup filetypedetect
+    au BufRead,BufNewFile *.plist setfiletype xml
+    " associate *.plist with xml filetype
+augroup END
 
 let g:rails_projections = {
       \ "app/validators/*_validator.rb": {
