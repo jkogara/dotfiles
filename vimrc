@@ -11,7 +11,6 @@ set smartcase                  " Match case if the search pattern has uppercase
 set hidden                     " Don't force non-visible buffers to be written
 set showmode                   " show mode
 set wildmenu                   " Enhanced command completition
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
 set tw=120
@@ -147,7 +146,18 @@ Plugin 'tpope/vim-commentary.git'
 Plugin 'tpope/vim-cucumber.git'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise.git'
+
+" fugitive related
 Plugin 'tpope/vim-fugitive.git'
+set diffopt+=vertical
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
+autocmd User fugitive
+   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+   \ nnoremap <buffer> .. :edit %:h<CR> |
+   \ endif
+
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
 Plugin 'tpope/vim-rbenv.git'
 Plugin 'vim-git-log'
 Plugin 'dbakker/vim-lint'
@@ -169,12 +179,6 @@ Plugin 'tpope/vim-pathogen'
 call vundle#end()
 
 
-autocmd User fugitive
-   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-   \ nnoremap <buffer> .. :edit %:h<CR> |
-   \ endif
-
-autocmd BufReadPost fugitive://* set bufhidden=delete
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 highlight Pmenu ctermbg=238 gui=bold

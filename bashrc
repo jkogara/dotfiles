@@ -41,4 +41,7 @@ export NVM_DIR="/Users/jogara/.nvm"
 # Load my bash scripts
 
 source ~/dotfiles/bashme.sh
-source ~/.grubhub_dev_setup.sh
+if [ -f ~/.grubhub_dev_setup.sh ]
+then
+  source ~/.grubhub_dev_setup.sh
+fi

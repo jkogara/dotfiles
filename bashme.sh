@@ -72,3 +72,4 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 
 source ~/.all_elixir_auto_complete.bash
+eval "$(rbenv init -)"
