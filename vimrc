@@ -40,7 +40,20 @@ Plugin 'gmarik/Vundle.vim'
 
 " Latex tools
 Plugin 'vim-latex/vim-latex'
+let g:tex_flavor='latex'
+let g:Tex_TreatMacViewerAsUNIX = 1
+let g:Tex_ExecuteUNIXViewerInForeground = 1
+let g:Tex_ViewRule_ps = 'open -a Preview'
+let g:Tex_ViewRule_pdf = 'open -a Preview'
+" Required to get <leader>lv to work
+" see https://stackoverflow.com/questions/12650528/viewing-pdfs-with-vim-latex-suite-start-preview-shell-returned-127#comment30189856_12650683
+autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
+
+" Typescript
 Plugin 'clausreinke/typescript-tools.vim'
+
+" TMUX
+Plugin 'christoomey/vim-tmux-navigator'
 
 " Dash documentation
 Plugin 'rizzatti/dash.vim'
@@ -50,6 +63,7 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'avdgaag/vim-phoenix'
 Plugin 'elmcast/elm-vim'
 Plugin 'slashmili/alchemist.vim'
+Plugin 'posva/vim-vue'
 
 " Markdown support
 Plugin 'JamshedVesuna/vim-markdown-preview'
@@ -149,8 +163,8 @@ Plugin 'tpope/vim-endwise.git'
 
 " fugitive related
 Plugin 'tpope/vim-fugitive.git'
-set diffopt+=vertical
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
+set diffopt+=vertical
 autocmd User fugitive
    \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
    \ nnoremap <buffer> .. :edit %:h<CR> |
@@ -177,7 +191,6 @@ let g:rooter_use_lcd = 1
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'tpope/vim-pathogen'
 call vundle#end()
-
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 

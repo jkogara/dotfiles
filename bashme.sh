@@ -70,6 +70,5 @@ PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export HISTCONTROL=ignoredups:erasedups
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
-
 source ~/.all_elixir_auto_complete.bash
 eval "$(rbenv init -)"

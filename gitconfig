@@ -69,4 +69,4 @@ protocol = https
 [commit]
 	; gpgsign = true
 [commit]
-	template = /Users/jogara/.stCommitMsg
+	; template = /Users/jogara/.stCommitMsg
