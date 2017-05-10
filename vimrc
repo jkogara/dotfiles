@@ -10,7 +10,6 @@ set ignorecase                 " self explanitory
 set smartcase                  " Match case if the search pattern has uppercase
 set hidden                     " Don't force non-visible buffers to be written
 set showmode                   " show mode
-set wildmenu                   " Enhanced command completition
 set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
 set tw=120
@@ -40,7 +39,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " Latex tools
 Plugin 'vim-latex/vim-latex'
-let g:tex_flavor='latex'
 let g:Tex_TreatMacViewerAsUNIX = 1
 let g:Tex_ExecuteUNIXViewerInForeground = 1
 let g:Tex_ViewRule_ps = 'open -a Preview'
@@ -48,6 +46,7 @@ let g:Tex_ViewRule_pdf = 'open -a Preview'
 " Required to get <leader>lv to work
 " see https://stackoverflow.com/questions/12650528/viewing-pdfs-with-vim-latex-suite-start-preview-shell-returned-127#comment30189856_12650683
 autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
+Bundle 'matze/vim-tex-fold'
 
 " Typescript
 Plugin 'clausreinke/typescript-tools.vim'
@@ -58,10 +57,12 @@ Plugin 'christoomey/vim-tmux-navigator'
 " Dash documentation
 Plugin 'rizzatti/dash.vim'
 
+" polyglot - multiple language syntax support
+Plugin 'othree/html5.vim'
+Plugin 'sheerun/vim-polyglot'
+
 " Elixir related
-Plugin 'elixir-lang/vim-elixir'
 Plugin 'avdgaag/vim-phoenix'
-Plugin 'elmcast/elm-vim'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'posva/vim-vue'
 
@@ -108,17 +109,17 @@ let g:ycm_semantic_triggers =  {
   \   'elm' : ['.'],
   \   'erlang' : [':'],
   \ }
+let g:ycm_filetype_specific_completion_to_disable = {
+      \   'tex': 1
+      \ }
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
 Plugin 'gregsexton/gitv'
-Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'skammer/vim-css-color.git'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'epmatsw/ag.vim.git'
-Plugin 'fatih/vim-go'
 Plugin 'godlygeek/tabular'
-Plugin 'jelera/vim-javascript-syntax'
 Plugin 'johnogara/vim-bundler'
 Plugin 'junkblocker/patchreview-vim'
 Plugin 'kana/vim-textobj-entire.git'
@@ -130,11 +131,9 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-textobj-rubyblock.git'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'pangloss/vim-javascript'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'rust-lang/rust.vim'
 Plugin 'racer-rust/vim-racer'
-Plugin 'cespare/vim-toml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
@@ -153,17 +152,13 @@ let g:syntastic_style_error_symbol='✗'
 let g:elm_syntastic_show_warnings=1
 Plugin 'sjl/gundo.vim'
 Plugin 'skalnik/vim-vroom'
-Plugin 'skwp/vim-rspec.git'
-Plugin 'vim-ruby/vim-ruby'
 Plugin 't9md/vim-ruby-xmpfilter.git'
 Plugin 'tpope/vim-commentary.git'
-Plugin 'tpope/vim-cucumber.git'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise.git'
 
 " fugitive related
 Plugin 'tpope/vim-fugitive.git'
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-40.(%l,%c%V%)\ %P
 set diffopt+=vertical
 autocmd User fugitive
    \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
@@ -171,6 +166,11 @@ autocmd User fugitive
    \ endif
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" Status line
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline#extensions#tabline#enabled = 1
 
 Plugin 'tpope/vim-rbenv.git'
 Plugin 'vim-git-log'
@@ -188,7 +188,6 @@ Plugin 'vim-scripts/ruby-matchit.git'
 Plugin 'vim-rooter'
 let g:rooter_patterns = ['Rakefile', '.git/']
 let g:rooter_use_lcd = 1
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'tpope/vim-pathogen'
 call vundle#end()
 
@@ -219,7 +218,7 @@ set splitright
 
 set wildmenu
 set wildmode=list:longest
-set wildignore+=bower_components,node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.gitignore,.DS_Store
+set wildignore+=bower_components,node_modules,dist,vendor,log,tmp,*.swp,gems,.bundle,Gemfile.lock,.gem,.gitignore,.DS_Store,*/doc/*,*/_build/*
 
 set cf  " Enable error files & error jumping.
 set history=5000  " Number of things to remember in history.
@@ -253,6 +252,7 @@ set noswapfile
 highlight Pmenu ctermbg=238 gui=bold
 
 set nowrap  " Line wrapping off
+au BufNewFile,BufFilePre,BufRead *.tex set filetype=tex tw=120 fo+=t colorcolumn=120
 
 " Alias commonly mistyped write and quit command
 if !(exists(":WQ"))
@@ -276,6 +276,7 @@ autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
+autocmd BufRead,BufNewFile *.cls set filetype=tex
 autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
 autocmd BufRead,BufNewFile *.js.erb set filetype=eruby.javascript
 autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
@@ -343,9 +344,11 @@ if executable('ag')
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_custom_ignore = { 'dir': 'doc$\|_build$' }
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
+
 endif
 
 let vim_markdown_preview_hotkey='<C-m>'
@@ -365,6 +368,7 @@ endif
 " spelling
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd Filetype gitcommit setlocal spell
 set complete+=kspell
 

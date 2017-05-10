@@ -72,3 +72,10 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 source ~/.all_elixir_auto_complete.bash
 eval "$(rbenv init -)"
+source ~/.secrets
+
+function add_docs(){
+  nohup aws s3 sync doc s3://swisspair-docs/ > /dev/null 2>&1  &
+  git add -u
+  git add -f doc/*
+}

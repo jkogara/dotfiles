@@ -1,4 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='/Users/jogara'
 let g:netrw_dirhist_2='/Users/jogara/src/zoomer'
+let g:netrw_dirhist_3='/Users/jogara/src/swiss_umbrella/report/sections'
+let g:netrw_dirhist_4='/Users/jogara/src/swiss_umbrella/report'
+let g:netrw_dirhist_5='/Users/jogara/src/swiss_umbrella/report/sections'
