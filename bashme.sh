@@ -79,3 +79,6 @@ function add_docs(){
   git add -u
   git add -f doc/*
 }
+export PATH=$PATH:$GRADLE_HOME/bin
+export JAVA_HOME=$(/usr/libexec/java_home)
+source ~/.grubhub_dev.sh

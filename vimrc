@@ -115,6 +115,9 @@ let g:ycm_filetype_specific_completion_to_disable = {
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
+Plugin 'lepture/vim-jinja'
+Plugin 'wting/cheetah.vim'
+
 Plugin 'gregsexton/gitv'
 Plugin 'skammer/vim-css-color.git'
 Plugin 'flazz/vim-colorschemes'
@@ -344,11 +347,11 @@ if executable('ag')
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
   let g:ctrlp_custom_ignore = { 'dir': 'doc$\|_build$' }
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
-
 endif
 
 let vim_markdown_preview_hotkey='<C-m>'
@@ -370,6 +373,7 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd BufRead,BufNewFile *.txt setlocal spell
 autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd Filetype gitcommit setlocal spell
+set spelllang=en_gb
 set complete+=kspell
 
 " Rust auto completition

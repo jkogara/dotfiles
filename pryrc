@@ -62,6 +62,17 @@ end
     Pry.print = Pry::DEFAULT_PRINT
   end
 
+  block_command 'enable_autoload_debug' do
+    d = ActiveSupport::Dependencies
+    d.logger = Logger.new(STDOUT)
+    d.log_activity = true
+  end
+
+  block_command 'disable_autoload_debug' do
+    d = ActiveSupport::Dependencies
+    d.log_activity = false
+  end
+
   block_command 'enable_awesome_print' do
     Pry.config.print = proc { |output, value| output.puts value.ai }
   end

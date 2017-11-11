@@ -1,7 +1,10 @@
 [user]
-	name = jkogara
-	email = johnogara@gmail.com
-	; signingkey = E232E598
+  ; name = jogara
+  ; email = jogara@grubhub.com
+	; name = jkogara
+	; email = johnogara@gmail.com
+	signingkey = E232E598
+	useConfigOnly = true
 [branch]
 	autosetupmerge = true
 [core]
@@ -48,6 +51,7 @@
   br = branch
 	ctags = !.git/hooks/ctags
 	ls = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)'
+	pushf = push --force-with-lease
 [push]
 	default = current
 [heroku]
