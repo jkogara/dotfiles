@@ -2,6 +2,9 @@
 set -e
 PATH="/usr/local/bin:$PATH"
 GEMDIR=`rbenv gemdir`
+case $PWD/ in
+  */Homebrew/*) echo "In Homebrew, exitting" && exit;;
+esac
 trap "rm -f .git/tags.$$" EXIT
 ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --languages=-javascript,sql --exclude=log --exclude=angular/node_modules --exclude=*bower_components* --exclude=syntastic.log --exclude=doc --exclude=nohup.out --exclude=coverage --exclude=prototype --exclude=*coffee-script-source* --exclude=tmp --exclude=features --exclude=spec * $GEMDIR
 mv .git/tags.$$ .git/tags

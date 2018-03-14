@@ -45,3 +45,9 @@ then
   source ~/.grubhub_dev_setup.sh
 fi
 source ~/dotfiles/bashme.sh
+
+###-tns-completion-start-###
+if [ -f /Users/jogara/.tnsrc ]; then 
+    source /Users/jogara/.tnsrc 
+fi
+###-tns-completion-end-###

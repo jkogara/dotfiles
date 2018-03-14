@@ -80,5 +80,8 @@ function add_docs(){
   git add -f doc/*
 }
 export PATH=$PATH:$GRADLE_HOME/bin
+export PATH=$PATH:/Users/jogara/src/pest_pulse/flutter/bin
 export JAVA_HOME=$(/usr/libexec/java_home)
+export ANDROID_HOME=~/Library/Android/sdk/
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 source ~/.grubhub_dev.sh

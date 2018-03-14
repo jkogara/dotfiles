@@ -47,6 +47,7 @@ let g:Tex_ViewRule_pdf = 'open -a Preview'
 " see https://stackoverflow.com/questions/12650528/viewing-pdfs-with-vim-latex-suite-start-preview-shell-returned-127#comment30189856_12650683
 autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
 Bundle 'matze/vim-tex-fold'
+Bundle 'tweekmonster/startuptime.vim'
 
 " Typescript
 Plugin 'clausreinke/typescript-tools.vim'
@@ -59,16 +60,13 @@ Plugin 'rizzatti/dash.vim'
 
 " polyglot - multiple language syntax support
 Plugin 'othree/html5.vim'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'sheerun/vim-polyglot'
 
 " Elixir related
 Plugin 'avdgaag/vim-phoenix'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'posva/vim-vue'
-
-" Markdown support
-Plugin 'JamshedVesuna/vim-markdown-preview'
-let vim_markdown_preview_github=1
 
 let g:elm_format_autosave = 1
 
@@ -353,8 +351,6 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-
-let vim_markdown_preview_hotkey='<C-m>'
 
 if !exists("*WipeBuffersWithoutFiles")
   function! s:WipeBuffersWithoutFiles()
