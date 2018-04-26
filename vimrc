@@ -29,7 +29,7 @@ set numberwidth=5
 set nocompatible               " be iMproved
 filetype off "This need to be set before running bundle stuff
 set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=/Users/jogara/.vim/bundle/typescript-tools.vim/
+set rtp+=~/.vim/bundle/typescript-tools.vim/
 call vundle#begin()
 
 " let Vundle manage Vundle
@@ -39,6 +39,8 @@ Plugin 'gmarik/Vundle.vim'
 
 " Latex tools
 Plugin 'vim-latex/vim-latex'
+Plugin 'xuhdev/vim-latex-live-preview'
+let g:livepreview_previewer = 'open -a Preview'
 let g:Tex_TreatMacViewerAsUNIX = 1
 let g:Tex_ExecuteUNIXViewerInForeground = 1
 let g:Tex_ViewRule_ps = 'open -a Preview'
@@ -58,10 +60,17 @@ Plugin 'christoomey/vim-tmux-navigator'
 " Dash documentation
 Plugin 'rizzatti/dash.vim'
 
+" Dart support
+Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'natebosch/vim-lsc'
+" let g:lsc_server_commands = {'dart': 'dart_language_server'}
+
 " polyglot - multiple language syntax support
 Plugin 'othree/html5.vim'
 Plugin 'plasticboy/vim-markdown'
+
 Plugin 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['dart', 'markdown', 'ruby']
 
 " Elixir related
 Plugin 'avdgaag/vim-phoenix'
@@ -140,7 +149,7 @@ Plugin 'scrooloose/syntastic'
 let g:syntastic_javascript_syntax_checker = 'jshint'
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=0
-let g:syntastic_ruby_exec = "/Users/jogara/.rbenv/shims/ruby"
+let g:syntastic_ruby_exec = "~/.rbenv/shims/ruby"
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 let g:syntastic_elixir_checkers = ['elixir']
 let g:syntastic_enable_elixir_checker = 1
@@ -373,58 +382,10 @@ set spelllang=en_gb
 set complete+=kspell
 
 " Rust auto completition
-let g:racer_cmd = "/Users/jogara/.cargo/bin/racer"
+let g:racer_cmd = "~/.cargo/bin/racer"
 let $RUST_SRC_PATH="/usr/local/src/rust/src"
 
 augroup filetypedetect
     au BufRead,BufNewFile *.plist setfiletype xml
     " associate *.plist with xml filetype
 augroup END
-
-let g:rails_projections = {
-      \ "app/validators/*_validator.rb": {
-      \   "command": "validator",
-      \   "affinity": "model",
-      \   "test": "spec/validators/%s_spec.rb",
-      \   "related": "app/models/%s.rb",
-      \   "template": "class %SValidator < ActiveModel::Validator\nend"
-      \ },
-      \ "app/serializers/*_serializer.rb": {
-      \   "command": "serializer",
-      \   "affinity": "model",
-      \   "test": "spec/serializers/%s_spec.rb",
-      \   "related": "app/models/%s.rb",
-      \   "template": "class %SSerializer < Api::V1::BaseSerializer\nend"
-      \ },
-      \ "app/workers/*.rb": {
-      \   "command": "worker",
-      \   "test": "spec/workers/%s_spec.rb",
-      \   "template": "class %S\ninclude Sidekiq::Worker\nend"
-      \ },
-      \ "app/admin/*.rb": {
-      \   "command": "admin",
-      \   "affinity": "controller",
-      \   "test": "spec/controllers/admin/%ss_controller_spec.rb",
-      \   "related": "app/models/%s.rb"
-      \ },
-      \ "spec/factories/*.rb": {
-      \   "command": "factory",
-      \   "affinity": "model",
-      \   "related": "app/models/%s.rb",
-      \   "template": "FactoryGirl.define do\nfactory :%s do\nend\nend"
-      \ },
-      \ "app/decorators/*.rb": {
-      \   "command": "decorator",
-      \   "affinity": "model",
-      \   "related": "app/models/%s.rb",
-      \   "test": "spec/decorators/%s_spec.rb",
-      \   "template": "class %SDecorator < Draper::Decorator\n  delegate_all\nend"
-      \ },
-      \ "app/services/*.rb": {
-      \   "command": "service",
-      \   "affinity": "model",
-      \   "related": "app/models/%s.rb",
-      \   "test": "spec/services/%s_spec.rb",
-      \   "template": "module Services\nmodule %S\nend\nend"
-      \ }
-      \ }
