@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export PATH=/usr/local/Cellar/postgresql/bin/:$PATH
 # Path to the bash it configuration
 export BASH_IT=$HOME/.bash_it
 
@@ -47,7 +48,10 @@ fi
 source ~/dotfiles/bashme.sh
 
 ###-tns-completion-start-###
-if [ -f /Users/jogara/.tnsrc ]; then 
-    source /Users/jogara/.tnsrc 
+if [ -f /Users/jogara/.tnsrc ]; then
+    source /Users/jogara/.tnsrc
 fi
-###-tns-completion-end-###
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -16,88 +16,74 @@ set tw=120
 set diffopt+=vertical          " Always use a vertical diff
 
 "More useable timeouts for leaders etc.
+let mapleader="`"
 set timeout timeoutlen=3000 ttimeoutlen=100
 
 set viminfo^=!
 set anti enc=utf-8
-set guifont=Source\ Code\ Pro:h12
-set background=light
-set number
-set norelativenumber
-set numberwidth=5
 
 set nocompatible               " be iMproved
-filetype off "This need to be set before running bundle stuff
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.vim/bundle/typescript-tools.vim/
-call vundle#begin()
-
-" let Vundle manage Vundle
-" required!
-" Vundle
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " Latex tools
-Plugin 'vim-latex/vim-latex'
-Plugin 'xuhdev/vim-latex-live-preview'
+Plug 'vim-latex/vim-latex'
+Plug 'xuhdev/vim-latex-live-preview'
 let g:livepreview_previewer = 'open -a Preview'
 let g:Tex_TreatMacViewerAsUNIX = 1
 let g:Tex_ExecuteUNIXViewerInForeground = 1
 let g:Tex_ViewRule_ps = 'open -a Preview'
 let g:Tex_ViewRule_pdf = 'open -a Preview'
-" Required to get <leader>lv to work
-" see https://stackoverflow.com/questions/12650528/viewing-pdfs-with-vim-latex-suite-start-preview-shell-returned-127#comment30189856_12650683
 autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
-Bundle 'matze/vim-tex-fold'
-Bundle 'tweekmonster/startuptime.vim'
+Plug 'matze/vim-tex-fold'
+Plug 'tweekmonster/startuptime.vim'
 
-" Typescript
-Plugin 'clausreinke/typescript-tools.vim'
+Plug 'andymass/vim-matchup'
+" " Typescript
+Plug 'clausreinke/typescript-tools.vim'
 
-" TMUX
-Plugin 'christoomey/vim-tmux-navigator'
+" " Dart support
+Plug 'dart-lang/dart-vim-plugin'
 
-" Dash documentation
-Plugin 'rizzatti/dash.vim'
+Plug 'w0rp/ale'
+let b:ale_linters = {
+      \ 'javascript': ['eslint', 'prettier'],
+      \ 'jsx': ['eslint', 'prettier'],
+      \ 'dart': ['language_server'],
+      \ 'dockerfile': ['hadolint'],
+      \ 'ruby': ['reek', 'rubocop', 'ruby'] }
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\   'ruby': ['rubocop'],
+\}
+let g:ale_completion_enabled = 0
+let g:ale_fix_on_save = 1
+nmap <silent> <C-u> <Plug>(ale_previous_wrap)
+nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
-" Dart support
-Plugin 'dart-lang/dart-vim-plugin'
-Plugin 'natebosch/vim-lsc'
-" let g:lsc_server_commands = {'dart': 'dart_language_server'}
-
-" polyglot - multiple language syntax support
-Plugin 'othree/html5.vim'
-Plugin 'plasticboy/vim-markdown'
-
-Plugin 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['dart', 'markdown', 'ruby']
+set rtp+=/usr/local/opt/fzf
+Plug 'junegunn/fzf.vim'
+nnoremap <C-p> :<C-u>FZF<CR>
+Plug 'prabirshrestha/async.vim'
+Plug 'reisub0/hot-reload.vim'
+Plug 'othree/html5.vim'
+Plug 'plasticboy/vim-markdown'
 
 " Elixir related
-Plugin 'avdgaag/vim-phoenix'
-Plugin 'slashmili/alchemist.vim'
-Plugin 'posva/vim-vue'
+Plug 'avdgaag/vim-phoenix'
+Plug 'slashmili/alchemist.vim'
+Plug 'posva/vim-vue'
 
-let g:elm_format_autosave = 1
-
-Plugin 'hashivim/vim-terraform'
-
-Plugin 'dsawardekar/ember.vim'
-
-Plugin 'bruno-/vim-ruby-fold'
-Plugin 'artnez/vim-wipeout'
-Plugin 'FuzzyFinder'
-Plugin 'L9' "Required by FuzzyFinder
-Plugin 'auto-pairs'
-Plugin 'splitjoin.vim'
-Plugin 'Lokaltog/vim-easymotion'
-" let g:EasyMotion_do_mapping = 0
-" let g:EasyMotion_smartcase = 1
-" map <Leader>x <Plug>(easymotion-s2)
-" map <Leader>j <Plug>(easymotion-j)
-" map <Leader>k <Plug>(easymotion-k)
-Plugin 'Proj'
-Plugin 'Valloric/YouCompleteMe'
-" Plugin 'supertab'
+Plug 'bruno-/vim-ruby-fold'
+Plug 'vim-scripts/auto-pairs'
+Plug 'vim-scripts/splitjoin.vim'
+Plug 'vim-scripts/Proj'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -117,106 +103,82 @@ let g:ycm_semantic_triggers =  {
   \   'erlang' : [':'],
   \ }
 let g:ycm_filetype_specific_completion_to_disable = {
-      \   'tex': 1
+      \   'tex': 1,
       \ }
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 let g:gitgutter_eager = 1
 let g:gitgutter_realtime = 1
-Plugin 'lepture/vim-jinja'
-Plugin 'wting/cheetah.vim'
 
-Plugin 'gregsexton/gitv'
-Plugin 'skammer/vim-css-color.git'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'epmatsw/ag.vim.git'
-Plugin 'godlygeek/tabular'
-Plugin 'johnogara/vim-bundler'
-Plugin 'junkblocker/patchreview-vim'
-Plugin 'kana/vim-textobj-entire.git'
-Plugin 'kana/vim-textobj-user.git'
-Plugin 'kien/ctrlp.vim'
+Plug 'gregsexton/gitv'
+Plug 'ap/vim-css-color'
+Plug 'flazz/vim-colorschemes'
+Plug 'mhinz/vim-grepper'
+let g:grepper = {}
+let g:grepper.tools = ['grep', 'git', 'ag']
+" Search for the current word
+nnoremap <leader>f :Grepper -tool ag -cword -noprompt<cr>
+" Search for the current selection
+xmap gs <plug>(GrepperOperator)
+nmap gs <plug>(GrepperOperator)
+vmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
+
+Plug 'godlygeek/tabular'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
 let g:tern_map_keys=1
 let g:tern_show_arguement_hints='on_hold'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-textobj-rubyblock.git'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'rust-lang/rust.vim'
-Plugin 'racer-rust/vim-racer'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-let g:syntastic_javascript_syntax_checker = 'jshint'
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_auto_loc_list=0
-let g:syntastic_ruby_exec = "~/.rbenv/shims/ruby"
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-let g:syntastic_elixir_checkers = ['elixir']
-let g:syntastic_enable_elixir_checker = 1
-let g:syntastic_c_checkers = ['make', 'splint']
-let g:syntastic_html_tidy_ignore_errors=["proprietary attribute \"ng-"]
-let g:syntastic_aggregate_errors = 0
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol='✗'
-let g:elm_syntastic_show_warnings=1
-Plugin 'sjl/gundo.vim'
-Plugin 'skalnik/vim-vroom'
-Plugin 't9md/vim-ruby-xmpfilter.git'
-Plugin 'tpope/vim-commentary.git'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise.git'
-
-" fugitive related
-Plugin 'tpope/vim-fugitive.git'
-set diffopt+=vertical
-autocmd User fugitive
-   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-   \ nnoremap <buffer> .. :edit %:h<CR> |
-   \ endif
-
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
-" Status line
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'scrooloose/nerdtree'
+Plug 'sjl/gundo.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
-
-Plugin 'tpope/vim-rbenv.git'
-Plugin 'vim-git-log'
-Plugin 'dbakker/vim-lint'
-Plugin 'tpope/vim-haml.git'
-Plugin 'tpope/vim-rails.git'
-Plugin 'tpope/vim-projectionist.git'
-Plugin 'tpope/vim-rake.git'
-Plugin 'tpope/vim-repeat.git'
-Plugin 'tpope/vim-sensible.git'
-Plugin 'tpope/vim-surround.git'
-Plugin 'tpope/vim-tbone.git'
-Plugin 'tpope/vim-unimpaired.git'
-Plugin 'vim-scripts/ruby-matchit.git'
-Plugin 'vim-rooter'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+" fugitive related
+Plug 'tpope/vim-fugitive'
+set diffopt+=vertical
+autocmd BufReadPost fugitive://* set bufhidden=delete
+Plug 'tpope/vim-rbenv'
+Plug 'dbakker/vim-lint'
+Plug 'tpope/vim-haml'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-unimpaired'
 let g:rooter_patterns = ['Rakefile', '.git/']
 let g:rooter_use_lcd = 1
-Plugin 'tpope/vim-pathogen'
-call vundle#end()
+call plug#end()
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 highlight Pmenu ctermbg=238 gui=bold
 " search with Ag
-nmap <C-F> :Ag<space>
+nmap <C-F> :GrepperAg<space>
+nmap <C-D> :GrepperGit<space>
 inoremap kk <Esc>
-nmap <C-G> :FufBuffer<space>
-nnoremap <leader>v :vsplit<cr>  " Split pane vertically
+nmap <C-G> :Buffers<cr>
+nnoremap <leader>v :vsplit<cr>
 nnoremap <F5> :GundoToggle<CR>
 
-" shortcut for wrap word - vim surround
+" " shortcut for wrap word - vim surround
 nmap <leader>s ysiw
-" shortcut for wrap line - vim surround
+" " shortcut for wrap line - vim surround
 nmap <leader>l yss
 
 set clipboard=unnamed
+set clipboard=unnamedplus
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
@@ -295,8 +257,6 @@ autocmd BufRead,BufNewFile *.html.arb set filetype=ruby
 autocmd BufRead,BufNewFile *.arb set filetype=ruby
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
-let mapleader="'"
-
 map <C-n> :NERDTreeToggle<CR>
 
 " fast split window navigation
@@ -327,39 +287,23 @@ function! MakeSession()
   exe "bprevious"
 endfunction
 
-syntax on
-filetype plugin indent on
 set smartindent
-" set background=light
+colorscheme solarized8_light
 let g:solarized_contrast="high"
 let g:solarized_visibility="high"
-colorscheme solarized
+set guifont=Source\ Code\ Pro:h12
+" set background=dark
+set number
+set norelativenumber
+set numberwidth=5
 set scrolloff=3
 
-let g:syntastic_mode_map = { 'mode': 'passive',
-      \ 'active_filetypes': ['javascript', 'elm', 'elixir', 'rust', 'ruby', 'python', 'eruby', 'c'],
-      \ 'passive_filetypes': []
-      \ }
-nnoremap <Leader>e :SyntasticCheck<CR>
 nnoremap <Space> za
 
 source ~/dotfiles/vim/regexlist.vim
 set vb
 filetype plugin on
 au BufRead,BufNewFile *.ts        setlocal filetype=typescript
-
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  let g:ctrlp_custom_ignore = { 'dir': 'doc$\|_build$' }
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
 
 if !exists("*WipeBuffersWithoutFiles")
   function! s:WipeBuffersWithoutFiles()
@@ -380,12 +324,9 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd Filetype gitcommit setlocal spell
 set spelllang=en_gb
 set complete+=kspell
-
-" Rust auto completition
-let g:racer_cmd = "~/.cargo/bin/racer"
-let $RUST_SRC_PATH="/usr/local/src/rust/src"
+let g:loaded_matchit = 1
 
 augroup filetypedetect
-    au BufRead,BufNewFile *.plist setfiletype xml
     " associate *.plist with xml filetype
+    au BufRead,BufNewFile *.plist setfiletype xml
 augroup END
