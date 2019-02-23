@@ -133,7 +133,10 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'scrooloose/nerdtree'
-Plug 'sjl/gundo.vim'
+Plug 'simnalamburt/vim-mundo'
+let g:mundo_width = 80
+let g:mundo_preview_height = 40
+let g:mundo_right = 1
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
@@ -178,7 +181,6 @@ nmap <leader>s ysiw
 nmap <leader>l yss
 
 set clipboard=unnamed
-set clipboard=unnamedplus
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
@@ -324,7 +326,8 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd Filetype gitcommit setlocal spell
 set spelllang=en_gb
 set complete+=kspell
-let g:loaded_matchit = 1
+let g:matchup_enabled = 1
+let g:matchup_surround_enabled = 1
 
 augroup filetypedetect
     " associate *.plist with xml filetype
