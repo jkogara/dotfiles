@@ -14,6 +14,7 @@ set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
 set tw=120
 set diffopt+=vertical          " Always use a vertical diff
+set colorcolumn=120
 
 "More useable timeouts for leaders etc.
 let mapleader="`"
@@ -21,6 +22,25 @@ set timeout timeoutlen=3000 ttimeoutlen=100
 
 set viminfo^=!
 set anti enc=utf-8
+
+" Protect changes between writes. Default values of
+" updatecount (200 keystrokes) and updatetime
+" (4 seconds) are fine
+set swapfile
+set backup                     " Enable creation of backup file.
+set backupdir=~/.vim/backups// " Where backups will go.
+set directory=~/.vim/tmp//     " Where temporary files will go.
+
+" protect against crash-during-write
+set writebackup
+" but do not persist backup after successful write
+set nobackup
+" use rename-and-write-new method whenever safe
+set backupcopy=auto
+
+" persist the undo tree for each file
+set undofile
+set undodir^=~/.vim/undo//
 
 set nocompatible               " be iMproved
 call plug#begin('~/.vim/plugged')
@@ -42,19 +62,26 @@ autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
 Plug 'matze/vim-tex-fold'
 Plug 'tweekmonster/startuptime.vim'
 
-Plug 'andymass/vim-matchup'
 " " Typescript
 Plug 'clausreinke/typescript-tools.vim'
 
 " " Dart support
 Plug 'dart-lang/dart-vim-plugin'
+let dart_style_guide = 2
+let dart_format_on_save = 1
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
+let g:lsc_auto_map = v:true
+
+Plug 'thosakwe/vim-flutter'
 
 Plug 'w0rp/ale'
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
       \ 'jsx': ['eslint', 'prettier'],
-      \ 'dart': ['language_server'],
+      \ 'dart': ['/home/jkogara/.pub-cache/bin/dart_language_server'],
       \ 'dockerfile': ['hadolint'],
+      \ 'eruby': ['erubylint'],
       \ 'ruby': ['reek', 'rubocop', 'ruby'] }
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -63,17 +90,19 @@ let g:ale_fixers = {
 \}
 let g:ale_completion_enabled = 0
 let g:ale_fix_on_save = 1
+let g:ale_set_balloons = 0
 nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
-set rtp+=/usr/local/opt/fzf
+Plug 'shinglyu/vim-codespell'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 nnoremap <C-p> :<C-u>FZF<CR>
 Plug 'prabirshrestha/async.vim'
-Plug 'reisub0/hot-reload.vim'
 Plug 'othree/html5.vim'
-Plug 'plasticboy/vim-markdown'
-
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+let g:mkdp_auto_start = 0
 " Elixir related
 Plug 'avdgaag/vim-phoenix'
 Plug 'slashmili/alchemist.vim'
@@ -105,13 +134,12 @@ let g:ycm_semantic_triggers =  {
 let g:ycm_filetype_specific_completion_to_disable = {
       \   'tex': 1,
       \ }
-Plug 'airblade/vim-gitgutter'
-let g:gitgutter_eager = 1
-let g:gitgutter_realtime = 1
 
+Plug 'mhinz/vim-signify'
 Plug 'gregsexton/gitv'
 Plug 'ap/vim-css-color'
 Plug 'flazz/vim-colorschemes'
+Plug 'vim-scripts/CSApprox'
 Plug 'mhinz/vim-grepper'
 let g:grepper = {}
 let g:grepper.tools = ['grep', 'git', 'ag']
@@ -123,7 +151,6 @@ nmap gs <plug>(GrepperOperator)
 vmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
-Plug 'godlygeek/tabular'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
@@ -143,11 +170,10 @@ let g:airline#extensions#tabline#enabled = 1
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-endwise'
 " fugitive related
 Plug 'tpope/vim-fugitive'
-set diffopt+=vertical
-autocmd BufReadPost fugitive://* set bufhidden=delete
+" set diffopt+=vertical
+" autocmd BufReadPost fugitive://* set bufhidden=delete
 Plug 'tpope/vim-rbenv'
 Plug 'dbakker/vim-lint'
 Plug 'tpope/vim-haml'
@@ -159,6 +185,10 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-unimpaired'
+Plug 'andymass/vim-matchup'
+Plug 'tpope/vim-endwise'
+let g:matchup_enabled = 1
+let g:matchup_surround_enabled = 1
 let g:rooter_patterns = ['Rakefile', '.git/']
 let g:rooter_use_lcd = 1
 call plug#end()
@@ -168,13 +198,17 @@ autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 highlight Pmenu ctermbg=238 gui=bold
 " search with Ag
-nmap <C-F> :GrepperAg<space>
+nmap <C-S> :GrepperAg<space>
 nmap <C-D> :GrepperGit<space>
 inoremap kk <Esc>
 nmap <C-G> :Buffers<cr>
 nnoremap <leader>v :vsplit<cr>
 nnoremap <F5> :GundoToggle<CR>
 
+" pasting
+inoremap <C-v> <ESC>"+pa
+vnoremap <C-c> "+y
+vnoremap <C-d> "+d
 " " shortcut for wrap word - vim surround
 nmap <leader>s ysiw
 " " shortcut for wrap line - vim surround
@@ -185,7 +219,6 @@ highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
 set cursorline
-set colorcolumn=120
 set undodir^=~/.vim/undo
 set splitbelow
 set splitright
@@ -200,6 +233,7 @@ set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
+set shell=/usr/bin/bash
 
 set ts=2  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
@@ -218,10 +252,6 @@ set mat=5  " Bracket blinking.
 set nolist
 
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
-set backup                     " Enable creation of backup file.
-set backupdir=~/.vim/backups " Where backups will go.
-set directory=~/.vim/tmp     " Where temporary files will go.
-set noswapfile
 
 highlight Pmenu ctermbg=238 gui=bold
 
@@ -290,11 +320,11 @@ function! MakeSession()
 endfunction
 
 set smartindent
-colorscheme solarized8_light
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
-set guifont=Source\ Code\ Pro:h12
-" set background=dark
+
+" let g:solarized_contrast="high"
+" let g:solarized_visibility="high"
+set guifont=Source\ Code\ Pro\ Medium\ 10
+set background=dark
 set number
 set norelativenumber
 set numberwidth=5
@@ -326,10 +356,32 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd Filetype gitcommit setlocal spell
 set spelllang=en_gb
 set complete+=kspell
-let g:matchup_enabled = 1
-let g:matchup_surround_enabled = 1
+" Enable spell checking for rb and js files
+autocmd BufWritePre *.rb :Codespell
+autocmd BufWritePre *.js :Codespell
+
 
 augroup filetypedetect
     " associate *.plist with xml filetype
     au BufRead,BufNewFile *.plist setfiletype xml
 augroup END
+
+if has("gui_running")
+  colo solarized8_light_high
+  let g:airline_theme='solarized'
+else
+  set t_Co=256
+  colo  gruvbox
+  syntax enable
+  set background=dark
+  set t_Co=16
+  let &t_SI = "\<Esc>[6 q"
+  let &t_SR = "\<Esc>[4 q"
+  let &t_EI = "\<Esc>[2 q"
+endif
+set colorcolumn=120
+set noballooneval
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]node_modules$'
+  \ }

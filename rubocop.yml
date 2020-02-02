@@ -1,31 +1,28 @@
-Encoding:
-  Enabled: false
-
-LineLength:
+Metrics/LineLength:
   Max: 120
 
-TrailingBlankLines:
+Layout/TrailingBlankLines:
   Enabled: false
 
-MethodLength:
+Metrics/MethodLength:
   CountComments: false
   Max: 15
 
 # Avoid more than `Max` levels of nesting.
-BlockNesting:
+Metrics/BlockNesting:
   Max: 3
 
 # Align with the style guide.
-CollectionMethods:
+Style/CollectionMethods:
   PreferredMethods:
     collect:  'map'
     inject:   'reduce'
     find:     'detect'
     find_all: 'select'
 
-Documentation:
+Style/Documentation:
   Enabled: false
 
 # Don't require magic comment at thte top of every file
-Encoding:
+Style/Encoding:
   Enabled: false

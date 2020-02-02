@@ -1,7 +1,15 @@
 # Rails and ruby
 alias be='bundle exec'
 alias ber='bundle exec rspec'
-export PATH="/usr/local/Cellar/postgresql/bin/":$PATH
+alias vi=vim
+
+source /usr/share/bash-completion/bash_completion
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/jkogara/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/completion.bash.inc'; fi
+
 function kill_spring(){
   ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
 }
@@ -18,10 +26,11 @@ export BROWSER=Chrome
 # Git related
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 function clean_merged_branches(){
-  for branch in `git branch --merged | egrep -v "\*|master" | egrep -v "\*|ready_to_go"`;
-  do
-    git branch -D $branch;
-  done;
+  for k in $(git branch | sed /\*/d | egrep -v master); do
+    if [[ ! $(git log -1 --since='2 weeks ago' -s $k) ]]; then
+      git branch -D $k
+    fi
+  done
   git remote prune origin
 }
 
@@ -37,7 +46,7 @@ function prompt_command() {
   PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
 }
 
-PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command';
+PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a';
 
 # Show colours for directores and files
 export CLICOLOR=1
@@ -50,10 +59,6 @@ if [ -f /usr/local/share/bash-completion/bash_completion ]; then
   . /usr/local/share/bash-completion/bash_completion
 fi
 
-if [ -n "`command -v brew`" ] && [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
-  source `brew --prefix`/etc/bash_completion.d/vagrant
-fi
-
 # Misc,
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 export LC_ALL=en_US.UTF-8
@@ -64,48 +69,26 @@ export GOPATH=/Users/jogara/gopath/
 export GRADLE_HOME=/opt/gradle-2.2.1
 export PATH=$PATH:$GRADLE_HOME/bin
 
-# use core utils instead of the shitty OSX ones
-alias man='_() { echo $1; man -M $(brew --prefix)/opt/coreutils/libexec/gnuman $1 1>/dev/null 2>&1;  if [ "$?" -eq 0 ]; then man -M $(brew --prefix)/opt/coreutils/libexec/gnuman $1; else man $1; fi }; _'
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-
-# Add homebrew options
-PATH=/usr/local/sbin:/usr/local/bin:$PATH
+for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*; do source $file; done
 
 # Avoid duplicates in history
-export HISTCONTROL=ignoredups:erasedups
+export HISTCONTROL=ignoreboth:erasedups
+export HISTTIMEFORMAT="%h %d %H:%M:%S "
+export HISTSIZE=10000
+export HISTIGNORE="history"
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 source ~/.all_elixir_auto_complete.bash
 eval "$(rbenv init -)"
+eval `dircolors /home/jkogara/.dir_colors/dircolors`
 source ~/.secrets
-
-function add_docs(){
-  nohup aws s3 sync doc s3://swisspair-docs/ > /dev/null 2>&1  &
-  git add -u
-  git add -f doc/*
-}
-export PATH=$PATH:$GRADLE_HOME/bin
-export PATH=$PATH:/Users/jogara/src/pest_pulse/flutter/bin
-export JAVA_HOME=$(/usr/libexec/java_home)
-export ANDROID_HOME=~/Library/Android/sdk/
-export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/lib/google-cloud-sdk/path.bash.inc' ]; then source '/usr/local/lib/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/lib/google-cloud-sdk/completion.bash.inc' ]; then source '/usr/local/lib/google-cloud-sdk/completion.bash.inc'; fi
 
 export PATH=./bin:$PATH
 # Dart support
 export PATH="$PATH":"~/.pub-cache/bin"
 
-source ~/.kube_helpers.sh
-source ~/.terraform_env.sh
-
 export _Z_DATA=~/.z_cache
 export _Z_NO_PROMPT_COMMAND=no_prompt
-export PATH="/usr/local/opt/node@8/bin:$PATH"
 
 function rails_clean_g() {
   bundle exec rails g "$@" --no-javascripts --no-stylesheets --no-helper --no-assets
@@ -121,4 +104,17 @@ function rails_clean_g() {
 } >> "/dev/null" 2>&1
 
 export GOOGLE_PLACES_API_KEY=AIzaSyBJYn-5rOHssNIDVxeEAg9UZ2biMudrsJI
-export PATH=$PATH:/usr/local/Cellar/postgresql@9.6/9.6.10_1/bin
+
+export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/
+export NGROK_SUBDOMAIN=johnpestpulse
+export NGROK_REGION=eu
+PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/cache/dart-sdk/bin
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH:/usr/pgsql-9.6/bin/"
+export PATH="$PATH:/home/jkogara/Android/Sdk/platform-tools/:/usr/lib64/qt5/bin/:/var/lib/snapd/snap/bin"
+export PATH="$PATH:/opt/RubyMine-2019.2.3/bin/:/var/lib/snapd/snap/google-cloud-sdk/current/bin"
+export PARALLEL_TEST_PROCESSORS=`cat /proc/cpuinfo  | grep processor | wc -l`
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+setxkbmap -option ctrl:nocaps
+stty -ixon
