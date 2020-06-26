@@ -2,6 +2,8 @@
 alias be='bundle exec'
 alias ber='bundle exec rspec'
 alias vi=vim
+alias cl=clear
+alias rm="rm -i "
 
 source /usr/share/bash-completion/bash_completion
 # The next line updates PATH for the Google Cloud SDK.
@@ -78,6 +80,10 @@ export HISTSIZE=10000
 export HISTIGNORE="history"
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
+# When using fc commands (e.g. !! !? !) require confirmation before execution
+shopt -s histverify
+shopt -s cdspell
+shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
 eval "$(rbenv init -)"
 eval `dircolors /home/jkogara/.dir_colors/dircolors`
@@ -118,3 +124,20 @@ eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 setxkbmap -option ctrl:nocaps
 stty -ixon
+# android home
+export ANDROID_HOME=/home/jkogara/Android/Sdk
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/tools/bin:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+
+# android sdk root
+export ANDROID_SDK_ROOT=/usr/lib/Android
+export PATH=$ANDROID_SDK_ROOT:$PATH
+
+## Gradle
+export GRADLE_HOME=/opt/gradle-5.1.1
+export PATH=$GRADLE_HOME/bin:$PATH
+
+# export CLOUDSDK_COMPUTE_REGION=europe-west1
+export CLOUDSDK_COMPUTE_ZONE=europe-west1-b
+export CLOUDSDK_CONTAINER_CLUSTER=pestpulse-production

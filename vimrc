@@ -78,6 +78,8 @@ Plug 'thosakwe/vim-flutter'
 Plug 'w0rp/ale'
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
+      \ 'css': ['prettier'],
+      \ 'scss': ['prettier'],
       \ 'jsx': ['eslint', 'prettier'],
       \ 'dart': ['/home/jkogara/.pub-cache/bin/dart_language_server'],
       \ 'dockerfile': ['hadolint'],
@@ -86,6 +88,8 @@ let b:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['prettier', 'eslint'],
+\   'css': ['prettier'],
+\   'scss': ['prettier'],
 \   'ruby': ['rubocop'],
 \}
 let g:ale_completion_enabled = 0
@@ -103,6 +107,7 @@ Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
 " Elixir related
 Plug 'avdgaag/vim-phoenix'
 Plug 'slashmili/alchemist.vim'
