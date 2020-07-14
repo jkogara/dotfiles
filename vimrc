@@ -14,10 +14,11 @@ set tags+=.git/tags
 set ff=unix                    " Convert line endings to unix
 set tw=120
 set diffopt+=vertical          " Always use a vertical diff
-set colorcolumn=120
 
 "More useable timeouts for leaders etc.
-let mapleader="`"
+nnoremap ' <Nop>
+let mapleader="'"
+let maplocalleader="'"
 set timeout timeoutlen=3000 ttimeoutlen=100
 
 set viminfo^=!
@@ -70,9 +71,7 @@ Plug 'dart-lang/dart-vim-plugin'
 let dart_style_guide = 2
 let dart_format_on_save = 1
 Plug 'natebosch/vim-lsc'
-Plug 'natebosch/vim-lsc-dart'
-let g:lsc_auto_map = v:true
-
+let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
 Plug 'thosakwe/vim-flutter'
 
 Plug 'w0rp/ale'
@@ -100,6 +99,9 @@ nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
 Plug 'shinglyu/vim-codespell'
 
+" set rtp+=/usr/local/opt/fzf
+Plug 'shinglyu/vim-codespell'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 nnoremap <C-p> :<C-u>FZF<CR>
@@ -107,7 +109,6 @@ Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
 " Elixir related
 Plug 'avdgaag/vim-phoenix'
 Plug 'slashmili/alchemist.vim'
@@ -148,8 +149,6 @@ Plug 'vim-scripts/CSApprox'
 Plug 'mhinz/vim-grepper'
 let g:grepper = {}
 let g:grepper.tools = ['grep', 'git', 'ag']
-" Search for the current word
-nnoremap <leader>f :Grepper -tool ag -cword -noprompt<cr>
 " Search for the current selection
 xmap gs <plug>(GrepperOperator)
 nmap gs <plug>(GrepperOperator)
@@ -179,8 +178,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 " set diffopt+=vertical
 " autocmd BufReadPost fugitive://* set bufhidden=delete
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-rbenv'
-Plug 'dbakker/vim-lint'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-projectionist'
@@ -201,24 +200,17 @@ call plug#end()
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
-highlight Pmenu ctermbg=238 gui=bold
 " search with Ag
 nmap <C-S> :GrepperAg<space>
 nmap <C-D> :GrepperGit<space>
 inoremap kk <Esc>
 nmap <C-G> :Buffers<cr>
-nnoremap <leader>v :vsplit<cr>
 nnoremap <F5> :GundoToggle<CR>
 
 " pasting
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
-" " shortcut for wrap word - vim surround
-nmap <leader>s ysiw
-" " shortcut for wrap line - vim surround
-nmap <leader>l yss
-
 set clipboard=unnamed
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
@@ -305,6 +297,18 @@ noremap <C-l>  <C-w>l
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
+" Search for the current word
+nnoremap <leader>f :Grepper -tool ag -cword -noprompt<cr>
+nnoremap <leader>v :vsplit<cr>
+nnoremap <leader>h :split<cr>
+"shortcut for wrap word - vim surround
+nmap <leader>s ysiw
+" shortcut for wrap line - vim surround
+nmap <leader>l yss
+
+" write all open buffers
+nmap <leader>w :wa<cr>
+
 nnoremap <leader>1 :call MakeSession()<cr>
 nnoremap <leader><leader>1 :call RestoreSession()<cr>
 
@@ -328,7 +332,8 @@ set smartindent
 
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="high"
-set guifont=Source\ Code\ Pro\ Medium\ 10
+" set guifont=Source\ Code\ Pro\ Medium\ 10
+set guifont=JetBrains\ Mono\ Regular
 set background=dark
 set number
 set norelativenumber
@@ -340,7 +345,7 @@ nnoremap <Space> za
 source ~/dotfiles/vim/regexlist.vim
 set vb
 filetype plugin on
-au BufRead,BufNewFile *.ts        setlocal filetype=typescript
+au BufRead,BufNewFile *.ts setlocal filetype=typescript
 
 if !exists("*WipeBuffersWithoutFiles")
   function! s:WipeBuffersWithoutFiles()
@@ -384,7 +389,6 @@ else
   let &t_SR = "\<Esc>[4 q"
   let &t_EI = "\<Esc>[2 q"
 endif
-set colorcolumn=120
 set noballooneval
 
 let g:ctrlp_custom_ignore = {

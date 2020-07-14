@@ -1,0 +1,3 @@
+#!/bin/bash
+command cd "$1"
+pwd > ~/.terminal_directory
