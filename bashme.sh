@@ -77,6 +77,8 @@ shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
 eval "$(rbenv init -)"
 eval `dircolors /home/jkogara/.dir_colors/dircolors`
+export GO111MODULE=on
+export GOPATH=$HOME/go
 source ~/.secrets
 
 export _Z_DATA=~/.z_cache

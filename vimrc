@@ -19,7 +19,7 @@ set diffopt+=vertical          " Always use a vertical diff
 nnoremap ' <Nop>
 let mapleader="'"
 let maplocalleader="'"
-set timeout timeoutlen=3000 ttimeoutlen=100
+set timeout timeoutlen=3000 ttimeoutlen=500
 
 set viminfo^=!
 set anti enc=utf-8
@@ -73,6 +73,8 @@ let dart_format_on_save = 1
 Plug 'natebosch/vim-lsc'
 let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
 Plug 'thosakwe/vim-flutter'
+
+Plug 'fatih/vim-go'
 
 Plug 'w0rp/ale'
 let b:ale_linters = {
