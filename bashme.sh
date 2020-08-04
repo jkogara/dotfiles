@@ -128,7 +128,6 @@ if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jk
 
 export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/
 
-setxkbmap -option ctrl:nocaps
 stty -ixon
 # android home
 

@@ -73,6 +73,8 @@ let dart_format_on_save = 1
 Plug 'natebosch/vim-lsc'
 let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
 Plug 'thosakwe/vim-flutter'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
 Plug 'fatih/vim-go'
 
@@ -84,16 +86,18 @@ let b:ale_linters = {
       \ 'jsx': ['eslint', 'prettier'],
       \ 'dart': ['/home/jkogara/.pub-cache/bin/dart_language_server'],
       \ 'dockerfile': ['hadolint'],
+      \ 'elixir': ['elixir-ls'],
       \ 'eruby': ['erubylint'],
       \ 'ruby': ['reek', 'rubocop', 'ruby'] }
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['prettier', 'eslint'],
 \   'css': ['prettier'],
+\   'elixir': ['mix_format'],
 \   'scss': ['prettier'],
 \   'ruby': ['rubocop'],
 \}
-let g:ale_completion_enabled = 0
+let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_set_balloons = 0
 nmap <silent> <C-u> <Plug>(ale_previous_wrap)
@@ -112,8 +116,8 @@ Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 let g:mkdp_auto_start = 0
 " Elixir related
+Plug 'elixir-editors/vim-elixir'
 Plug 'avdgaag/vim-phoenix'
-Plug 'slashmili/alchemist.vim'
 Plug 'posva/vim-vue'
 
 Plug 'bruno-/vim-ruby-fold'
@@ -249,6 +253,7 @@ set showmatch  " Show matching brackets.
 set showcmd
 set mat=5  " Bracket blinking.
 set nolist
+set colorcolumn=120
 
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 
@@ -335,7 +340,7 @@ set smartindent
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="high"
 " set guifont=Source\ Code\ Pro\ Medium\ 10
-set guifont=JetBrains\ Mono\ Regular
+set guifont=JetBrains\ Mono\ Regular\ 10
 set background=dark
 set number
 set norelativenumber
