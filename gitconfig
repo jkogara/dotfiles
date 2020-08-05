@@ -3,8 +3,8 @@
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore-rab
 [user]
-	name = John O'Gara
-	email = me@johnogara.com
+	name = jkogara
+	email = johnogara@gmail.com
 	signingkey = 47B158BF9D9096A3
 [commit]
 	template = /home/jkogara/.stCommitMsg

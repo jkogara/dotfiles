@@ -261,6 +261,7 @@ highlight Pmenu ctermbg=238 gui=bold
 
 set nowrap  " Line wrapping off
 au BufNewFile,BufFilePre,BufRead *.tex set filetype=tex tw=120 fo+=t colorcolumn=120
+set colorcolumn=120
 
 " Alias commonly mistyped write and quit command
 if !(exists(":WQ"))

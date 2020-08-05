@@ -128,8 +128,9 @@ if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jk
 
 export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/
 
+# Commenting this as it resets the compose key, other tweaks have disabled caps globally
+# setxkbmap -option ctrl:nocaps
 stty -ixon
-# android home
 
 # export CLOUDSDK_COMPUTE_REGION=europe-west1
 export CLOUDSDK_COMPUTE_ZONE=europe-west1-b
