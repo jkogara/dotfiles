@@ -37,6 +37,9 @@ set backup                     " Enable creation of backup file.
 set backupdir=~/.vim/backups// " Where backups will go.
 set directory=~/.vim/tmp//     " Where temporary files will go.
 
+autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
+autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
+
 " protect against crash-during-write
 set writebackup
 " but do not persist backup after successful write
@@ -119,7 +122,7 @@ hi link ALEWarning SyntasticWarning
 hi link ALEErrorSign SyntasticErrorSign
 hi link ALEWarningSign SyntasticWarningSign
 " Enable completion with LSP
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:ale_completion_delay = 0
 let g:ale_fix_on_save = 1
 let g:ale_set_ballons = 1
@@ -150,32 +153,30 @@ Plug 'bruno-/vim-ruby-fold'
 Plug 'vim-scripts/auto-pairs'
 Plug 'vim-scripts/splitjoin.vim'
 Plug 'vim-scripts/Proj'
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-" let g:ycm_collect_identifiers_from_tags_files = 1
-" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-" let g:ycm_seed_identifiers_with_syntax = 1
-" let g:ycm_confirm_extra_conf = 0
-" let g:ycm_semantic_triggers =  {
-"   \   'c' : ['->', '.'],
-"   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-"   \             're!\[.*\]\s'],
-"   \   'ocaml' : ['.', '#'],
-"   \   'cpp,objcpp' : ['->', '.', '::'],
-"   \   'perl' : ['->'],
-"   \   'php' : ['->', '::'],
-"   \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-"   \   'ruby' : ['.', '::'],
-"   \   'lua' : ['.', ':'],
-"   \   'elm' : ['.'],
-"   \   'erlang' : [':'],
-"   \ }
-" let g:ycm_filetype_specific_completion_to_disable = {
-"       \ 'tex': 1,
-"       \ 'rust': 1,
-"       \ }
-" let g:ycm_filetype_blacklist = {
-"       \ 'rust': 1,
-"       \ }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'elm' : ['.'],
+  \   'erlang' : [':'],
+  \ }
+let g:ycm_filetype_specific_completion_to_disable = {
+      \ 'tex': 1,
+      \ }
+let g:ycm_filetype_blacklist = {
+      \ }
 
 
 Plug 'mhinz/vim-signify'

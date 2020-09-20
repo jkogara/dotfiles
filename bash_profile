@@ -39,8 +39,8 @@ export SCM_CHECK=true
 source $BASH_IT/bash_it.sh
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 
-
-# IPython Notebook Spark integration, added by aws.sh
-export SPARK_HOME='/usr/local/Cellar/apache-spark/1.4.1'
 # Appending pyspark-shell is needed for Spark 1.4+
 export PYSPARK_SUBMIT_ARGS='--master local[2] pyspark-shell'
+
+export PATH="$HOME/.cargo/bin:$PATH"
+export RUST_SRC_PATH=`rustc --print sysroot`/lib/rustlib/src/rust/src
