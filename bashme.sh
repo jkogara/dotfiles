@@ -4,7 +4,8 @@ alias ber='bundle exec rspec'
 alias cd='source ~/.cd_extend'
 alias cl=clear
 alias rm="rm -i "
-alias vi=vim
+alias vi=vimx
+alias vim=vimx
 
 source /usr/share/bash-completion/bash_completion
 
@@ -26,7 +27,7 @@ export BROWSER=Chrome
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 function clean_merged_branches(){
   for k in $(git branch | sed /\*/d | egrep -v master); do
-    if [[ ! $(git log -1 --since='2 weeks ago' -s $k) ]]; then
+    if [[ ! $(git log -1 --since='1 weeks ago' -s $k) ]]; then
       git branch -D $k
     fi
   done
@@ -59,7 +60,7 @@ if [ -f /usr/local/share/bash-completion/bash_completion ]; then
 fi
 
 # Misc,
-alias updatedb='sudo /usr/libexec/locate.updatedb'
+# alias updatedb='sudo /usr/libexec/locate.updatedb'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -144,3 +145,6 @@ source "$fasd_cache"
 unset fasd_cache
 
 cd `cat ~/.terminal_directory`
+export DISABLE_SPRING=true
+source $HOME/.cargo/env
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'

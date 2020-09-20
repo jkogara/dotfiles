@@ -10,7 +10,12 @@ set ignorecase                 " self explanitory
 set smartcase                  " Match case if the search pattern has uppercase
 set hidden                     " Don't force non-visible buffers to be written
 set showmode                   " show mode
+set ttymouse=sgr
+set balloondelay=250
+set ballooneval
+set balloonevalterm
 set tags+=.git/tags
+set tags+=rusty-tags.vi
 set ff=unix                    " Convert line endings to unix
 set tw=120
 set diffopt+=vertical          " Always use a vertical diff
@@ -22,7 +27,7 @@ let maplocalleader="'"
 set timeout timeoutlen=3000 ttimeoutlen=500
 
 set viminfo^=!
-set anti enc=utf-8
+set enc=utf-8
 
 " Protect changes between writes. Default values of
 " updatecount (200 keystrokes) and updatetime
@@ -73,12 +78,22 @@ let dart_format_on_save = 1
 Plug 'natebosch/vim-lsc'
 let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
 Plug 'thosakwe/vim-flutter'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+
+Plug 'rust-lang/rust.vim'
+let g:rustfmt_autosave = 1
 
 Plug 'fatih/vim-go'
 
-Plug 'w0rp/ale'
+set omnifunc=ale#completion#OmniFunc
+let g:ale_rust_rls_config = {
+	\ 'rust': {
+		\ 'all_targets': 1,
+		\ 'build_on_save': 1,
+		\ 'clippy_preference': 'on'
+	\ }
+	\ }
+let g:ale_rust_rls_toolchain = ''
+
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
       \ 'css': ['prettier'],
@@ -86,6 +101,7 @@ let b:ale_linters = {
       \ 'jsx': ['eslint', 'prettier'],
       \ 'dart': ['/home/jkogara/.pub-cache/bin/dart_language_server'],
       \ 'dockerfile': ['hadolint'],
+      \ 'rust': ['analyzer'],
       \ 'elixir': ['elixir-ls'],
       \ 'eruby': ['erubylint'],
       \ 'ruby': ['reek', 'rubocop', 'ruby'] }
@@ -93,30 +109,40 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['prettier', 'eslint'],
 \   'css': ['prettier'],
+\   'rust': ['rustfmt'],
 \   'elixir': ['mix_format'],
 \   'scss': ['prettier'],
 \   'ruby': ['rubocop'],
 \}
+hi link ALEError SyntasticError
+hi link ALEWarning SyntasticWarning
+hi link ALEErrorSign SyntasticErrorSign
+hi link ALEWarningSign SyntasticWarningSign
+" Enable completion with LSP
 let g:ale_completion_enabled = 1
+let g:ale_completion_delay = 0
 let g:ale_fix_on_save = 1
-let g:ale_set_balloons = 0
+let g:ale_set_ballons = 1
+Plug 'dense-analysis/ale'
+
 nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
+set rtp+=/home/linuxbrew/.linuxbrew/bin/fzf
 Plug 'shinglyu/vim-codespell'
-
-" set rtp+=/usr/local/opt/fzf
-Plug 'shinglyu/vim-codespell'
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'vim-scripts/vimomni', {'for': ['vim']}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 nnoremap <C-p> :<C-u>FZF<CR>
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 let g:mkdp_auto_start = 0
 " Elixir related
 Plug 'elixir-editors/vim-elixir'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 Plug 'avdgaag/vim-phoenix'
 Plug 'posva/vim-vue'
 
@@ -124,34 +150,38 @@ Plug 'bruno-/vim-ruby-fold'
 Plug 'vim-scripts/auto-pairs'
 Plug 'vim-scripts/splitjoin.vim'
 Plug 'vim-scripts/Proj'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_semantic_triggers =  {
-  \   'c' : ['->', '.'],
-  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-  \             're!\[.*\]\s'],
-  \   'ocaml' : ['.', '#'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
-  \   'perl' : ['->'],
-  \   'php' : ['->', '::'],
-  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-  \   'ruby' : ['.', '::'],
-  \   'lua' : ['.', ':'],
-  \   'elm' : ['.'],
-  \   'erlang' : [':'],
-  \ }
-let g:ycm_filetype_specific_completion_to_disable = {
-      \   'tex': 1,
-      \ }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" let g:ycm_collect_identifiers_from_tags_files = 1
+" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+" let g:ycm_seed_identifiers_with_syntax = 1
+" let g:ycm_confirm_extra_conf = 0
+" let g:ycm_semantic_triggers =  {
+"   \   'c' : ['->', '.'],
+"   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+"   \             're!\[.*\]\s'],
+"   \   'ocaml' : ['.', '#'],
+"   \   'cpp,objcpp' : ['->', '.', '::'],
+"   \   'perl' : ['->'],
+"   \   'php' : ['->', '::'],
+"   \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+"   \   'ruby' : ['.', '::'],
+"   \   'lua' : ['.', ':'],
+"   \   'elm' : ['.'],
+"   \   'erlang' : [':'],
+"   \ }
+" let g:ycm_filetype_specific_completion_to_disable = {
+"       \ 'tex': 1,
+"       \ 'rust': 1,
+"       \ }
+" let g:ycm_filetype_blacklist = {
+"       \ 'rust': 1,
+"       \ }
+
 
 Plug 'mhinz/vim-signify'
 Plug 'gregsexton/gitv'
 Plug 'ap/vim-css-color'
 Plug 'flazz/vim-colorschemes'
-Plug 'vim-scripts/CSApprox'
 Plug 'mhinz/vim-grepper'
 let g:grepper = {}
 let g:grepper.tools = ['grep', 'git', 'ag']
@@ -177,13 +207,14 @@ let g:mundo_right = 1
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 " fugitive related
 Plug 'tpope/vim-fugitive'
-" set diffopt+=vertical
-" autocmd BufReadPost fugitive://* set bufhidden=delete
+set diffopt+=vertical
+autocmd BufReadPost fugitive://* set bufhidden=delete
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-haml'
@@ -211,13 +242,15 @@ nmap <C-S> :GrepperAg<space>
 nmap <C-D> :GrepperGit<space>
 inoremap kk <Esc>
 nmap <C-G> :Buffers<cr>
+" nmap <C-G> :CtrlPBuffer<cr>
 nnoremap <F5> :GundoToggle<CR>
 
 " pasting
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
-set clipboard=unnamed
+set clipboard+=unnamedplus
+" set mouse=r
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
@@ -295,6 +328,7 @@ autocmd BufRead,BufNewFile *.arb set filetype=ruby
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['node_modules[[dir]]']
 
 " fast split window navigation
 noremap <C-h>  <C-w>h
@@ -379,6 +413,7 @@ autocmd BufWritePre *.rb :Codespell
 autocmd BufWritePre *.js :Codespell
 
 
+
 augroup filetypedetect
     " associate *.plist with xml filetype
     au BufRead,BufNewFile *.plist setfiletype xml
@@ -388,17 +423,17 @@ if has("gui_running")
   colo solarized8_light_high
   let g:airline_theme='solarized'
 else
-  set t_Co=256
-  colo  gruvbox
+  colo solarized8_light_high
+  let g:airline_theme='solarized'
   syntax enable
-  set background=dark
   set t_Co=16
   let &t_SI = "\<Esc>[6 q"
   let &t_SR = "\<Esc>[4 q"
   let &t_EI = "\<Esc>[2 q"
 endif
-set noballooneval
-
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]node_modules$'
+  \ 'dir':  '\v([\/]node_modules$|\.local)'
   \ }
