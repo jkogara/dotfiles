@@ -96,6 +96,7 @@ let g:ale_rust_rls_config = {
 	\ }
 	\ }
 let g:ale_rust_rls_toolchain = ''
+let g:ale_rust_cargo_use_clippy = 1
 
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
@@ -152,12 +153,15 @@ Plug 'posva/vim-vue'
 Plug 'bruno-/vim-ruby-fold'
 Plug 'vim-scripts/auto-pairs'
 Plug 'vim-scripts/splitjoin.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-scripts/Proj'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
+let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
@@ -180,6 +184,7 @@ let g:ycm_filetype_blacklist = {
 
 
 Plug 'mhinz/vim-signify'
+Plug 'hashivim/vim-terraform'
 Plug 'gregsexton/gitv'
 Plug 'ap/vim-css-color'
 Plug 'flazz/vim-colorschemes'
@@ -233,6 +238,8 @@ let g:matchup_enabled = 1
 let g:matchup_surround_enabled = 1
 let g:rooter_patterns = ['Rakefile', '.git/']
 let g:rooter_use_lcd = 1
+
+Plug 'adelarsq/vim-matchit'
 call plug#end()
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee

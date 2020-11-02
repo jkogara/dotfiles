@@ -1,7 +1,8 @@
 # Rails and ruby
 alias be='bundle exec'
 alias ber='bundle exec rspec'
-alias cd='source ~/.cd_extend'
+# alias cd='source ~/.cd_extend'
+# cd `cat ~/.terminal_directory`
 alias cl=clear
 alias rm="rm -i "
 alias vi=vimx
@@ -33,6 +34,11 @@ function clean_merged_branches(){
   done
   git remote prune origin
 }
+
+function kill_spring(){
+  ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
+}
+
 
 if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
   source ~/.gnupg/.gpg-agent-info
@@ -92,7 +98,6 @@ function rails_clean_g() {
 export PARALLEL_TEST_PROCESSORS=`cat /proc/cpuinfo  | grep processor | wc -l`
 
 # Java - gradle
-export GOPATH=/Users/jogara/gopath/
 export GRADLE_HOME=/opt/gradle-2.2.1
 export PATH=$PATH:$GRADLE_HOME/bin
 
@@ -127,7 +132,7 @@ if [ -f '/home/jkogara/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/completion.bash.inc'; fi
 
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/
+export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin
 
 # Commenting this as it resets the compose key, other tweaks have disabled caps globally
 # setxkbmap -option ctrl:nocaps
@@ -144,7 +149,6 @@ fi
 source "$fasd_cache"
 unset fasd_cache
 
-cd `cat ~/.terminal_directory`
 export DISABLE_SPRING=true
 source $HOME/.cargo/env
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
