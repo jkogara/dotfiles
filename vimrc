@@ -86,6 +86,7 @@ Plug 'rust-lang/rust.vim'
 let g:rustfmt_autosave = 1
 
 Plug 'fatih/vim-go'
+Plug 'ruanyl/vim-gh-line'
 
 set omnifunc=ale#completion#OmniFunc
 let g:ale_rust_rls_config = {
