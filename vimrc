@@ -88,7 +88,7 @@ let g:rustfmt_autosave = 1
 Plug 'fatih/vim-go'
 Plug 'ruanyl/vim-gh-line'
 
-set omnifunc=ale#completion#OmniFunc
+" set omnifunc=ale#completion#OmniFunc
 let g:ale_rust_rls_config = {
 	\ 'rust': {
 		\ 'all_targets': 1,
@@ -134,7 +134,7 @@ nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
 set rtp+=/home/linuxbrew/.linuxbrew/bin/fzf
-Plug 'shinglyu/vim-codespell'
+" Plug 'shinglyu/vim-codespell'
 Plug 'vim-scripts/vimomni', {'for': ['vim']}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -148,6 +148,17 @@ let g:mkdp_auto_start = 0
 Plug 'elixir-editors/vim-elixir'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 Plug 'avdgaag/vim-phoenix'
 Plug 'posva/vim-vue'
 
@@ -157,31 +168,7 @@ Plug 'vim-scripts/splitjoin.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-scripts/Proj'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_confirm_extra_conf = 0
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
-let g:ycm_semantic_triggers =  {
-  \   'c' : ['->', '.'],
-  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-  \             're!\[.*\]\s'],
-  \   'ocaml' : ['.', '#'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
-  \   'perl' : ['->'],
-  \   'php' : ['->', '::'],
-  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-  \   'ruby' : ['.', '::'],
-  \   'lua' : ['.', ':'],
-  \   'elm' : ['.'],
-  \   'erlang' : [':'],
-  \ }
-let g:ycm_filetype_specific_completion_to_disable = {
-      \ 'tex': 1,
-      \ }
-let g:ycm_filetype_blacklist = {
-      \ }
+let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-solargraph']
 
 
 Plug 'mhinz/vim-signify'
@@ -418,8 +405,8 @@ autocmd Filetype gitcommit setlocal spell
 set spelllang=en_gb
 set complete+=kspell
 " Enable spell checking for rb and js files
-autocmd BufWritePre *.rb :Codespell
-autocmd BufWritePre *.js :Codespell
+" autocmd BufWritePre *.rb :Codespell
+" autocmd BufWritePre *.js :Codespell
 
 
 
@@ -476,3 +463,5 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
+set hlsearch
+hi Search ctermbg=LightYellow

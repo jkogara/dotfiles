@@ -42,5 +42,7 @@ source $BASH_IT/bash_it.sh
 # Appending pyspark-shell is needed for Spark 1.4+
 export PYSPARK_SUBMIT_ARGS='--master local[2] pyspark-shell'
 
-export PATH="$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH=`rustc --print sysroot`/lib/rustlib/src/rust/src
+source "$HOME/.cargo/env"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

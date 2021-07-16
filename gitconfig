@@ -16,6 +16,7 @@
 	ci = commit
 	st = status -sb
   pushf = push --force-with-lease
+  comf = commit --no-edit --no-verify --amend
   graph = log --graph --oneline --decorate=short --branches='*'
 	df = diff --color-words='[^[:space:]]'
 	sh = show --color-words='[^[:space:]]'
@@ -69,8 +70,6 @@
 	user = jkogara
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
-[url "ssh://git@bitbucket.org/"]
-	insteadOf = https://bitbucket.org/
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3

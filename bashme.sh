@@ -95,6 +95,11 @@ function rails_clean_g() {
   bundle exec rails g "$@" --no-javascripts --no-stylesheets --no-helper --no-assets
 }
 
+function git-reset-new-files() {
+  git add .
+  git reset --hard
+}
+
 export PARALLEL_TEST_PROCESSORS=`cat /proc/cpuinfo  | grep processor | wc -l`
 
 # Java - gradle
@@ -124,7 +129,6 @@ export PATH=$ANDROID_SDK_ROOT:$PATH
 ## Gradle
 export GRADLE_HOME=/opt/gradle-5.1.1
 export PATH=$GRADLE_HOME/bin:$PATH
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/jkogara/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/path.bash.inc'; fi
@@ -132,7 +136,7 @@ if [ -f '/home/jkogara/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/completion.bash.inc'; fi
 
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin
+export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin:/home/jkogara/.local/bin:/usr/pgsql-11/bin/
 
 # Commenting this as it resets the compose key, other tweaks have disabled caps globally
 # setxkbmap -option ctrl:nocaps
@@ -141,6 +145,8 @@ stty -ixon
 # export CLOUDSDK_COMPUTE_REGION=europe-west1
 export CLOUDSDK_COMPUTE_ZONE=europe-west1-b
 export CLOUDSDK_CONTAINER_CLUSTER=pestpulse-production
+
+export PATH=$PATH:/opt/bin
 
 fasd_cache="$HOME/.fasd-init-bash"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
