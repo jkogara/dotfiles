@@ -102,4 +102,3 @@ Pry.config.commands.import default_command_set
 Pry.commands.alias_command 'c', 'continue' if Pry.commands.keys.include?('continue')
 Pry.commands.alias_command 's', 'step' if Pry.commands.keys.include?('step')
 Pry.commands.alias_command 'n', 'next' if Pry.commands.keys.include?('next')
-

@@ -83,6 +83,9 @@ shopt -s cdspell
 shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
 eval "$(rbenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 eval `dircolors /home/jkogara/.dir_colors/dircolors`
 export GO111MODULE=on
 export GOPATH=$HOME/go

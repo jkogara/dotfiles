@@ -59,6 +59,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+Plug 'uarun/vim-protobuf'
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'thoughtbot/vim-rspec'
+
 " Latex tools
 Plug 'vim-latex/vim-latex'
 Plug 'xuhdev/vim-latex-live-preview'
@@ -111,13 +116,13 @@ let b:ale_linters = {
       \ 'eruby': ['erubylint'],
       \ 'ruby': ['reek', 'rubocop', 'ruby'] }
 let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\   'css': ['prettier'],
-\   'rust': ['rustfmt'],
-\   'elixir': ['mix_format'],
-\   'scss': ['prettier'],
-\   'ruby': ['rubocop'],
+\   '*': ['remove_trailing_lines'],
+\   'javascript': ['prettier', 'eslint', 'trim_whitespace'],
+\   'css': ['prettier', 'trim_whitespace'],
+\   'rust': ['rustfmt', 'trim_whitespace'],
+\   'elixir': ['mix_format', 'trim_whitespace'],
+\   'scss': ['prettier', 'trim_whitespace'],
+\   'ruby': ['rubocop', 'trim_whitespace'],
 \}
 hi link ALEError SyntasticError
 hi link ALEWarning SyntasticWarning
@@ -306,8 +311,15 @@ if !(exists(":Q"))
 command Q q
 endif
 
-" auto delete trailing whitespace
-autocmd BufWritePre * :%s/\s\+$//e
+fun! StripTrailingWhitespace()
+    " Don't strip on these filetypes
+    if &ft =~ 'markdown'
+        return
+    endif
+    %s/\s\+$//e
+endfun
+
+autocmd BufWritePre * call StripTrailingWhitespace()
 
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
