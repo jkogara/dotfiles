@@ -26,6 +26,19 @@ let mapleader="'"
 let maplocalleader="'"
 set timeout timeoutlen=3000 ttimeoutlen=500
 
+" Map option+left and option+right arrows to jump world
+nnoremap <ESC>f el
+inoremap <ESC>b <C-o>b
+inoremap <ESC>f <C-o>e
+cmap <ESC>f e
+
+
+" Map Home and End keys to start and end line
+nnoremap <ESC>[H <Home>
+nnoremap <ESC>[F <End>
+inoremap <ESC>H <Home>
+inoremap <ESC>F <End>
+
 set viminfo^=!
 set enc=utf-8
 
@@ -58,6 +71,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+Plug 'uarun/vim-protobuf'
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'thoughtbot/vim-rspec'
 
 " Latex tools
 Plug 'vim-latex/vim-latex'
@@ -109,15 +127,16 @@ let b:ale_linters = {
       \ 'rust': ['analyzer'],
       \ 'elixir': ['elixir-ls'],
       \ 'eruby': ['erubylint'],
-      \ 'ruby': ['reek', 'rubocop', 'ruby'] }
+      \ 'ruby': ['reek', 'rubocop', 'ruby', 'sorbet'] }
 let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\   'css': ['prettier'],
-\   'rust': ['rustfmt'],
-\   'elixir': ['mix_format'],
-\   'scss': ['prettier'],
-\   'ruby': ['rubocop'],
+\   '*': ['remove_trailing_lines'],
+\   'javascript': ['prettier', 'eslint', 'trim_whitespace'],
+\   'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
+\   'css': ['prettier', 'trim_whitespace'],
+\   'rust': ['rustfmt', 'trim_whitespace'],
+\   'elixir': ['mix_format', 'trim_whitespace'],
+\   'scss': ['prettier', 'trim_whitespace'],
+\   'ruby': ['rubocop', 'trim_whitespace'],
 \}
 hi link ALEError SyntasticError
 hi link ALEWarning SyntasticWarning
@@ -233,20 +252,42 @@ call plug#end()
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
+" Keeping it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+" Undo breakpoints
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ( (<c-g>u
+inoremap [ [<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Moving text
+" highlighted block, K and J to move up and down
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+" In insert mode use ctrl-k and ctrl-j to move the line up and down
+inoremap <C-j> <esc>:m .+1<CR>==i
+inoremap <C-k> <esc>:m .-2<CR>==i
+" In insert mode use ctrl-k and ctrl-j to move the line up and down
+nnoremap <leader>k :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+
 " search with Ag
 nmap <C-S> :GrepperAg<space>
 nmap <C-D> :GrepperGit<space>
 inoremap kk <Esc>
 nmap <C-G> :Buffers<cr>
-" nmap <C-G> :CtrlPBuffer<cr>
 nnoremap <F5> :GundoToggle<CR>
 
 " pasting
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
-set clipboard+=unnamedplus
-" set mouse=r
+set clipboard=unnamed
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
@@ -265,7 +306,7 @@ set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
-set shell=/usr/bin/bash
+set shell=/usr/local/bin/bash
 
 set ts=2  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
@@ -282,13 +323,13 @@ set showmatch  " Show matching brackets.
 set showcmd
 set mat=5  " Bracket blinking.
 set nolist
-set colorcolumn=120
 
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 
 highlight Pmenu ctermbg=238 gui=bold
 
 set nowrap  " Line wrapping off
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown tw=80 fo+=t colorcolumn=80
 au BufNewFile,BufFilePre,BufRead *.tex set filetype=tex tw=120 fo+=t colorcolumn=120
 set colorcolumn=120
 
@@ -306,8 +347,15 @@ if !(exists(":Q"))
 command Q q
 endif
 
-" auto delete trailing whitespace
-autocmd BufWritePre * :%s/\s\+$//e
+fun! StripTrailingWhitespace()
+    " Don't strip on these filetypes
+    if &ft =~ 'markdown'
+        return
+    endif
+    %s/\s\+$//e
+endfun
+
+autocmd BufWritePre * call StripTrailingWhitespace()
 
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
