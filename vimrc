@@ -19,7 +19,6 @@ set tags+=rusty-tags.vi
 set ff=unix                    " Convert line endings to unix
 set tw=120
 set diffopt+=vertical          " Always use a vertical diff
-
 "More useable timeouts for leaders etc.
 nnoremap ' <Nop>
 let mapleader="'"
@@ -67,12 +66,13 @@ set undodir^=~/.vim/undo//
 set nocompatible               " be iMproved
 call plug#begin('~/.vim/plugged')
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+Plug 'Shopify/shadowenv.vim'
+
 Plug 'uarun/vim-protobuf'
+Plug 'jparise/vim-graphql'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
@@ -477,9 +477,13 @@ else
 endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = [
+			\ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+			\ 'rg %s --files --color=never --glob ""',
+			\ 'find %s -type f'
+			\ ]
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v([\/]node_modules$|\.local)'
+  \ 'dir':  '\v([\/]node_modules$|\.local|\.dev|\.shadowenv\.d|\.spin|log)'
   \ }
 
 " air-line
