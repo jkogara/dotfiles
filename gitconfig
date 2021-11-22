@@ -1,14 +1,15 @@
 [core]
-	excludesfile = /home/jkogara/.gitignore_global
+	excludesfile = /User/jkogara/.gitignore_global
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore-rab
 	trustctime = false
+	commitGraph = true
 [user]
 	name = John O'Gara
 	email = johnogara@gmail.com
-	signingkey = 47B158BF9D9096A3
+	signingkey = John O'Gara <johnogara@gmail.com>
 [commit]
-	template = /home/jkogara/.stCommitMsg
+	template = /Users/jkogara/.stCommitMsg
 	gpgsign = true
 [alias]
 	co = checkout
@@ -75,3 +76,13 @@
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
+[bash]
+	showDirtyState = false
+[diff]
+	algorithm = patience
+[gc]
+	writeCommitGraph = true
+[protocol]
+	version = 2
+[gpg]
+	program = gpg

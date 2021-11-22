@@ -10,10 +10,13 @@ set ignorecase                 " self explanitory
 set smartcase                  " Match case if the search pattern has uppercase
 set hidden                     " Don't force non-visible buffers to be written
 set showmode                   " show mode
-set ttymouse=sgr
-set balloondelay=250
-set ballooneval
-set balloonevalterm
+if !has('nvim')
+  set ballooneval
+  set balloonevalterm
+  set ttymouse=sgr
+  set balloondelay=250
+endif
+
 set tags+=.git/tags
 set tags+=rusty-tags.vi
 set ff=unix                    " Convert line endings to unix
@@ -60,16 +63,22 @@ set nobackup
 set backupcopy=auto
 
 " persist the undo tree for each file
+
 set undofile
-set undodir^=~/.vim/undo//
+if has('nvim')
+  set undodir^=~/.vim/nvimundo//
+else
+  set undodir^=~/.vim/undo//
+endif
 
 set nocompatible               " be iMproved
 call plug#begin('~/.vim/plugged')
 if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
-Plug 'Shopify/shadowenv.vim'
+if executable('shadowenv')
+  Plug 'Shopify/shadowenv.vim'
+endif
 
 Plug 'uarun/vim-protobuf'
 Plug 'jparise/vim-graphql'
@@ -127,7 +136,8 @@ let b:ale_linters = {
       \ 'rust': ['analyzer'],
       \ 'elixir': ['elixir-ls'],
       \ 'eruby': ['erubylint'],
-      \ 'ruby': ['reek', 'rubocop', 'ruby', 'sorbet'] }
+      \ 'ruby': ['solargraph', 'reek', 'rubocop', 'ruby', 'sorbet'] }
+let g:ale_cpp_cc_options = '-Wall -O2 -std=c++20'
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines'],
 \   'javascript': ['prettier', 'eslint', 'trim_whitespace'],
@@ -165,12 +175,19 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 let g:mkdp_auto_start = 0
 " Elixir related
 Plug 'elixir-editors/vim-elixir'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+
+if has('nvim')
+  Plug 'neovim/nvim-lspconfig'
+else
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
+endif
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -187,7 +204,6 @@ Plug 'vim-scripts/splitjoin.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-scripts/Proj'
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-solargraph']
 
 
 Plug 'mhinz/vim-signify'
@@ -373,6 +389,7 @@ autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['node_modules[[dir]]']
+" let g:NERDTreeWinSize=60
 
 " fast split window navigation
 noremap <C-h>  <C-w>h
@@ -483,7 +500,7 @@ let g:ctrlp_user_command = [
 			\ 'find %s -type f'
 			\ ]
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v([\/]node_modules$|\.local|\.dev|\.shadowenv\.d|\.spin|log)'
+  \ 'dir':  '\v([\/]sorbet$|[\/]node_modules$|\.local|\.dev|\.shadowenv\.d|\.spin|log)'
   \ }
 
 " air-line
@@ -516,4 +533,5 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 set hlsearch
-hi Search ctermbg=LightYellow
+hi Search ctermfg=red
+hi Search ctermbg=white

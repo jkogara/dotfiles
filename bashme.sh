@@ -5,21 +5,13 @@ alias ber='bundle exec rspec'
 # cd `cat ~/.terminal_directory`
 alias cl=clear
 alias rm="rm -i "
-alias vi=vimx
-alias vim=vimx
-
-source /usr/share/bash-completion/bash_completion
-
-for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*
-do
-  source $file
-done
+# alias vi=vimx
+# alias vim=vimx
 
 function replace_all_strings(){
   find ./ -not -iwholename '*.git*' -type f -exec sed -i -e "s/${1}/${2}/g" {} \;
 }
 export NO_AUTOCORRECT_RUBOCOP=true
-source ~/.heroku_shorts.sh
 
 # End to end testing multiple environments
 export BROWSER=Chrome
@@ -40,16 +32,9 @@ function kill_spring(){
 }
 
 
-if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
-  source ~/.gnupg/.gpg-agent-info
-  export GPG_AGENT_INFO
-else
-  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
-fi
-
 # shell prompt
 function prompt_command() {
-  PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
+  PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[${GITSTATUS_PROMPT}]${normal}» "
 }
 
 PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a';
@@ -59,11 +44,6 @@ export CLICOLOR=1
 
 # Set some default ARCH_FLAGS for building native gems
 ARCHFLAGS="-arch x86_64"
-
-# Autocomplete
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-  . /usr/local/share/bash-completion/bash_completion
-fi
 
 # Misc,
 # alias updatedb='sudo /usr/libexec/locate.updatedb'
@@ -82,11 +62,9 @@ shopt -s histverify
 shopt -s cdspell
 shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
-eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-eval `dircolors /home/jkogara/.dir_colors/dircolors`
 export GO111MODULE=on
 export GOPATH=$HOME/go
 source ~/.secrets
@@ -103,24 +81,17 @@ function git-reset-new-files() {
   git reset --hard
 }
 
-export PARALLEL_TEST_PROCESSORS=`cat /proc/cpuinfo  | grep processor | wc -l`
-
 # Java - gradle
 export GRADLE_HOME=/opt/gradle-2.2.1
 export PATH=$PATH:$GRADLE_HOME/bin
 
-export PATH=./bin:$PATH
 # Dart support
 export PATH="$PATH":"~/.pub-cache/bin"
 
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/
 export NGROK_SUBDOMAIN=johnpestpulse
 export NGROK_REGION=eu
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/cache/dart-sdk/bin
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH:/usr/pgsql-9.6/bin/"
-export PATH="$PATH:/home/jkogara/Android/Sdk/platform-tools/:/usr/lib64/qt5/bin/:/var/lib/snapd/snap/bin"
-export ANDROID_HOME=/home/jkogara/Android/Sdk
 export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/tools/bin:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
@@ -133,13 +104,7 @@ export PATH=$ANDROID_SDK_ROOT:$PATH
 export GRADLE_HOME=/opt/gradle-5.1.1
 export PATH=$GRADLE_HOME/bin:$PATH
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/jkogara/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/path.bash.inc'; fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/completion.bash.inc'; fi
-
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin:/home/jkogara/.local/bin:/usr/pgsql-11/bin/
 
 # Commenting this as it resets the compose key, other tweaks have disabled caps globally
 # setxkbmap -option ctrl:nocaps
@@ -161,3 +126,12 @@ unset fasd_cache
 export DISABLE_SPRING=true
 source $HOME/.cargo/env
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+source ~/gitstatus/gitstatus.prompt.sh
+
+PS1="${bold_blue}[$(hostname)]${bold_red}"
+PS1+='$(ruby_version_prompt)'
+PS1+="${normal} \w${normal} ${bold_white}\n"
+PS1+='[${GITSTATUS_PROMPT}]'
+PS1+="${normal}» "
+
+export PATH=./bin:$PATH
