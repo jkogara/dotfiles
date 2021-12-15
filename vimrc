@@ -10,12 +10,15 @@ set ignorecase                 " self explanitory
 set smartcase                  " Match case if the search pattern has uppercase
 set hidden                     " Don't force non-visible buffers to be written
 set showmode                   " show mode
-set ttymouse=sgr
-set balloondelay=250
-set ballooneval
-set balloonevalterm
+if !has('nvim')
+  set ballooneval
+  set balloonevalterm
+  set ttymouse=sgr
+  set balloondelay=250
+endif
 set tags+=.git/tags
 set tags+=rusty-tags.vi
+set tags+=.tags
 set ff=unix                    " Convert line endings to unix
 set tw=120
 set diffopt+=vertical          " Always use a vertical diff
@@ -25,6 +28,19 @@ nnoremap ' <Nop>
 let mapleader="'"
 let maplocalleader="'"
 set timeout timeoutlen=3000 ttimeoutlen=500
+
+" Map option+left and option+right arrows to jump world
+nnoremap <ESC>f el
+inoremap <ESC>b <C-o>b
+inoremap <ESC>f <C-o>e
+cmap <ESC>f e
+
+
+" Map Home and End keys to start and end line
+nnoremap <ESC>[H <Home>
+nnoremap <ESC>[F <End>
+inoremap <ESC>H <Home>
+inoremap <ESC>F <End>
 
 set viminfo^=!
 set enc=utf-8
@@ -60,7 +76,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 Plug 'uarun/vim-protobuf'
+Plug 'jparise/vim-graphql'
 
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'tyru/open-browser.vim'
+Plug 'aklt/plantuml-syntax'
+au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml-1.2021.16.jar"
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
 
@@ -114,10 +135,12 @@ let b:ale_linters = {
       \ 'rust': ['analyzer'],
       \ 'elixir': ['elixir-ls'],
       \ 'eruby': ['erubylint'],
-      \ 'ruby': ['reek', 'rubocop', 'ruby'] }
+      \ 'ruby': ['solargraph', 'reek', 'rubocop', 'ruby', 'sorbet'] }
+let g:ale_cpp_cc_options = '-Wall -O2 -std=c++20'
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines'],
 \   'javascript': ['prettier', 'eslint', 'trim_whitespace'],
+\   'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
 \   'css': ['prettier', 'trim_whitespace'],
 \   'rust': ['rustfmt', 'trim_whitespace'],
 \   'elixir': ['mix_format', 'trim_whitespace'],
@@ -152,11 +175,17 @@ let g:mkdp_auto_start = 0
 " Elixir related
 Plug 'elixir-editors/vim-elixir'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+if has('nvim')
+  Plug 'neovim/nvim-lspconfig'
+else
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
+endif
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -173,7 +202,6 @@ Plug 'vim-scripts/splitjoin.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-scripts/Proj'
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-solargraph']
 
 
 Plug 'mhinz/vim-signify'
@@ -237,6 +265,30 @@ call plug#end()
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+
+" Keeping it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+" Undo breakpoints
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ( (<c-g>u
+inoremap [ [<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Moving text
+" highlighted block, K and J to move up and down
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+" In insert mode use ctrl-k and ctrl-j to move the line up and down
+inoremap <C-j> <esc>:m .+1<CR>==i
+inoremap <C-k> <esc>:m .-2<CR>==i
+" In insert mode use ctrl-k and ctrl-j to move the line up and down
+nnoremap <leader>k :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
 
 " search with Ag
 nmap <C-S> :GrepperAg<space>
@@ -441,7 +493,11 @@ else
 endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = [
+			\ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+			\ 'rg %s --files --color=never --glob ""',
+			\ 'find %s -type f'
+			\ ]
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v([\/]node_modules$|\.local)'
   \ }
