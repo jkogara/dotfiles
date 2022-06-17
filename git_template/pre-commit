@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+.git/hooks/check_focus
+.git/hooks/rubocop_diff
+.git/hooks/check_js_linting

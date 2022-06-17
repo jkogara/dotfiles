@@ -1,0 +1,2 @@
+#!/bin/bash
+git diff --name-status --diff-filter=rd origin/develop --  ':(exclude)db'  | grep "\.rb$" | awk '{print $2 }' | xargs -r bundle exec rubocop --parallel

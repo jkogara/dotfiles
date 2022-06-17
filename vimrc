@@ -50,8 +50,16 @@ set enc=utf-8
 " (4 seconds) are fine
 set swapfile
 set backup                     " Enable creation of backup file.
-set backupdir=~/.vim/backups// " Where backups will go.
-set directory=~/.vim/tmp//     " Where temporary files will go.
+if has('nvim')
+  set undodir^=~/.nvim/undo//
+  set backupdir=~/.nvim/backups// " Where backups will go.
+  set directory=~/.nvim/tmp//     " Where temporary files will go.
+else
+  set undodir^=~/.vim/undo//
+  set backupdir=~/.vim/backups// " Where backups will go.
+  set directory=~/.vim/tmp//     " Where temporary files will go.
+endif
+set undofile
 
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
@@ -63,9 +71,6 @@ set nobackup
 " use rename-and-write-new method whenever safe
 set backupcopy=auto
 
-" persist the undo tree for each file
-set undofile
-set undodir^=~/.vim/undo//
 
 set nocompatible               " be iMproved
 call plug#begin('~/.vim/plugged')
@@ -84,6 +89,7 @@ Plug 'aklt/plantuml-syntax'
 au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml-1.2021.16.jar"
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
+Plug 'hashivim/vim-packer'
 
 " Latex tools
 Plug 'vim-latex/vim-latex'
@@ -127,6 +133,7 @@ let g:ale_rust_cargo_use_clippy = 1
 
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
+      \   'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
       \ 'css': ['prettier'],
       \ 'scss': ['prettier'],
       \ 'jsx': ['eslint', 'prettier'],
@@ -170,22 +177,23 @@ nnoremap <C-p> :<C-u>FZF<CR>
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_auto_start = 0
 " Elixir related
 Plug 'elixir-editors/vim-elixir'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-if has('nvim')
-  Plug 'neovim/nvim-lspconfig'
-else
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
-endif
+Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+Plug 'neoclide/coc-solargraph'
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss']
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -202,6 +210,7 @@ Plug 'vim-scripts/splitjoin.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-scripts/Proj'
+
 
 
 Plug 'mhinz/vim-signify'
@@ -308,7 +317,6 @@ highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
 set cursorline
-set undodir^=~/.vim/undo
 set splitbelow
 set splitright
 
@@ -346,6 +354,7 @@ set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 highlight Pmenu ctermbg=238 gui=bold
 
 set nowrap  " Line wrapping off
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown tw=80 fo+=t colorcolumn=80
 au BufNewFile,BufFilePre,BufRead *.tex set filetype=tex tw=120 fo+=t colorcolumn=120
 set colorcolumn=120
 
@@ -389,6 +398,7 @@ autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['node_modules[[dir]]']
+" let g:NERDTreeWinSize=60
 
 " fast split window navigation
 noremap <C-h>  <C-w>h
@@ -532,4 +542,8 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 set hlsearch
-hi Search ctermbg=LightYellow
+hi Search ctermbg=white
+hi Search ctermfg=red
+" hi Pmenu ctermbg=gray
+hi Pmenu ctermfg=black
+" hi Search ctermbg=white

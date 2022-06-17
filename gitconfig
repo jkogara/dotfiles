@@ -68,6 +68,8 @@
   pretty = '%C(yellow)%h%Creset %C(magenta)%cd%Creset %d %s'
 [github]
 	user = jkogara
+[gitlab]
+	user = jkogara
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 [merge]

@@ -26,6 +26,3 @@ Style/Documentation:
 # Don't require magic comment at thte top of every file
 Style/Encoding:
   Enabled: false
-
-RSpec/Focus:
-  Enabled: false

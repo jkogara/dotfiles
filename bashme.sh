@@ -7,6 +7,10 @@ alias cl=clear
 alias rm="rm -i "
 alias vi=vimx
 alias vim=vimx
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+alias ls='lsd'
+alias cat='bat'
 
 source /usr/share/bash-completion/bash_completion
 
@@ -86,7 +90,7 @@ eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-eval `dircolors /home/jkogara/.dir_colors/dircolors`
+eval `dircolors /home/jkogara/.dir_colors`
 export GO111MODULE=on
 export GOPATH=$HOME/go
 source ~/.secrets
