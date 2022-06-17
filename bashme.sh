@@ -10,7 +10,6 @@ alias vim=vimx
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='lsd'
-alias cat='bat'
 
 source /usr/share/bash-completion/bash_completion
 
@@ -28,6 +27,14 @@ source ~/.heroku_shorts.sh
 # End to end testing multiple environments
 export BROWSER=Chrome
 
+cat() {
+  if hash bat 2>/dev/null; then
+    bat "$@"
+  else
+    cat "$@"
+  fi
+}
+
 # Git related
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 function clean_merged_branches(){
@@ -41,6 +48,10 @@ function clean_merged_branches(){
 
 function kill_spring(){
   ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
+}
+
+function kafka-up(){
+ cd /opt/kafka_2.13-3.0.0 && foreman start
 }
 
 
@@ -154,6 +165,7 @@ export CLOUDSDK_COMPUTE_ZONE=europe-west1-b
 export CLOUDSDK_CONTAINER_CLUSTER=pestpulse-production
 
 export PATH=$PATH:/opt/bin
+export PATH=$PATH:/opt/android-studio/bin/
 
 fasd_cache="$HOME/.fasd-init-bash"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
@@ -165,3 +177,9 @@ unset fasd_cache
 export DISABLE_SPRING=true
 source $HOME/.cargo/env
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+eval "$(pyenv virtualenv-init -)"
+
+function connect-to-console(){
+  args=("$@")
+  kubectl exec -it ${args[0]} -c rails -n ${args[1]}  -- ./docker-entrypoint.sh /bin/bash
+}

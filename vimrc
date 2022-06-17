@@ -83,8 +83,8 @@ endif
 Plug 'uarun/vim-protobuf'
 Plug 'jparise/vim-graphql'
 
-Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'tyru/open-browser.vim'
+Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'aklt/plantuml-syntax'
 au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml-1.2021.16.jar"
 Plug 'christoomey/vim-tmux-navigator'
@@ -169,7 +169,7 @@ nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
 set rtp+=/home/linuxbrew/.linuxbrew/bin/fzf
-" Plug 'shinglyu/vim-codespell'
+Plug 'shinglyu/vim-codespell'
 Plug 'vim-scripts/vimomni', {'for': ['vim']}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -380,6 +380,8 @@ fun! StripTrailingWhitespace()
     %s/\s\+$//e
 endfun
 
+autocmd FileType markdown setlocal syntax=off spell
+
 autocmd BufWritePre * call StripTrailingWhitespace()
 
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
@@ -394,6 +396,7 @@ autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
 autocmd BufRead,BufNewFile *.scss.erb set filetype=eruby.scss
 autocmd BufRead,BufNewFile *.html.arb set filetype=ruby
 autocmd BufRead,BufNewFile *.arb set filetype=ruby
+autocmd BufRead,BufNewFile *.jbuilder set filetype=ruby
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 map <C-n> :NERDTreeToggle<CR>
@@ -445,8 +448,8 @@ set smartindent
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="high"
 " set guifont=Source\ Code\ Pro\ Medium\ 10
-set guifont=JetBrains\ Mono\ Regular\ 10
-set background=dark
+" set guifont=JetBrains\ Mono\ Regular\ 10
+set guifont=Anonymous\ Pro\ Regular\ 10
 set number
 set norelativenumber
 set numberwidth=5
@@ -489,28 +492,38 @@ augroup filetypedetect
     au BufRead,BufNewFile *.plist setfiletype xml
 augroup END
 
-if has("gui_running")
-  colo solarized8_light_high
-  let g:airline_theme='solarized'
-else
-  colo solarized8_light_high
-  let g:airline_theme='solarized'
-  syntax enable
-  set t_Co=16
-  let &t_SI = "\<Esc>[6 q"
-  let &t_SR = "\<Esc>[4 q"
-  let &t_EI = "\<Esc>[2 q"
-endif
+" if has("gui_running")
+"   colo solarized8_light_high
+"   let g:airline_theme='solarized'
+" else
+syntax enable
+set t_Co=16
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+let g:airline_theme='solarized'
+set hlsearch
+hi Search ctermbg=Black
+set background=dark
+colorscheme solarized8_light_high
+" endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = [
-			\ '.git', 'cd %s && git ls-files . -co --exclude-standard',
-			\ 'rg %s --files --color=never --glob ""',
-			\ 'find %s -type f'
-			\ ]
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v([\/]node_modules$|\.local)'
-  \ }
+let g:ctrlp_use_caching = 0
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+    let g:ctrlp_user_command = [
+        \ '.git',
+        \ 'cd %s && git ls-files . -co --exclude-standard',
+        \ 'find %s -type f'
+    \ ]
+    let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+    \ }
+endif
 
 " air-line
 let g:airline_powerline_fonts = 1
@@ -541,9 +554,43 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
-set hlsearch
-hi Search ctermbg=white
-hi Search ctermfg=red
-" hi Pmenu ctermbg=gray
-hi Pmenu ctermfg=black
-" hi Search ctermbg=white
+augroup SpellUnderline
+  autocmd!
+  autocmd ColorScheme *
+    \ highlight SpellBad
+    \   cterm=Underline
+    \   ctermfg=NONE
+    \   ctermbg=NONE
+    \   term=Reverse
+    \   gui=Undercurl
+    \   guisp=Red
+  autocmd ColorScheme *
+    \ highlight SpellCap
+    \   cterm=Underline
+    \   ctermfg=NONE
+    \   ctermbg=NONE
+    \   term=Reverse
+    \   gui=Undercurl
+    \   guisp=Red
+  autocmd ColorScheme *
+    \ highlight SpellLocal
+    \   cterm=Underline
+    \   ctermfg=NONE
+    \   ctermbg=NONE
+    \   term=Reverse
+    \   gui=Undercurl
+    \   guisp=Red
+  autocmd ColorScheme *
+    \ highlight SpellRare
+    \   cterm=Underline
+    \   ctermfg=NONE
+    \   ctermbg=NONE
+    \   term=Reverse
+    \   gui=Undercurl
+    \   guisp=Red
+  augroup END
+
+augroup reload_vimrc
+autocmd!
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END

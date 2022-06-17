@@ -11,11 +11,11 @@
 	template = /home/jkogara/.stCommitMsg
 	gpgsign = true
 [alias]
+  pushf = push --force-with-lease
 	co = checkout
 	br = branch
 	ci = commit
 	st = status -sb
-  pushf = push --force-with-lease
   comf = commit --no-edit --no-verify --amend
   graph = log --graph --oneline --decorate=short --branches='*'
 	df = diff --color-words='[^[:space:]]'
@@ -77,3 +77,5 @@
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
+[init]
+	defaultBranch = main
