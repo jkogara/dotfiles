@@ -1,0 +1,22 @@
+{
+  "codeLens.enable": true,
+  "solargraph.useBundler": true,
+  "solargraph.autoformat": true,
+  "solargraph.formatting": true,
+  "solargraph.diagnostics": true,
+  "solargraph.hover": true,
+  "python.pythonPath": "/home/jkogara/.pyenv/shims/python",
+
+	"languageserver": {
+		"terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		}
+	}
+}

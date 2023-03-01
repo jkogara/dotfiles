@@ -83,6 +83,8 @@ endif
 Plug 'uarun/vim-protobuf'
 Plug 'jparise/vim-graphql'
 
+Plug 'github/copilot.vim'
+
 Plug 'tyru/open-browser.vim'
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'aklt/plantuml-syntax'
@@ -141,6 +143,7 @@ let b:ale_linters = {
       \ 'dockerfile': ['hadolint'],
       \ 'rust': ['analyzer'],
       \ 'elixir': ['elixir-ls'],
+      \ 'python': ['black'],
       \ 'eruby': ['erubylint'],
       \ 'ruby': ['solargraph', 'reek', 'rubocop', 'ruby', 'sorbet'] }
 let g:ale_cpp_cc_options = '-Wall -O2 -std=c++20'
@@ -152,8 +155,10 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt', 'trim_whitespace'],
 \   'elixir': ['mix_format', 'trim_whitespace'],
 \   'scss': ['prettier', 'trim_whitespace'],
+\   'python': ['black'],
 \   'ruby': ['rubocop', 'trim_whitespace'],
 \}
+let g:ale_python_flake8_options = '--max-line-length=120'
 hi link ALEError SyntasticError
 hi link ALEWarning SyntasticWarning
 hi link ALEErrorSign SyntasticErrorSign
@@ -170,6 +175,7 @@ nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
 set rtp+=/home/linuxbrew/.linuxbrew/bin/fzf
 Plug 'shinglyu/vim-codespell'
+Plug 'cappyzawa/starlark.vim'
 Plug 'vim-scripts/vimomni', {'for': ['vim']}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -181,7 +187,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 let g:mkdp_auto_start = 0
 " Elixir related
 Plug 'elixir-editors/vim-elixir'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.81' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 Plug 'neoclide/coc-solargraph'
 inoremap <silent><expr> <TAB>
@@ -215,6 +221,7 @@ Plug 'vim-scripts/Proj'
 
 Plug 'mhinz/vim-signify'
 Plug 'hashivim/vim-terraform'
+let g:terraform_fmt_on_save=1
 Plug 'gregsexton/gitv'
 Plug 'ap/vim-css-color'
 Plug 'flazz/vim-colorschemes'
