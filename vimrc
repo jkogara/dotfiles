@@ -17,6 +17,7 @@ if !has('nvim')
   set balloondelay=250
 endif
 set tags+=.git/tags
+set tags+=../.git/tags
 set tags+=rusty-tags.vi
 set tags+=.tags
 set ff=unix                    " Convert line endings to unix
@@ -88,7 +89,7 @@ Plug 'github/copilot.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'aklt/plantuml-syntax'
-au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml-1.2021.16.jar"
+au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml.jar"
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
 Plug 'hashivim/vim-packer'
@@ -112,8 +113,8 @@ Plug 'clausreinke/typescript-tools.vim'
 Plug 'dart-lang/dart-vim-plugin'
 let dart_style_guide = 2
 let dart_format_on_save = 1
-Plug 'natebosch/vim-lsc'
-let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
+" Plug 'natebosch/vim-lsc'
+" let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
 Plug 'thosakwe/vim-flutter'
 
 Plug 'rust-lang/rust.vim'
@@ -135,9 +136,11 @@ let g:ale_rust_cargo_use_clippy = 1
 
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
-      \   'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
+      \ 'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
       \ 'css': ['prettier'],
       \ 'scss': ['prettier'],
+      \   'terraform': ['terraform'],
+      \ 'python': ['flake8', 'pylint'],
       \ 'jsx': ['eslint', 'prettier'],
       \ 'dart': ['/home/jkogara/.pub-cache/bin/dart_language_server'],
       \ 'dockerfile': ['hadolint'],
@@ -151,7 +154,10 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines'],
 \   'javascript': ['prettier', 'eslint', 'trim_whitespace'],
 \   'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
+\   'typescript': ['prettier', 'eslint', 'trim_whitespace'],
 \   'css': ['prettier', 'trim_whitespace'],
+\   'python': ['autopep8', 'yapf'],
+\   'terraform': ['terraform'],
 \   'rust': ['rustfmt', 'trim_whitespace'],
 \   'elixir': ['mix_format', 'trim_whitespace'],
 \   'scss': ['prettier', 'trim_whitespace'],
@@ -189,17 +195,31 @@ let g:mkdp_auto_start = 0
 Plug 'elixir-editors/vim-elixir'
 Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.81' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
+au BufRead,BufNewFile mix.lock set filetype=elixir
+
 Plug 'neoclide/coc-solargraph'
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss']
+inoremap <silent><expr> <cr> coc#pum#visible() && coc#pum#info()['index'] != -1 ? coc#pum#confirm() :
+        \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss', 'coc-clangd']
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -408,7 +428,7 @@ autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['node_modules[[dir]]']
-" let g:NERDTreeWinSize=60
+let g:NERDTreeWinSize=40
 
 " fast split window navigation
 noremap <C-h>  <C-w>h
