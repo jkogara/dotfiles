@@ -146,7 +146,6 @@ let b:ale_linters = {
       \ 'dockerfile': ['hadolint'],
       \ 'rust': ['analyzer'],
       \ 'elixir': ['elixir-ls'],
-      \ 'python': ['black'],
       \ 'eruby': ['erubylint'],
       \ 'ruby': ['solargraph', 'reek', 'rubocop', 'ruby', 'sorbet'] }
 let g:ale_cpp_cc_options = '-Wall -O2 -std=c++20'
@@ -161,7 +160,6 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt', 'trim_whitespace'],
 \   'elixir': ['mix_format', 'trim_whitespace'],
 \   'scss': ['prettier', 'trim_whitespace'],
-\   'python': ['black'],
 \   'ruby': ['rubocop', 'trim_whitespace'],
 \}
 let g:ale_python_flake8_options = '--max-line-length=120'
