@@ -5,8 +5,8 @@ alias ber='bundle exec rspec'
 # cd `cat ~/.terminal_directory`
 alias cl=clear
 alias rm="rm -i "
-alias vi=vimx
-alias vim=vimx
+alias vi=nvim
+alias vim=nvim
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='lsd'
@@ -104,7 +104,8 @@ eval "$(pyenv init --path)"
 eval `dircolors /home/jkogara/.dir_colors`
 export GO111MODULE=on
 export GOPATH=$HOME/go
-source ~/.secrets
+if [ -f ~/.secrets ]; then . ~/.secrets; fi
+if [ -f ~/.work_specific.sh ]; then . ~/.work_specific.sh; fi
 
 export _Z_DATA=~/.z_cache
 export _Z_NO_PROMPT_COMMAND=no_prompt
@@ -148,12 +149,6 @@ export PATH=$ANDROID_SDK_ROOT:$PATH
 export GRADLE_HOME=/opt/gradle-5.1.1
 export PATH=$GRADLE_HOME/bin:$PATH
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/jkogara/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/jkogara/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/google-cloud-sdk/completion.bash.inc'; fi
-
 export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin:/home/jkogara/.local/bin:/usr/pgsql-11/bin/
 
 # Commenting this as it resets the compose key, other tweaks have disabled caps globally
@@ -166,6 +161,9 @@ export CLOUDSDK_CONTAINER_CLUSTER=pestpulse-production
 
 export PATH=$PATH:/opt/bin
 export PATH=$PATH:/opt/android-studio/bin/
+export PATH=$PATH:/opt/apache-jmeter-5.5/bin/
+export PATH=$PATH:/opt/istio-1.15.1/bin
+
 
 fasd_cache="$HOME/.fasd-init-bash"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
@@ -183,3 +181,12 @@ function connect-to-console(){
   args=("$@")
   kubectl exec -it ${args[0]} -c rails -n ${args[1]}  -- ./docker-entrypoint.sh /bin/bash
 }
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/src/keypest/data/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc'; fi
+
+export PATH=/home/jkogara/.local/bin:$PATH
+export XDG_CONFIG_HOME=$HOME/.config

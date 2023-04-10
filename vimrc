@@ -177,14 +177,11 @@ Plug 'dense-analysis/ale'
 nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
-set rtp+=/home/linuxbrew/.linuxbrew/bin/fzf
 Plug 'shinglyu/vim-codespell'
 Plug 'cappyzawa/starlark.vim'
 Plug 'vim-scripts/vimomni', {'for': ['vim']}
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-nnoremap <C-p> :<C-u>FZF<CR>
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -198,8 +195,6 @@ au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
 au BufRead,BufNewFile mix.lock set filetype=elixir
 
 Plug 'neoclide/coc-solargraph'
-inoremap <silent><expr> <cr> coc#pum#visible() && coc#pum#info()['index'] != -1 ? coc#pum#confirm() :
-        \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss', 'coc-clangd']
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -218,12 +213,12 @@ function! ShowDocumentation()
   endif
 endfunction
 
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
 Plug 'avdgaag/vim-phoenix'
 Plug 'posva/vim-vue'
@@ -438,7 +433,13 @@ let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
 " Search for the current word
-nnoremap <leader>f :Grepper -tool ag -cword -noprompt<cr>
+" nnoremap <leader>f :Grepper -tool ag -cword -noprompt<cr>
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').grep_string()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fr <cmd>lua require('telescope.builtin').registers()<cr>
+nnoremap <C-g> <cmd>lua require('telescope.builtin').buffers()<cr>
+
 nnoremap <leader>v :vsplit<cr>
 nnoremap <leader>h :split<cr>
 "shortcut for wrap word - vim surround
