@@ -74,54 +74,21 @@ set backupcopy=auto
 
 
 set nocompatible               " be iMproved
-call plug#begin('~/.vim/plugged')
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-Plug 'uarun/vim-protobuf'
-Plug 'jparise/vim-graphql'
-
-Plug 'github/copilot.vim'
-
-Plug 'tyru/open-browser.vim'
-Plug 'weirongxu/plantuml-previewer.vim'
-Plug 'aklt/plantuml-syntax'
 au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml.jar"
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'thoughtbot/vim-rspec'
-Plug 'hashivim/vim-packer'
-
-" Latex tools
-Plug 'vim-latex/vim-latex'
-Plug 'xuhdev/vim-latex-live-preview'
 let g:livepreview_previewer = 'open -a Preview'
 let g:Tex_TreatMacViewerAsUNIX = 1
 let g:Tex_ExecuteUNIXViewerInForeground = 1
 let g:Tex_ViewRule_ps = 'open -a Preview'
 let g:Tex_ViewRule_pdf = 'open -a Preview'
 autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
-Plug 'matze/vim-tex-fold'
-Plug 'tweekmonster/startuptime.vim'
 
 " " Typescript
-Plug 'clausreinke/typescript-tools.vim'
 
 " " Dart support
-Plug 'dart-lang/dart-vim-plugin'
 let dart_style_guide = 2
 let dart_format_on_save = 1
-" Plug 'natebosch/vim-lsc'
-" let g:lsc_server_commands = { 'dart': '/home/jkogara/.pub-cache/bin/dart_language_server' }
-Plug 'thosakwe/vim-flutter'
-
-Plug 'rust-lang/rust.vim'
 let g:rustfmt_autosave = 1
 
-Plug 'fatih/vim-go'
-Plug 'ruanyl/vim-gh-line'
 
 " set omnifunc=ale#completion#OmniFunc
 let g:ale_rust_rls_config = {
@@ -172,30 +139,13 @@ let g:ale_completion_enabled = 0
 let g:ale_completion_delay = 0
 let g:ale_fix_on_save = 1
 let g:ale_set_ballons = 1
-Plug 'dense-analysis/ale'
-
 nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
-
-Plug 'shinglyu/vim-codespell'
-Plug 'cappyzawa/starlark.vim'
-Plug 'vim-scripts/vimomni', {'for': ['vim']}
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-Plug 'prabirshrestha/async.vim'
-Plug 'othree/html5.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_auto_start = 0
-" Elixir related
-Plug 'elixir-editors/vim-elixir'
-Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.81' }
-Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
 au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
 au BufRead,BufNewFile mix.lock set filetype=elixir
-
-Plug 'neoclide/coc-solargraph'
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss', 'coc-clangd']
+let g:coc_global_extensions = ['coc-solargraph', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss', 'coc-clangd']
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -213,32 +163,26 @@ function! ShowDocumentation()
   endif
 endfunction
 
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-
-Plug 'avdgaag/vim-phoenix'
-Plug 'posva/vim-vue'
-
-Plug 'bruno-/vim-ruby-fold'
-Plug 'vim-scripts/auto-pairs'
-Plug 'vim-scripts/splitjoin.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'vim-scripts/Proj'
 
 
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable                     " Disable folding at startup.
+let g:tern_map_keys=1
+let g:tern_show_arguement_hints='on_hold'
+let g:mundo_width = 80
+let g:mundo_preview_height = 40
+let g:mundo_right = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+set diffopt+=vertical
+autocmd BufReadPost fugitive://* set bufhidden=delete
+let g:matchup_enabled = 1
+let g:matchup_surround_enabled = 1
+let g:rooter_patterns = ['Rakefile', '.git/']
+let g:rooter_use_lcd = 1
 
-Plug 'mhinz/vim-signify'
-Plug 'hashivim/vim-terraform'
 let g:terraform_fmt_on_save=1
-Plug 'gregsexton/gitv'
-Plug 'ap/vim-css-color'
-Plug 'flazz/vim-colorschemes'
-Plug 'mhinz/vim-grepper'
 let g:grepper = {}
 let g:grepper.tools = ['grep', 'git', 'ag']
 " Search for the current selection
@@ -247,50 +191,6 @@ nmap gs <plug>(GrepperOperator)
 vmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
-let g:tern_map_keys=1
-let g:tern_show_arguement_hints='on_hold'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'scrooloose/nerdtree'
-Plug 'simnalamburt/vim-mundo'
-let g:mundo_width = 80
-let g:mundo_preview_height = 40
-let g:mundo_right = 1
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-" fugitive related
-Plug 'tpope/vim-fugitive'
-set diffopt+=vertical
-autocmd BufReadPost fugitive://* set bufhidden=delete
-Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'tpope/vim-rbenv'
-Plug 'tpope/vim-haml'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-unimpaired'
-Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-endwise'
-let g:matchup_enabled = 1
-let g:matchup_surround_enabled = 1
-let g:rooter_patterns = ['Rakefile', '.git/']
-let g:rooter_use_lcd = 1
-
-Plug 'adelarsq/vim-matchit'
-call plug#end()
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
@@ -320,10 +220,9 @@ nnoremap <leader>k :m .-2<CR>==
 nnoremap <leader>j :m .+1<CR>==
 
 " search with Ag
-nmap <C-S> :GrepperAg<space>
-nmap <C-D> :GrepperGit<space>
+" nmap <C-S> :GrepperAg<space>
+" nmap <C-D> :GrepperGit<space>
 inoremap kk <Esc>
-nmap <C-G> :Buffers<cr>
 " nmap <C-G> :CtrlPBuffer<cr>
 nnoremap <F5> :GundoToggle<CR>
 
@@ -434,11 +333,17 @@ let g:session_autoload = 'yes'
 
 " Search for the current word
 " nnoremap <leader>f :Grepper -tool ag -cword -noprompt<cr>
-nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').grep_string()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fr <cmd>lua require('telescope.builtin').registers()<cr>
-nnoremap <C-g> <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fs <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nmap <C-S> :GrepperAg<space>
+nnoremap <C-G> <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <C-D> <cmd>lua live_grep_git_dir()<CR>
+nnoremap <leader>gp :Git push origin --force-with-lease<cr>
+
+
+
 
 nnoremap <leader>v :vsplit<cr>
 nnoremap <leader>h :split<cr>

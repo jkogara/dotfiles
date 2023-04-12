@@ -188,5 +188,5 @@ if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/path.bash.inc' ]; then 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc'; fi
 
-export PATH=/home/jkogara/.local/bin:$PATH
+export PATH=/home/jkogara/bin:/home/jkogara/.local/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config

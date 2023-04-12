@@ -1,0 +1,21 @@
+{
+  "suggest.noselect": true,
+  "diagnostic.checkCurrentLine": false,
+  "diagnostic.displayByAle": true,
+  "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
+  "python.pythonPath": "/home/jkogara/.local/share/virtualenvs/src-EV6MVUt3/bin/python",
+  "python.globalModuleInstallation": true,
+  "python.pipenvPath": "/home/jkogara/.pyenv/shims/pipenv",
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
+}
