@@ -1,3 +1,6 @@
+lua vim.g.loaded_netrw = 1
+lua vim.g.loaded_netrwPlugin = 1
+
 call plug#begin('~/.vim/plugged')
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -16,6 +19,8 @@ Plug 'aklt/plantuml-syntax'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
 Plug 'hashivim/vim-packer'
+Plug 'plytophogy/vim-virtualenv'
+Plug 'PieterjanMontens/vim-pipenv'
 Plug 'matze/vim-tex-fold'
 Plug 'tweekmonster/startuptime.vim'
 Plug 'clausreinke/typescript-tools.vim'
@@ -35,8 +40,6 @@ Plug 'rhysd/vim-lsp-ale'
 Plug 'shinglyu/vim-codespell'
 Plug 'cappyzawa/starlark.vim'
 Plug 'vim-scripts/vimomni', {'for': ['vim']}
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -63,16 +66,14 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'scrooloose/nerdtree'
 Plug 'simnalamburt/vim-mundo'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-" fugitive related
+Plug 'tpope/vim-dispatch' " Asynchronous build and test dispatcher
 Plug 'tpope/vim-fugitive'
-Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
@@ -81,18 +82,19 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-unimpaired'
 Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-endwise'
-Plug 'adelarsq/vim-matchit'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'RRethy/nvim-treesitter-endwise'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
 call plug#end()
 
 source ~/.vimrc
 
 lua require('telescope_config')
-
-
+lua require('lualine').setup({ options = { theme = 'onelight', section_separators = {'', ''}, component_separators = {'', ''} } })
 lua require('tree_sitter_config')
+lua require("nvim-tree").setup()

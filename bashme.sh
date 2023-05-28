@@ -190,3 +190,5 @@ if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc' ];
 
 export PATH=/home/jkogara/bin:/home/jkogara/.local/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"

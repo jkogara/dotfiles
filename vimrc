@@ -122,7 +122,7 @@ let g:ale_fixers = {
 \   'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
 \   'typescript': ['prettier', 'eslint', 'trim_whitespace'],
 \   'css': ['prettier', 'trim_whitespace'],
-\   'python': ['autopep8', 'yapf'],
+\   'python': ['yapf', 'autopep8', 'trim_whitespace'],
 \   'terraform': ['terraform'],
 \   'rust': ['rustfmt', 'trim_whitespace'],
 \   'elixir': ['mix_format', 'trim_whitespace'],
@@ -173,8 +173,6 @@ let g:tern_show_arguement_hints='on_hold'
 let g:mundo_width = 80
 let g:mundo_preview_height = 40
 let g:mundo_right = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
 set diffopt+=vertical
 autocmd BufReadPost fugitive://* set bufhidden=delete
 let g:matchup_enabled = 1
@@ -318,9 +316,7 @@ autocmd BufRead,BufNewFile *.arb set filetype=ruby
 autocmd BufRead,BufNewFile *.jbuilder set filetype=ruby
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
-map <C-n> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['node_modules[[dir]]']
-let g:NERDTreeWinSize=40
+map <C-n> :NvimTreeToggle<CR>
 
 " fast split window navigation
 noremap <C-h>  <C-w>h
@@ -425,14 +421,12 @@ augroup END
 
 " if has("gui_running")
 "   colo solarized8_light_high
-"   let g:airline_theme='solarized'
 " else
 syntax enable
 set t_Co=16
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
-let g:airline_theme='solarized'
 set hlsearch
 hi Search ctermbg=Black
 set background=dark
@@ -456,35 +450,6 @@ else
     \ }
 endif
 
-" air-line
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
 augroup SpellUnderline
   autocmd!
   autocmd ColorScheme *
