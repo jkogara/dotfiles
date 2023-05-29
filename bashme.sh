@@ -101,7 +101,7 @@ eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-eval `dircolors /home/jkogara/.dir_colors`
+eval `dircolors /home/jkogara/.dir_colors/dircolors`
 export GO111MODULE=on
 export GOPATH=$HOME/go
 if [ -f ~/.secrets ]; then . ~/.secrets; fi
@@ -192,3 +192,7 @@ export PATH=/home/jkogara/bin:/home/jkogara/.local/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+if [ -f /home/jkogara/.streamyard_secrets ]; then
+  source /home/jkogara/.streamyard_secrets
+fi

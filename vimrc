@@ -229,7 +229,7 @@ inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
 set clipboard+=unnamedplus
-" set mouse=r
+set mouse=r
 highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
@@ -337,6 +337,8 @@ nmap <C-S> :GrepperAg<space>
 nnoremap <C-G> <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <C-D> <cmd>lua live_grep_git_dir()<CR>
 nnoremap <leader>gp :Git push origin --force-with-lease<cr>
+" pretty format json for current file
+nnoremap <leader>pj :%!jq '.'<cr>
 
 
 
@@ -408,6 +410,7 @@ autocmd BufRead,BufNewFile *.tex setlocal spell
 autocmd Filetype gitcommit setlocal spell
 set spelllang=en_gb
 set complete+=kspell
+set completefunc=emoji#complete
 " Enable spell checking for rb and js files
 " autocmd BufWritePre *.rb :Codespell
 " autocmd BufWritePre *.js :Codespell
