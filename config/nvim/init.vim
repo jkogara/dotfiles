@@ -44,7 +44,7 @@ Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'elixir-editors/vim-elixir'
-Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.81' }
+Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.82' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 Plug 'neoclide/coc-solargraph'
 Plug 'avdgaag/vim-phoenix'
@@ -56,7 +56,8 @@ Plug 'mhinz/vim-signify'
 Plug 'hashivim/vim-terraform'
 Plug 'gregsexton/gitv'
 Plug 'ap/vim-css-color'
-Plug 'flazz/vim-colorschemes'
+" Plug 'rose-pine/neovim'
+Plug 'lifepillar/vim-solarized8'
 Plug 'mhinz/vim-grepper'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
@@ -90,8 +91,12 @@ Plug 'nvim-tree/nvim-tree.lua'
 call plug#end()
 
 source ~/.vimrc
+inoremap <expr><CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 lua require('telescope_config')
 lua require('lualine_config')
 lua require('tree_sitter_config')
 lua require("nvim-tree").setup()
+
+" lua require('rose-pine_config')

@@ -12,6 +12,7 @@ alias pbpaste='xsel --clipboard --output'
 alias ls='lsd'
 
 source /usr/share/bash-completion/bash_completion
+complete -C '/usr/local/bin/aws_completer' aws
 
 for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*
 do
