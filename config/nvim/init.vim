@@ -92,6 +92,6 @@ call plug#end()
 source ~/.vimrc
 
 lua require('telescope_config')
-lua require('lualine').setup({ options = { theme = 'onelight', section_separators = {'', ''}, component_separators = {'', ''} } })
+lua require('lualine_config')
 lua require('tree_sitter_config')
 lua require("nvim-tree").setup()
