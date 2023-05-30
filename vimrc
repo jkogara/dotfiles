@@ -36,6 +36,7 @@ inoremap <ESC>b <C-o>b
 inoremap <ESC>f <C-o>e
 cmap <ESC>f e
 
+
 " Map Home and End keys to start and end line
 nnoremap <ESC>[H <Home>
 nnoremap <ESC>[F <End>
@@ -70,6 +71,7 @@ set writebackup
 set nobackup
 " use rename-and-write-new method whenever safe
 set backupcopy=auto
+
 
 set nocompatible               " be iMproved
 au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml.jar"
@@ -262,11 +264,16 @@ set showmatch  " Show matching brackets.
 set showcmd
 set mat=5  " Bracket blinking.
 set nolist
-
+set colorcolumn=120
 
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 
+highlight Pmenu ctermbg=238 gui=bold
+
 set nowrap  " Line wrapping off
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown tw=80 fo+=t colorcolumn=80
+au BufNewFile,BufFilePre,BufRead *.tex set filetype=tex tw=120 fo+=t colorcolumn=120
+set colorcolumn=120
 
 " Alias commonly mistyped write and quit command
 if !(exists(":WQ"))
@@ -367,6 +374,11 @@ endfunction
 
 set smartindent
 
+" let g:solarized_contrast="high"
+" let g:solarized_visibility="high"
+" set guifont=Source\ Code\ Pro\ Medium\ 10
+" set guifont=JetBrains\ Mono\ Regular\ 10
+set guifont=Anonymous\ Pro\ Regular\ 10
 set number
 set norelativenumber
 set numberwidth=5
@@ -403,24 +415,22 @@ set completefunc=emoji#complete
 " autocmd BufWritePre *.rb :Codespell
 " autocmd BufWritePre *.js :Codespell
 
-set background=light
-colorscheme solarized8
-au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown tw=80 fo+=t colorcolumn=80
-au BufNewFile,BufFilePre,BufRead *.tex set filetype=tex tw=120 fo+=t colorcolumn=120
-set colorcolumn=120
-set termguicolors
+
 
 augroup filetypedetect
     " associate *.plist with xml filetype
     au BufRead,BufNewFile *.plist setfiletype xml
 augroup END
 
+" if has("gui_running")
+"   colo solarized8_light_high
+" else
 syntax enable
 set t_Co=16
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
-
+" endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_use_caching = 0
@@ -474,3 +484,12 @@ augroup SpellUnderline
     \   gui=Undercurl
     \   guisp=Red
   augroup END
+
+augroup reload_vimrc
+autocmd!
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+set t_Co=16
+set termguicolors
+set background=light
+colorscheme base16-solarized-light

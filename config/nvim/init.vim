@@ -56,8 +56,8 @@ Plug 'mhinz/vim-signify'
 Plug 'hashivim/vim-terraform'
 Plug 'gregsexton/gitv'
 Plug 'ap/vim-css-color'
-" Plug 'rose-pine/neovim'
-Plug 'lifepillar/vim-solarized8'
+Plug 'flazz/vim-colorschemes'
+Plug 'rrethy/nvim-base16'
 Plug 'mhinz/vim-grepper'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
@@ -98,5 +98,3 @@ lua require('telescope_config')
 lua require('lualine_config')
 lua require('tree_sitter_config')
 lua require("nvim-tree").setup()
-
-" lua require('rose-pine_config')
