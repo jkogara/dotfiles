@@ -100,10 +100,12 @@ let g:ale_rust_rls_config = {
 	\ }
 let g:ale_rust_rls_toolchain = ''
 let g:ale_rust_cargo_use_clippy = 1
+let g:ale_use_global_executables = 0
 
 let b:ale_linters = {
       \ 'javascript': ['eslint', 'prettier'],
       \ 'typescriptreact': ['prettier', 'eslint', 'trim_whitespace'],
+      \ 'typescript': ['prettier', 'eslint', 'trim_whitespace'],
       \ 'css': ['prettier'],
       \ 'scss': ['prettier'],
       \   'terraform': ['terraform'],
@@ -141,6 +143,7 @@ let g:ale_fix_on_save = 1
 let g:ale_set_ballons = 1
 nmap <silent> <C-u> <Plug>(ale_previous_wrap)
 nmap <silent> <C-i> <Plug>(ale_next_wrap)
+
 let g:mkdp_auto_start = 0
 au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
 au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir

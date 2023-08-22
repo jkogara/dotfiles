@@ -11,6 +11,9 @@ endif
 Plug 'uarun/vim-protobuf'
 Plug 'jparise/vim-graphql'
 
+Plug 'mfussenegger/nvim-dap'
+Plug 'David-Kunz/jester'
+
 Plug 'github/copilot.vim'
 Plug 'junegunn/vim-emoji'
 

@@ -39,7 +39,7 @@ cat() {
 # Git related
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 function clean_merged_branches(){
-  for k in $(git branch | sed /\*/d | egrep -v master); do
+  for k in $(git branch | sed /\*/d | grep -E -v master); do
     if [[ ! $(git log -1 --since='1 weeks ago' -s $k) ]]; then
       git branch -D $k
     fi
@@ -187,6 +187,7 @@ export PATH=/home/jkogara/bin:/home/jkogara/.local/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH=$PATH:./node_modules/.bin
 
 if [ -f /home/jkogara/.streamyard_secrets ]; then
   source /home/jkogara/.streamyard_secrets
@@ -196,4 +197,13 @@ eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
+# tabtab source for pnpm package
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/bash/__tabtab.bash ] && . ~/.config/tabtab/bash/__tabtab.bash || true
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"

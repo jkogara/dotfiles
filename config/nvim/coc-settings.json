@@ -2,9 +2,12 @@
   "suggest.noselect": true,
   "diagnostic.checkCurrentLine": true,
   "diagnostic.displayByAle": false,
+  "suggest.enablePreview": false,
   "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
   "python.globalModuleInstallation": true,
   "python.pipenvPath": "/home/jkogara/.pyenv/shims/pipenv",
+  "colors.enable": true,
+  "eslint.autoFixOnSave": true,
   "languageserver": {
     "terraform": {
       "command": "terraform-ls",

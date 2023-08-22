@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-diff = `git diff --cached | egrep -v "config.filter_run focus: true|^-.*|autofocus"`
+diff = `git diff --cached | grep -E -v "config.filter_run focus: true|^-.*|autofocus"`
 if diff =~ /focus: true/
   puts "Don't check in focus: true for any specs, aborting"
   exit 1
