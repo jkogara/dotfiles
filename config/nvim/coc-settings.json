@@ -1,8 +1,7 @@
 {
   "suggest.noselect": true,
-  "diagnostic.checkCurrentLine": false,
-  "diagnostic.displayByAle": true,
-  "suggest.enablePreview": false,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.displayByAle": false,
   "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
   "python.globalModuleInstallation": true,
   "python.pipenvPath": "/home/jkogara/.pyenv/shims/pipenv",

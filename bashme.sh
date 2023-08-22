@@ -98,11 +98,6 @@ shopt -s histverify
 shopt -s cdspell
 shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
-eval "$(rbenv init -)"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval `dircolors /home/jkogara/.dir_colors/dircolors`
 export GO111MODULE=on
 export GOPATH=$HOME/go
 if [ -f ~/.secrets ]; then . ~/.secrets; fi
@@ -176,7 +171,6 @@ unset fasd_cache
 export DISABLE_SPRING=true
 source $HOME/.cargo/env
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-eval "$(pyenv virtualenv-init -)"
 
 function connect-to-console(){
   args=("$@")
@@ -197,3 +191,9 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 if [ -f /home/jkogara/.streamyard_secrets ]; then
   source /home/jkogara/.streamyard_secrets
 fi
+export PATH="$HOME/.tfenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
