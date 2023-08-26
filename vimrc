@@ -28,7 +28,7 @@ set diffopt+=vertical          " Always use a vertical diff
 nnoremap ' <Nop>
 let mapleader="'"
 let maplocalleader="'"
-set timeout timeoutlen=3000 ttimeoutlen=500
+set timeout timeoutlen=3000 ttimeoutlen=50
 
 " Map option+left and option+right arrows to jump world
 nnoremap <ESC>f el

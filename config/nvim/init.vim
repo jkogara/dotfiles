@@ -34,6 +34,8 @@ Plug 'ruanyl/vim-gh-line'
 
 Plug 'rust-lang/rust.vim'
 
+Plug 'christoomey/vim-tmux-navigator'
+
 " Latex tools
 Plug 'vim-latex/vim-latex'
 Plug 'xuhdev/vim-latex-live-preview'
@@ -100,4 +102,4 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 lua require('telescope_config')
 lua require('lualine_config')
 lua require('tree_sitter_config')
-lua require("nvim-tree").setup()
+lua require("nvim-tree").setup({ view = { side = "right", width = 50 } })
