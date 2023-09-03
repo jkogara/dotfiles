@@ -98,7 +98,7 @@ shopt -s histverify
 shopt -s cdspell
 shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
-export GO111MODULE=on
+# export GO111MODULE=on
 export GOPATH=$HOME/go
 if [ -f ~/.secrets ]; then . ~/.secrets; fi
 if [ -f ~/.work_specific.sh ]; then . ~/.work_specific.sh; fi
@@ -146,6 +146,7 @@ export GRADLE_HOME=/opt/gradle-5.1.1
 export PATH=$GRADLE_HOME/bin:$PATH
 
 export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin:/home/jkogara/.local/bin:/usr/pgsql-11/bin/
+export PATH=/usr/local/go/bin:$PATH
 
 # Commenting this as it resets the compose key, other tweaks have disabled caps globally
 # setxkbmap -option ctrl:nocaps

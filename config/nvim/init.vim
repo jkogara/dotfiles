@@ -24,7 +24,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
 Plug 'hashivim/vim-packer'
 Plug 'plytophogy/vim-virtualenv'
-Plug 'PieterjanMontens/vim-pipenv'
 Plug 'matze/vim-tex-fold'
 Plug 'tweekmonster/startuptime.vim'
 Plug 'dart-lang/dart-vim-plugin'
@@ -35,6 +34,7 @@ Plug 'ruanyl/vim-gh-line'
 Plug 'rust-lang/rust.vim'
 
 Plug 'christoomey/vim-tmux-navigator'
+
 
 " Latex tools
 Plug 'vim-latex/vim-latex'
@@ -87,12 +87,13 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'andymass/vim-matchup'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-neorg/neorg', { 'tag': 'v5.0.0' }
 call plug#end()
 
 source ~/.vimrc
@@ -103,3 +104,4 @@ lua require('telescope_config')
 lua require('lualine_config')
 lua require('tree_sitter_config')
 lua require("nvim-tree").setup({ view = { side = "right", width = 50 } })
+lua require('neorg_config')

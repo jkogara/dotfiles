@@ -44,4 +44,3 @@ export PYSPARK_SUBMIT_ARGS='--master local[2] pyspark-shell'
 
 export RUST_SRC_PATH=`rustc --print sysroot`/lib/rustlib/src/rust/src
 source "$HOME/.cargo/env"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
