@@ -8,6 +8,7 @@
   "python.pipenvPath": "/home/jkogara/.pyenv/shims/pipenv",
   "colors.enable": true,
   "eslint.autoFixOnSave": true,
+  "tsserver.enable": true,
   "languageserver": {
     "terraform": {
       "command": "terraform-ls",

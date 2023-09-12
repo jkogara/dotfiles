@@ -54,7 +54,6 @@ Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 Plug 'neoclide/coc-solargraph'
 Plug 'avdgaag/vim-phoenix'
 Plug 'posva/vim-vue'
-Plug 'vim-scripts/auto-pairs'
 Plug 'vim-scripts/splitjoin.vim'
 Plug 'vim-scripts/Proj'
 Plug 'mhinz/vim-signify'

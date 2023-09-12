@@ -359,6 +359,9 @@ nmap <leader>w :wa<cr>
 nnoremap <leader>1 :call MakeSession()<cr>
 nnoremap <leader><leader>1 :call RestoreSession()<cr>
 
+" Bind <leader>y to forward last-yanked text to lemonade
+nnoremap <leader>y :call system('lemonade copy', @0)<CR>
+
 function! RestoreSession()
   let b:sessiondir = getcwd()
   let b:filename = b:sessiondir . '/session.vim'
