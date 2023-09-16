@@ -209,3 +209,4 @@ eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export GPG_TTY=$(tty)
+export PATH=/usr/local/bin:$PATH

@@ -166,6 +166,8 @@ function! ShowDocumentation()
   endif
 endfunction
 
+" started 10:02
+
 
 
 set foldmethod=expr
@@ -184,8 +186,14 @@ let g:rooter_patterns = ['Rakefile', '.git/']
 let g:rooter_use_lcd = 1
 
 let g:terraform_fmt_on_save=1
-let g:grepper = {}
-let g:grepper.tools = ['grep', 'git', 'ag']
+" let g:grepper = {}
+" let g:grepper.tools = ['grep', 'git', 'ag']
+let g:grepper = {
+    \ 'tools': ['grep', 'git', 'ag'],
+    \ 'ag': {
+    \   'grepprg': 'ag $* --vimgrep --smart-case --nogroup --column --ignore={"*node_modules*","*dist*"}',
+    \ }}
+
 " Search for the current selection
 xmap gs <plug>(GrepperOperator)
 nmap gs <plug>(GrepperOperator)
