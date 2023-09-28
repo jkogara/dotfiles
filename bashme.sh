@@ -36,6 +36,15 @@ cat() {
   fi
 }
 
+function start_lemonade(){
+  if [ -f /tmp/lemonade.pid ]; then
+    kill -9 $(cat /tmp/lemonade.pid)
+    rm /tmp/lemonade.pid
+  fi
+  lemonade server 2>&1 > /dev/null &
+  echo $! > /tmp/lemonade.pid
+}
+
 # Git related
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 function clean_merged_branches(){

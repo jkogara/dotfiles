@@ -503,7 +503,8 @@ augroup reload_vimrc
 autocmd!
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
-set t_Co=16
+" set t_Co=16
 set termguicolors
 set background=light
-colorscheme base16-solarized-light
+" colorscheme base16-solarized-light
+colorscheme NeoSolarized

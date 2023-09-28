@@ -35,6 +35,8 @@ Plug 'rust-lang/rust.vim'
 
 Plug 'christoomey/vim-tmux-navigator'
 
+Plug 'overcache/NeoSolarized'
+
 
 " Latex tools
 Plug 'vim-latex/vim-latex'
