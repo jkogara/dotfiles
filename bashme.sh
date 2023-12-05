@@ -48,7 +48,13 @@ function start_lemonade(){
 # Git related
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 function clean_merged_branches(){
-  for k in $(git branch | sed /\*/d | grep -E -v master); do
+  if [ -z "$1" ]; then
+    local reference_branch="master"
+  else
+    local reference_branch=$1
+  fi
+
+  for k in $(git branch | sed /\*/d | grep -E -v reference_branch); do
     if [[ ! $(git log -1 --since='1 weeks ago' -s $k) ]]; then
       git branch -D $k
     fi
@@ -69,7 +75,7 @@ if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
   source ~/.gnupg/.gpg-agent-info
   export GPG_AGENT_INFO
 else
-  eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+  eval $(gpg-agent --daemon  ~/.gnupg/.gpg-agent-info)
 fi
 
 # shell prompt

@@ -30,6 +30,9 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'fatih/vim-go'
 Plug 'ruanyl/vim-gh-line'
+if exists('$TMUX')
+  let g:gh_open_command = 'fn() { echo "$@" | lemonade copy; }; fn '
+endif
 
 Plug 'rust-lang/rust.vim'
 
@@ -54,8 +57,10 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.82' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 Plug 'neoclide/coc-solargraph'
+let g:coc_node_args = ['--max-old-space-size=8192']
 Plug 'avdgaag/vim-phoenix'
 Plug 'posva/vim-vue'
+Plug 'vim-scripts/auto-pairs'
 Plug 'vim-scripts/splitjoin.vim'
 Plug 'vim-scripts/Proj'
 Plug 'mhinz/vim-signify'

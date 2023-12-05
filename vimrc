@@ -154,6 +154,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
@@ -241,7 +244,7 @@ vnoremap <C-c> "+y
 vnoremap <C-d> "+d
 set clipboard+=unnamedplus
 set mouse=r
-highlight def link rubyRspec Function
+" highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
 
 set cursorline
@@ -275,11 +278,10 @@ set showmatch  " Show matching brackets.
 set showcmd
 set mat=5  " Bracket blinking.
 set nolist
-set colorcolumn=120
 
 set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
 
-highlight Pmenu ctermbg=238 gui=bold
+" highlight Pmenu ctermbg=238 gui=bold
 
 set nowrap  " Line wrapping off
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown tw=80 fo+=t colorcolumn=80
@@ -440,10 +442,6 @@ augroup END
 "   colo solarized8_light_high
 " else
 syntax enable
-set t_Co=16
-let &t_SI = "\<Esc>[6 q"
-let &t_SR = "\<Esc>[4 q"
-let &t_EI = "\<Esc>[2 q"
 " endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -505,6 +503,10 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 " set t_Co=16
 set termguicolors
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
 set background=light
-" colorscheme base16-solarized-light
-colorscheme NeoSolarized
+colorscheme base16-solarized-light
+" colorscheme NeoSolarized
+highlight CocFloating ctermfg=black ctermbg=black

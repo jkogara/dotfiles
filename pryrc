@@ -6,7 +6,17 @@ Pry.editor = 'vim'
 
 # === CUSTOM PROMPT ===
 # This prompt shows the ruby version (useful for RVM)
-Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
+
+default_prompt = Pry::Prompt[:default]
+
+Pry.config.prompt = Pry::Prompt.new(
+  'custom',
+  'my custom prompt',
+  [
+  proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " },
+  proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }
+  ]
+)
 
 Pry.config.ls.heading_color = :magenta
 Pry.config.ls.public_method_color = :green
