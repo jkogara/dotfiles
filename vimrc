@@ -146,6 +146,7 @@ nmap <silent> <C-i> <Plug>(ale_next_wrap)
 
 let g:mkdp_auto_start = 0
 au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+au BufRead,BufNewFile Tiltfile,*.tiltfile set filetype=starlark
 au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
 au BufRead,BufNewFile mix.lock set filetype=elixir
 let g:coc_global_extensions = ['coc-solargraph', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-tailwindcss', 'coc-clangd']
@@ -157,6 +158,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
 xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <leader>rn <Plug>(coc-rename)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
@@ -242,7 +244,7 @@ nnoremap <F5> :GundoToggle<CR>
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
-set clipboard+=unnamedplus
+set clipboard+=unnamed
 set mouse=r
 " highlight def link rubyRspec Function
 imap <S-CR> <CR><CR>end<Esc>-cc
@@ -502,11 +504,17 @@ autocmd!
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 " set t_Co=16
-set termguicolors
+set t_Co=256
+let g:solarized_termcolors=256
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 set background=light
-colorscheme base16-solarized-light
-" colorscheme NeoSolarized
+" colorscheme base16-solarized-light
+colorscheme NeoSolarized
 highlight CocFloating ctermfg=black ctermbg=black
+
+set shell=/opt/homebrew/bin/bash
+
+" let g:node_host_prog = '~/.nvm/versions/node/v20.10.0/lib/node_modules'
+" let g:copilot_node_command = '~/.nvm/versions/node/v20.10.0/bin/node'

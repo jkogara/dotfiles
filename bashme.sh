@@ -11,13 +11,42 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='lsd'
 
-source /usr/share/bash-completion/bash_completion
+# shell prompt
+function prompt_command() {
+  PS1="${bold_blue}[$(hostname)]${bold_red}${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
+}
+
+PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a';
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  function cat() {
+    if hash bat 2>/dev/null; then
+      bat "$@"
+    else
+      cat "$@"
+    fi
+  }
+
+  export PARALLEL_TEST_PROCESSORS=$(cat /proc/cpuinfo  | grep processor | wc -l)
+
+  # Autocomplete
+  if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+    . /usr/local/share/bash-completion/bash_completion
+  fi
+
+  source /usr/share/bash-completion/bash_completion
+  for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*
+  do
+    source $file
+  done
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  alias cat='bat --paging=never'
+  source ~/dotfiles/zoxide.sh
+  source /opt/homebrew/etc/bash_completion # Mac OSX
+fi
+
 complete -C '/usr/local/bin/aws_completer' aws
 
-for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*
-do
-  source $file
-done
 
 function replace_all_strings(){
   find ./ -not -iwholename '*.git*' -type f -exec sed -i -e "s/${1}/${2}/g" {} \;
@@ -27,14 +56,6 @@ source ~/.heroku_shorts.sh
 
 # End to end testing multiple environments
 export BROWSER=Chrome
-
-cat() {
-  if hash bat 2>/dev/null; then
-    bat "$@"
-  else
-    cat "$@"
-  fi
-}
 
 function start_lemonade(){
   if [ -f /tmp/lemonade.pid ]; then
@@ -70,31 +91,30 @@ function kafka-up(){
  cd /opt/kafka_2.13-3.0.0 && foreman start
 }
 
+export GPG_TTY=$(tty)
 
-if test -f ~/.gnupg/.gpg-agent-info -a -n "$(pgrep gpg-agent)"; then
-  source ~/.gnupg/.gpg-agent-info
-  export GPG_AGENT_INFO
-else
-  eval $(gpg-agent --daemon  ~/.gnupg/.gpg-agent-info)
-fi
-
-# shell prompt
-function prompt_command() {
-  PS1="${bold_blue}[$(hostname)]${bold_red}$(ruby_version_prompt)${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
+function start_or_load_gpg_agent() {
+  # Refresh gpg-agent tty in case user switches into an X session
+  gpg-connect-agent updatestartuptty /bye >/dev/null
+  # Set SSH to use gpg-agent
+  unset SSH_AGENT_PID
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+  # Start the gpg-agent if not already running
+  if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
+    gpg-connect-agent /bye >/dev/null 2>&1
+  fi
 }
 
-PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a';
+start_or_load_gpg_agent
+
 
 # Show colours for directores and files
 export CLICOLOR=1
 
 # Set some default ARCH_FLAGS for building native gems
 ARCHFLAGS="-arch x86_64"
-
-# Autocomplete
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-  . /usr/local/share/bash-completion/bash_completion
-fi
 
 # Misc,
 # alias updatedb='sudo /usr/libexec/locate.updatedb'
@@ -130,8 +150,6 @@ function git-reset-new-files() {
   git reset --hard
 }
 
-export PARALLEL_TEST_PROCESSORS=`cat /proc/cpuinfo  | grep processor | wc -l`
-
 # Java - gradle
 export GRADLE_HOME=/opt/gradle-2.2.1
 export PATH=$PATH:$GRADLE_HOME/bin
@@ -140,14 +158,10 @@ export PATH=./bin:$PATH
 # Dart support
 export PATH="$PATH":"~/.pub-cache/bin"
 
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/
 export NGROK_SUBDOMAIN=johnpestpulse
 export NGROK_REGION=eu
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/cache/dart-sdk/bin
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH:/usr/pgsql-9.6/bin/"
-export PATH="$PATH:/home/jkogara/Android/Sdk/platform-tools/:/usr/lib64/qt5/bin/:/var/lib/snapd/snap/bin"
-export ANDROID_HOME=/home/jkogara/Android/Sdk
 export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/tools/bin:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
@@ -160,7 +174,6 @@ export PATH=$ANDROID_SDK_ROOT:$PATH
 export GRADLE_HOME=/opt/gradle-5.1.1
 export PATH=$GRADLE_HOME/bin:$PATH
 
-export PATH=$PATH:/home/jkogara/src/pest_pulse/flutter/bin/:$GOPATH/bin:/home/jkogara/.local/bin:/usr/pgsql-11/bin/
 export PATH=/usr/local/go/bin:$PATH
 
 # Commenting this as it resets the compose key, other tweaks have disabled caps globally
@@ -168,21 +181,14 @@ export PATH=/usr/local/go/bin:$PATH
 stty -ixon
 
 # export CLOUDSDK_COMPUTE_REGION=europe-west1
-export CLOUDSDK_COMPUTE_ZONE=europe-west1-b
-export CLOUDSDK_CONTAINER_CLUSTER=pestpulse-production
+# export CLOUDSDK_COMPUTE_ZONE=europe-west1-b
+# export CLOUDSDK_CONTAINER_CLUSTER=pestpulse-production
 
 export PATH=$PATH:/opt/bin
 export PATH=$PATH:/opt/android-studio/bin/
 export PATH=$PATH:/opt/apache-jmeter-5.5/bin/
 export PATH=$PATH:/opt/istio-1.15.1/bin
 
-
-fasd_cache="$HOME/.fasd-init-bash"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
-fi
-source "$fasd_cache"
-unset fasd_cache
 
 export DISABLE_SPRING=true
 source $HOME/.cargo/env
@@ -193,35 +199,63 @@ function connect-to-console(){
   kubectl exec -it ${args[0]} -c rails -n ${args[1]}  -- ./docker-entrypoint.sh /bin/bash
 }
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/path.bash.inc' ]; then . '/home/jkogara/src/keypest/data/google-cloud-sdk/path.bash.inc'; fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc' ]; then . '/home/jkogara/src/keypest/data/google-cloud-sdk/completion.bash.inc'; fi
-
-export PATH=/home/jkogara/bin:/home/jkogara/.local/bin:$PATH
 export XDG_CONFIG_HOME=$HOME/.config
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH=$PATH:./node_modules/.bin
 
-if [ -f /home/jkogara/.streamyard_secrets ]; then
-  source /home/jkogara/.streamyard_secrets
+if [ -f $HOME/.streamyard_secrets ]; then
+  source $HOME/.streamyard_secrets
 fi
 export PATH="$HOME/.tfenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
 
-# tabtab source for pnpm package
-# uninstall by removing these lines
-[ -f ~/.config/tabtab/bash/__tabtab.bash ] && . ~/.config/tabtab/bash/__tabtab.bash || true
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export GPG_TTY=$(tty)
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="/opt/homebrew/Cellar/pyenv-virtualenv/1.2.1/shims:${PATH}"
+  export PYENV_VIRTUALENV_INIT=1
+
+  TEMP_PYENV_VIRTUALENV_PROJECT_DIR=$(mktemp -t pyenv_virtualenv_project_dir_XXXXXX)
+
+  _pyenv_virtualenv_hook() {
+    local ret=$?
+    project_dir=$(cat "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR")
+    if [[ $project_dir == "" ]]; then
+      if [ -f .python-version ] || [ -d venv ]; then
+        echo $PWD > "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR"
+        eval "$(pyenv sh-activate --quiet || true)" || . venv/bin/activate 2> /dev/null || true
+      fi
+    elif [[ ! $PWD =~ $project_dir ]]; then
+      echo > "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR"
+      eval "$(pyenv sh-deactivate --quiet || true)" || deactivate 2> /dev/null || true
+    fi
+    return $ret
+  }
+
+  PROMPT_COMMAND="_pyenv_virtualenv_hook; $PROMPT_COMMAND"
+
+  shellExit() {
+      rm "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR" 2> /dev/null
+  }
+  trap shellExit EXIT
+    eval "$(pyenv init -)"
+fi
+
+alias yarn="corepack yarn"
+alias yarnpkg="corepack yarnpkg"
+alias pnpm="corepack pnpm"
+alias pnpx="corepack pnpx"
+alias npm="corepack npm"
+alias npx="corepack npx"
+
 export PATH=/usr/local/bin:$PATH
+
+BASE16_SHELL_PATH="$HOME/.config/base16-shell"
+[ -n "$PS1" ] && \
+  [ -s "$BASE16_SHELL_PATH/profile_helper.sh" ] && \
+    source "$BASE16_SHELL_PATH/profile_helper.sh"

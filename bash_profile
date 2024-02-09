@@ -44,3 +44,7 @@ export PYSPARK_SUBMIT_ARGS='--master local[2] pyspark-shell'
 
 export RUST_SRC_PATH=`rustc --print sysroot`/lib/rustlib/src/rust/src
 source "$HOME/.cargo/env"
+eval "$(jenv init -)"
+
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init.bash 2>/dev/null || :

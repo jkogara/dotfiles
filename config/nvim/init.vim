@@ -18,7 +18,9 @@ Plug 'github/copilot.vim'
 Plug 'junegunn/vim-emoji'
 
 Plug 'tyru/open-browser.vim'
-Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'mracos/mermaid.vim'
+Plug 'chazmcgarvey/vim-mermaid'
+Plug 'https://gitlab.com/itaranto/plantuml.nvim.git'
 Plug 'aklt/plantuml-syntax'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'thoughtbot/vim-rspec'
@@ -52,7 +54,7 @@ Plug 'cappyzawa/starlark.vim'
 Plug 'vim-scripts/vimomni', {'for': ['vim']}
 Plug 'prabirshrestha/async.vim'
 Plug 'othree/html5.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'toppair/peek.nvim', { 'do': 'deno task --quiet build:fast'  }
 Plug 'elixir-editors/vim-elixir'
 Plug 'neoclide/coc.nvim', { 'tag': 'v0.0.82' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
@@ -99,7 +101,7 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-tree/nvim-tree.lua'
-Plug 'nvim-neorg/neorg', { 'tag': 'v5.0.0' }
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 call plug#end()
 
 source ~/.vimrc
@@ -110,4 +112,8 @@ lua require('telescope_config')
 lua require('lualine_config')
 lua require('tree_sitter_config')
 lua require("nvim-tree").setup({ view = { side = "right", width = 50 } })
-lua require('neorg_config')
+lua require('plantuml_config')
+lua require('peek_markdown_preview')
+
+lua vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+lua vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
