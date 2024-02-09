@@ -1,4 +1,4 @@
-# Makes console in mac more sane.
+# Makes console in mac sane.
 #
 # ln -s /path/here/inputrc ~/.inputrc
 

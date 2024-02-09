@@ -1,16 +1,19 @@
 [core]
-	excludesfile = /home/jkogara/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore-rab
 	trustctime = false
 [user]
 	name = John O'Gara
-	; email = john.ogara@hopin.to
-	; signingkey = F17654C731AA9547
 	email = johnogara@gmail.com
 	signingkey = 47B158BF9D9096A3
+	; email = johnogara@gmail.com
+	; signingkey = F17654C731AA9547
+	; signingkey = 47B158BF9D9096A3
+	; email = john.ogara@hopin.to
+  ; signingkey = john.ogara@hopin.to
 [commit]
-	template = /home/jkogara/.stCommitMsg
+	template = ~/.stCommitMsg
 	gpgsign = true
 [alias]
   pushf = push --force-with-lease
@@ -68,7 +71,7 @@
   # date = short
   date = relative
 [format]
-  pretty = '%C(yellow)%h%Creset %C(magenta)%cd%Creset %d %s'
+  pretty = '%C(yellow)%h%Creset %ae %C(magenta)%cd%Creset %d %s'
 [github]
 	user = jkogara
 [gitlab]
@@ -87,3 +90,5 @@
 	defaultBranch = main
 [credential]
 	helper = store
+[gpg]
+	program = gpg
