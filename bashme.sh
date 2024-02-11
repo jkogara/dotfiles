@@ -10,6 +10,9 @@ alias vim=nvim
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='lsd'
+if [ -f $HOME/.local/bin/tilt ]; then
+  alias tilt=~/.local/bin/tilt
+fi
 
 source /usr/share/bash-completion/bash_completion
 complete -C '/usr/local/bin/aws_completer' aws
@@ -225,4 +228,7 @@ if [ -f `which powerline-daemon` ]; then
 fi
 alias fabric=/home/jkogara/src/fabric/client/fabric
 source ~/dotfiles/zoxide.sh
-alias tilt=~/.local/bin/tilt
+if [ -f $HOME/.streamyard_secrets ]; then
+  source $HOME/.streamyard_secrets
+fi
+
