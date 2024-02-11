@@ -43,4 +43,4 @@ source $BASH_IT/bash_it.sh
 export PYSPARK_SUBMIT_ARGS='--master local[2] pyspark-shell'
 
 export RUST_SRC_PATH=`rustc --print sysroot`/lib/rustlib/src/rust/src
-source "$HOME/.cargo/env"
+. "$HOME/.cargo/env"

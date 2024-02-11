@@ -2,7 +2,7 @@ local lualine = require "lualine"
 
 local config = {
   options = {
-    theme = 'base16',
+    theme = 'solarized_light',
   },
   sections = {
     lualine_c = {
