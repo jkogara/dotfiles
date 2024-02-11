@@ -176,14 +176,6 @@ export PATH=$PATH:/opt/android-studio/bin/
 export PATH=$PATH:/opt/apache-jmeter-5.5/bin/
 export PATH=$PATH:/opt/istio-1.15.1/bin
 
-
-fasd_cache="$HOME/.fasd-init-bash"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
-fi
-source "$fasd_cache"
-unset fasd_cache
-
 export DISABLE_SPRING=true
 source $HOME/.cargo/env
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
@@ -210,18 +202,26 @@ if [ -f /home/jkogara/.streamyard_secrets ]; then
 fi
 export PATH="$HOME/.tfenv/bin:$PATH"
 eval "$(rbenv init -)"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
 
 # tabtab source for pnpm package
 # uninstall by removing these lines
 [ -f ~/.config/tabtab/bash/__tabtab.bash ] && . ~/.config/tabtab/bash/__tabtab.bash || true
+export GPG_TTY=$(tty)
+export PATH=/usr/local/bin:$PATH
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-export GPG_TTY=$(tty)
-export PATH=/usr/local/bin:$PATH
+
+if [ -f `which powerline-daemon` ]; then
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
+  . /usr/share/powerline/bash/powerline.sh
+fi
+alias fabric=/home/jkogara/src/fabric/client/fabric
+source ~/dotfiles/zoxide.sh

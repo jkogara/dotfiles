@@ -8,6 +8,13 @@
   "python.pipenvPath": "/home/jkogara/.pyenv/shims/pipenv",
   "colors.enable": true,
   "eslint.autoFixOnSave": true,
+  "java.configuration.runtimes": [
+    {
+      "name": "Java 18",
+      "path": "/etc/java/java-1.8.0-openjdk/java-1.8.0-openjdk-1.8.0.382.b05-2.fc38.x86_64",
+      "default": true
+    }
+  ],
   "tsserver.enable": true,
   "languageserver": {
     "ccls": {

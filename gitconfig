@@ -5,10 +5,10 @@
 	trustctime = false
 [user]
 	name = John O'Gara
-	email = john.ogara@hopin.to
-	; email = johnogara@gmail.com
-	signingkey = F17654C731AA9547
-	; signingkey = 47B158BF9D9096A3
+	; email = john.ogara@hopin.to
+	; signingkey = F17654C731AA9547
+	email = johnogara@gmail.com
+	signingkey = 47B158BF9D9096A3
 [commit]
 	template = /home/jkogara/.stCommitMsg
 	gpgsign = true
