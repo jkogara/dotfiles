@@ -12,8 +12,8 @@ return require("packer").startup(function()
 			-- LSP Support
 			{ "neovim/nvim-lspconfig" },
 			{ "williamboman/mason.nvim" },
-			{ "jose-elias-alvarez/null-ls.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
+      { "mfussenegger/nvim-lint" },
 
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
@@ -27,8 +27,15 @@ return require("packer").startup(function()
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
 			{ "rafamadriz/friendly-snippets" },
+      { 'mihyaeru21/nvim-lspconfig-bundler' }
 		},
-	}) --
+	})
+  use({
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup()
+    end,
+  })
 	use({ "folke/trouble.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
 
 	-- Treesitter
