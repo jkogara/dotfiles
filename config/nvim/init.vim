@@ -1,80 +1,5 @@
 lua require('init')
 
-nnoremap <ESC>[H <Home>
-nnoremap <ESC>[F <End>
-inoremap <ESC>H <Home>
-inoremap <ESC>F <End>
-
-set viminfo^=!
-set enc=utf-8
-
-" Protect changes between writes. Default values of
-" updatecount (200 keystrokes) and updatetime
-" (4 seconds) are fine
-set swapfile
-set backup                     " Enable creation of backup file.
-if has('nvim')
-  set undodir^=~/.nvim/undo//
-  set backupdir=~/.nvim/backups// " Where backups will go.
-  set directory=~/.nvim/tmp//     " Where temporary files will go.
-else
-  set undodir^=~/.vim/undo//
-  set backupdir=~/.vim/backups// " Where backups will go.
-  set directory=~/.vim/tmp//     " Where temporary files will go.
-endif
-set undofile
-
-autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
-autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
-
-" protect against crash-during-write
-set writebackup
-" but do not persist backup after successful write
-set nobackup
-" use rename-and-write-new method whenever safe
-set backupcopy=auto
-
-
-set nocompatible               " be iMproved
-au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = "/opt/plantuml.jar"
-let g:livepreview_previewer = 'open -a Preview'
-let g:Tex_TreatMacViewerAsUNIX = 1
-let g:Tex_ExecuteUNIXViewerInForeground = 1
-let g:Tex_ViewRule_ps = 'open -a Preview'
-let g:Tex_ViewRule_pdf = 'open -a Preview'
-autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
-
-" " Typescript
-
-" " Dart support
-let dart_style_guide = 2
-let dart_format_on_save = 1
-let g:rustfmt_autosave = 1
-
-
-let g:mkdp_auto_start = 0
-au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
-au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
-au BufRead,BufNewFile mix.lock set filetype=elixir
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable                     " Disable folding at startup.
-let g:tern_map_keys=1
-let g:tern_show_arguement_hints='on_hold'
-let g:mundo_width = 80
-let g:mundo_preview_height = 40
-let g:mundo_right = 1
-set diffopt+=vertical
-autocmd BufReadPost fugitive://* set bufhidden=delete
-let g:matchup_enabled = 1
-let g:matchup_surround_enabled = 1
-let g:rooter_patterns = ['Rakefile', '.git/']
-let g:rooter_use_lcd = 1
-
-let g:terraform_fmt_on_save=1
-" let g:grepper = {}
-" let g:grepper.tools = ['grep', 'git', 'ag']
 let g:grepper = {
     \ 'tools': ['grep', 'git', 'ag'],
     \ 'ag': {
@@ -88,7 +13,6 @@ vmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
 
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 " Keeping it centered
@@ -203,14 +127,6 @@ autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
-autocmd BufRead,BufNewFile *.cls set filetype=tex
-autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
-autocmd BufRead,BufNewFile *.js.erb set filetype=eruby.javascript
-autocmd BufRead,BufNewFile *.css.erb set filetype=eruby.css
-autocmd BufRead,BufNewFile *.scss.erb set filetype=eruby.scss
-autocmd BufRead,BufNewFile *.html.arb set filetype=ruby
-autocmd BufRead,BufNewFile *.arb set filetype=ruby
-autocmd BufRead,BufNewFile *.jbuilder set filetype=ruby
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 
 map <C-n> :NvimTreeToggle<CR>

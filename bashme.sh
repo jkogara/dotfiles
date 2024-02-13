@@ -141,6 +141,7 @@ shopt -s cmdhist
 source ~/.all_elixir_auto_complete.bash
 # export GO111MODULE=on
 export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 if [ -f ~/.secrets ]; then . ~/.secrets; fi
 if [ -f ~/.work_specific.sh ]; then . ~/.work_specific.sh; fi
 

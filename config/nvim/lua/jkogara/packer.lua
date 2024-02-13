@@ -1,6 +1,12 @@
 vim.cmd([[packadd packer.nvim]])
 
-return require("packer").startup(function()
+local packer = require("packer")
+packer.util = require("packer.util")
+packer.init({
+	compile_path = vim.fn.expand("$HOME/.nvim/plugin/packer_compiled.lua"),
+})
+
+return packer.startup(function()
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 
@@ -13,7 +19,7 @@ return require("packer").startup(function()
 			{ "neovim/nvim-lspconfig" },
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
-      { "mfussenegger/nvim-lint" },
+			{ "mfussenegger/nvim-lint" },
 
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
@@ -27,16 +33,18 @@ return require("packer").startup(function()
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
 			{ "rafamadriz/friendly-snippets" },
-      { 'mihyaeru21/nvim-lspconfig-bundler' }
+			{ "mihyaeru21/nvim-lspconfig-bundler" },
 		},
 	})
-  use({
-    "stevearc/conform.nvim",
-    config = function()
-      require("conform").setup()
-    end,
-  })
+	use({
+		"stevearc/conform.nvim",
+		config = function()
+			require("conform").setup()
+		end,
+	})
 	use({ "folke/trouble.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
+
+	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
 	-- Treesitter
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
@@ -75,12 +83,20 @@ return require("packer").startup(function()
 		end,
 	})
 
+	use({
+		"andymass/vim-matchup",
+		setup = function()
+			-- may set any options here
+			vim.g.matchup_matchparen_offscreen = { method = "popup" }
+		end,
+	})
+
 	use("uarun/vim-protobuf")
 	use("jparise/vim-graphql")
 	use("github/copilot.vim")
 	use("tyru/open-browser.vim")
-	use("weirongxu/plantuml-previewer.vim")
-	use("aklt/plantuml-syntax")
+	use("javiorfo/nvim-soil")
+	use("javiorfo/nvim-nyctophilia")
 	use("christoomey/vim-tmux-navigator")
 	use("jabirali/vim-tmux-yank")
 	use("thoughtbot/vim-rspec")
@@ -94,7 +110,6 @@ return require("packer").startup(function()
 
 	-- Latex tools
 	use("vim-latex/vim-latex")
-	use("xuhdev/vim-latex-live-preview")
 
 	-- Markdown preivew
 	use({
