@@ -219,8 +219,9 @@ export PATH="$HOME/.tfenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+POWERLIVE_DAEMON_INSTALLED=`command -pv powerline-daemon`
 
-if [ -f `which powerline-daemon` ]; then
+if [ -n "$POWERLIVE_DAEMON_INSTALLED" ]; then
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1

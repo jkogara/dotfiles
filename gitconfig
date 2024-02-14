@@ -6,15 +6,12 @@
 [user]
 	name = John O'Gara
 	email = johnogara@gmail.com
-	signingkey = 47B158BF9D9096A3
-	; email = johnogara@gmail.com
-	; signingkey = F17654C731AA9547
-	; signingkey = 47B158BF9D9096A3
-	; email = john.ogara@hopin.to
-  ; signingkey = john.ogara@hopin.to
+#	signingkey = 47B158BF9D9096A3
+[includeif "gitdir:~/src/streamyard/*/"]
+  path = ~/dotfiles/gitconfig.streamyard
 [commit]
 	template = ~/.stCommitMsg
-	gpgsign = true
+  #gpgsign = true
 [alias]
   pushf = push --force-with-lease
 	co = checkout
@@ -94,3 +91,7 @@
 	program = gpg
 [maintenance]
 	repo = /home/jkogara/src/regional_broadband/regional-codebase
+	repo = /Users/jkogara/src/streamyard/streamyard
+	repo = /Users/jkogara/src/streamyard/sy-platform-bot
+[fetch]
+	writeCommitGraph = true
