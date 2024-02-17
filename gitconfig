@@ -92,3 +92,5 @@
 	helper = store
 [gpg]
 	program = gpg
+[maintenance]
+	repo = /home/jkogara/src/regional_broadband/regional-codebase

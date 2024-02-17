@@ -90,5 +90,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --   let g:ale_fix_on_save = 1
 --   let g:ale_set_ballons = 1
 -- ]])
-require("lspconfig").tailwindcss.setup({})
+-- require("lspconfig").tailwindcss.setup({})
 require("lspconfig").emmet_language_server.setup({})

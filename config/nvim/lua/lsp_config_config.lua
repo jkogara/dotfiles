@@ -60,6 +60,7 @@ require("mason-lspconfig").setup({
 		"dockerls",
 		"marksman",
 		"typos_lsp",
+		"svelte",
 	},
 	handlers = {
 		default_setup,
