@@ -2,10 +2,15 @@ vim.opt.encoding = "utf-8"
 vim.opt.viminfo:append("!")
 vim.opt.ignorecase = true
 
+-- enable syntax highlighting
+vim.cmd("syntax enable")
+
 vim.opt.timeout = true
 vim.opt.timeoutlen = 3000
 vim.opt.ttimeoutlen = 50
+vim.opt.smarttab = true
 vim.opt.smartcase = true
+vim.opt.smartindent = true
 vim.opt.hidden = true
 vim.opt.showmode = true
 vim.opt.tags:append(".git/tags")
@@ -71,6 +76,8 @@ vim.opt.history = 5000
 vim.opt.autowrite = true
 vim.opt.ruler = true
 vim.opt.number = true
+vim.opt.numberwidth = 4
+vim.opt.scrolloff = 5
 vim.opt.timeoutlen = 250
 vim.opt.shell = "bash"
 vim.opt.tabstop = 2
@@ -81,7 +88,6 @@ vim.opt.cp = false
 vim.opt.incsearch = true
 vim.opt.cindent = true
 vim.opt.autoindent = true
-vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.showmatch = true
 vim.opt.showcmd = true
@@ -96,3 +102,31 @@ vim.opt.listchars = {
 	precedes = "«",
 }
 vim.opt.colorcolumn = "120"
+
+-- set space to toggle fold
+vim.keymap.set("n", "<Space>", "za")
+-- set visual bell
+vim.opt.vb = true
+
+-- set filetype and plugin on
+vim.cmd("filetype plugin on")
+
+-- prevent buffers that are not files from being written to disk
+if not vim.fn.exists("*WipeBuffersWithoutFiles") then
+	function WipeBuffersWithoutFiles()
+		local bufs = {}
+		for i = 1, vim.fn.bufnr("$") do
+			if
+				vim.fn.bufexists(i)
+				and vim.fn.empty(vim.fn.getbufvar(i, "&buftype"))
+				and not vim.fn.filereadable(vim.fn.bufname(i))
+			then
+				table.insert(bufs, i)
+			end
+		end
+		if #bufs > 0 then
+			vim.cmd("bwipeout " .. table.concat(bufs, " "))
+		end
+	end
+	vim.cmd("command! BWnex call v:lua.WipeBuffersWithoutFiles()")
+end

@@ -56,7 +56,14 @@ vim.keymap.set("n", "<leader>gp", ":Git push origin --force-with-lease<cr>", { n
 -- pretty format json for current file
 vim.keymap.set("n", "<leader>pj", ":%!jq '.'<cr>", { noremap = true, silent = true })
 
--- "shortcut for wrap word - vim surround
+-- shortcut for wrap word - vim surround
 vim.keymap.set("n", "<leader>s", "ysiW", { noremap = true, silent = true })
--- " shortcut for wrap line - vim surround
+
+-- shortcut for wrap line - vim surround
 vim.keymap.set("n", "<leader>l", "yss", { noremap = true, silent = true })
+
+-- leader w to write all buffers
+vim.keymap.set("n", "<leader>w", ":wa<cr>", { noremap = true, silent = true })
+
+-- leader y to pass @0 buffer to the system command lemonade copy, used for remote tmux
+vim.keymap.set("n", "<leader>y", ":call system('lemonade copy', @0)<CR>", { noremap = true, silent = true })

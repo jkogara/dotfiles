@@ -1,6 +1,7 @@
 require("jkogara.set")
 require("jkogara.remap")
 require("jkogara.packer")
+require("jkogara.color")
 require("jkogara.plugins.telescope")
 require("jkogara.plugins.nvim-tree")
 require("jkogara.plugins.vim-gh-line")
