@@ -13,14 +13,50 @@ vim.keymap.set("n", "'", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-i>", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<C-I>", vim.diagnostic.goto_prev)
 
+-- configure home and end keys for all terminal codes and modes
 vim.keymap.set("n", "<ESC>[H", "<Home>", { noremap = true, silent = true })
 vim.keymap.set("n", "<ESC>[F", "<End>", { noremap = true, silent = true })
 vim.keymap.set("i", "<ESC>H", "<Home>", { noremap = true, silent = true })
 vim.keymap.set("i", "<ESC>F", "<End>", { noremap = true, silent = true })
 
--- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+-- " Alias commonly mistyped write and quit command
+vim.cmd("command! -nargs=0 WQ wq")
+vim.cmd("command! -nargs=0 Wq wq")
+vim.cmd("command! -nargs=0 W w")
+vim.cmd("command! -nargs=0 Q q")
 
--- Set Ctrl u to toggle undo tree
-vim.keymap.set("n", "<C-u>", ":UndotreeToggle<CR>")
+vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+
+-- " fast split window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+-- shortcuts for splitting window
+vim.keymap.set("n", "<leader>v", ":vsplit<cr>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>h", ":split<cr>", { noremap = true, silent = true })
+
+-- grep keymaps
+vim.g.grepper = {
+	tools = { "grep", "git", "ag" },
+	ag = {
+		grepprg = 'ag $* --vimgrep --smart-case --nogroup --column --ignore={"*node_modules*","*dist*"}',
+	},
+}
+vim.keymap.set("x", "gs", "<plug>(GrepperOperator)")
+vim.keymap.set("n", "gs", "<plug>(GrepperOperator)")
+vim.keymap.set("v", "gs", "<plug>(GrepperOperator)")
+vim.keymap.set("x", "gs", "<plug>(GrepperOperator)")
+vim.keymap.set("n", "<C-S>", ":GrepperAg<space>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-D>", "<cmd>lua live_grep_git_dir()<CR>", { noremap = true, silent = true })
+
+-- fugitive force push with lease
+vim.keymap.set("n", "<leader>gp", ":Git push origin --force-with-lease<cr>", { noremap = true, silent = true })
+
+-- pretty format json for current file
+vim.keymap.set("n", "<leader>pj", ":%!jq '.'<cr>", { noremap = true, silent = true })
+
+-- "shortcut for wrap word - vim surround
+vim.keymap.set("n", "<leader>s", "ysiW", { noremap = true, silent = true })
+-- " shortcut for wrap line - vim surround
+vim.keymap.set("n", "<leader>l", "yss", { noremap = true, silent = true })

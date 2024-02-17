@@ -1,4 +1,4 @@
-require('lspconfig-bundler').setup()
+require("lspconfig-bundler").setup()
 local lsp_zero = require("lsp-zero")
 lsp_zero.extend_lspconfig()
 
@@ -36,6 +36,15 @@ local default_setup = function(server)
 	require("lspconfig")[server].setup({
 		capabilities = lsp_capabilities,
 	})
+	-- require("lspconfig")[server].lua_ls.setup({
+	-- 	settings = {
+	-- 		Lua = {
+	-- 			diagnostics = {
+	-- 				globals = { "vim" },
+	-- 			},
+	-- 		},
+	-- 	},
+	-- })
 end
 
 require("mason").setup({})
@@ -56,8 +65,9 @@ require("mason-lspconfig").setup({
 		"dockerls",
 		"terraformls",
 		"graphql",
-		"svelte",
-		"tailwindcss",
+		"cmake",
+		"dockerls",
+		"marksman",
 	},
 	handlers = {
 		default_setup,

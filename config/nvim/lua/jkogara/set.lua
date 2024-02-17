@@ -38,3 +38,61 @@ vim.opt.diffopt:append("vertical")
 vim.opt.diffopt:append("indent-heuristic")
 vim.opt.diffopt:append("iwhiteall")
 vim.opt.diffopt:append("algorithm:patience")
+
+vim.opt.clipboard:append("unnamedplus")
+vim.opt.mouse = "r"
+
+vim.opt.cursorline = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.wildmenu = true
+vim.opt.wildmode = "list:longest"
+local wildIgnoreList = {
+	"bower_components",
+	"node_modules",
+	"dist",
+	"vendor",
+	"log",
+	"tmp",
+	"*.swp",
+	"gems",
+	".bundle",
+	"Gemfile.lock",
+	".gem",
+	".gitignore",
+	".DS_Store",
+	"*/doc/*",
+	"*/_build/*",
+}
+for _, v in pairs(wildIgnoreList) do
+	vim.opt.wildignore:append(v)
+end
+vim.opt.history = 5000
+vim.opt.autowrite = true
+vim.opt.ruler = true
+vim.opt.number = true
+vim.opt.timeoutlen = 250
+vim.opt.shell = "bash"
+vim.opt.tabstop = 2
+vim.opt.backspace = "indent,eol,start"
+
+vim.opt.shiftwidth = 2
+vim.opt.cp = false
+vim.opt.incsearch = true
+vim.opt.cindent = true
+vim.opt.autoindent = true
+vim.opt.smarttab = true
+vim.opt.expandtab = true
+vim.opt.showmatch = true
+vim.opt.showcmd = true
+vim.opt.mat = 5
+vim.opt.list = false
+vim.opt.wrap = false
+vim.opt.listchars = {
+	tab = "▸ ",
+	eol = "↲",
+	trail = "·",
+	extends = "»",
+	precedes = "«",
+}
+vim.opt.colorcolumn = "120"

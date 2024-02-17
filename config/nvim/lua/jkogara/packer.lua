@@ -106,6 +106,7 @@ return packer.startup(function()
 	use("ruanyl/vim-gh-line")
 
 	use("rust-lang/rust.vim")
+
 	use("overcache/NeoSolarized")
 
 	-- Latex tools
@@ -125,7 +126,10 @@ return packer.startup(function()
 	use("hashivim/vim-terraform")
 
 	use("ap/vim-css-color")
-	use("mhinz/vim-grepper")
+	use({
+		"mhinz/vim-grepper",
+		config = function() end,
+	})
 	use("mbbill/undotree")
 
 	-- Git
