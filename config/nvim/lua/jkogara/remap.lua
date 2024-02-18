@@ -6,6 +6,7 @@ vim.cmd(
 	"autocmd BufWritePost *.rs :silent! exec '!rusty-tags vi --quiet --start-dir=' . expand('%:p:h') . '&' | redraw!"
 )
 vim.cmd("autocmd BufReadPost fugitive://* set bufhidden=delete")
+vim.cmd("au BufWritePost * lua require('lint').try_lint()")
 
 vim.keymap.set("n", "'", "<Nop>", { noremap = true, silent = true })
 
@@ -67,3 +68,6 @@ vim.keymap.set("n", "<leader>w", ":wa<cr>", { noremap = true, silent = true })
 
 -- leader y to pass @0 buffer to the system command lemonade copy, used for remote tmux
 vim.keymap.set("n", "<leader>y", ":call system('lemonade copy', @0)<CR>", { noremap = true, silent = true })
+if vim.fn.exists("$TMUX") then
+	vim.g.gh_open_command = 'fn() { echo "$@" | lemonade copy; }; fn '
+end
