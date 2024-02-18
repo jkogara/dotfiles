@@ -6,7 +6,7 @@ vim.cmd(
 	"autocmd BufWritePost *.rs :silent! exec '!rusty-tags vi --quiet --start-dir=' . expand('%:p:h') . '&' | redraw!"
 )
 vim.cmd("autocmd BufReadPost fugitive://* set bufhidden=delete")
-vim.cmd("au BufWritePost * lua require('lint').try_lint()")
+-- vim.cmd("au BufWritePost * lua require('lint').try_lint()")
 
 vim.keymap.set("n", "'", "<Nop>", { noremap = true, silent = true })
 

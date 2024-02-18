@@ -1,6 +1,7 @@
 return {
 	{
 		"mfussenegger/nvim-lint",
+		enabled = false,
 		event = {
 			"BufReadPre",
 			"BufNewFile",
@@ -21,12 +22,8 @@ return {
 				javascriptreact = { "eslint_d" },
 				typescriptreact = { "eslint_d" },
 				svelte = { "eslint_d" },
-				-- javascript = { "eslint_d" },
-				-- typescriptreact = { "prettier", "eslint", "trim_whitespace" },
-				-- typescript = { "prettier", "eslint", "trim_whitespace" },
 				css = { "prettier" },
 				scss = { "prettier" },
-				terraform = { "terraform" },
 				python = { "flake8", "pylint" },
 				jsx = { "eslint", "prettier" },
 				dockerfile = { "hadolint" },

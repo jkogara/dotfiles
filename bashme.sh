@@ -57,9 +57,6 @@ complete -C '/usr/local/bin/aws_completer' aws
 function replace_all_strings(){
   find ./ -not -iwholename '*.git*' -type f -exec sed -i -e "s/${1}/${2}/g" {} \;
 }
-export NO_AUTOCORRECT_RUBOCOP=true
-source ~/.heroku_shorts.sh
-
 # End to end testing multiple environments
 export BROWSER=Chrome
 
@@ -138,7 +135,6 @@ shopt -s histappend
 shopt -s histverify
 shopt -s cdspell
 shopt -s cmdhist
-source ~/.all_elixir_auto_complete.bash
 # export GO111MODULE=on
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
@@ -284,3 +280,22 @@ function clean_nvim_cache(){
   rm -rf ~/.local/share/nvim/*
   rm -rf ~/.cache/nvim/*  
 }
+
+comp_include _get_cword _pids _signals
+
+_kill()
+{
+    local cur
+
+    COMPREPLY=()
+    cur=`_get_cword`
+
+    if [ $COMP_CWORD -eq 1 ] && [[ "$cur" == -* ]]; then
+        # return list of available signals
+        _signals
+    else
+        # return list of available PIDs
+        _pids
+    fi
+} # _kill()
+

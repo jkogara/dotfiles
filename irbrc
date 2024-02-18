@@ -4,5 +4,5 @@ begin
   Irbtools.start
 rescue LoadError => e
   puts e
-  warn "unable to load irbtools"
+  warn 'unable to load irbtools'
 end
