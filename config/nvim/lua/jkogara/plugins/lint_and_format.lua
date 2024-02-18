@@ -47,25 +47,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.lsp.buf.format()
 	end,
 })
-require("conform").setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		-- Conform will run multiple formatters sequentially
-		python = { "isort", "black" },
-		-- Use a sub-list to run only the first available formatter
-		javascript = { { "prettier" } },
-		typescript = { { "prettier", "eslint", "trim_whitespace" } },
-	},
-})
-require("conform").formatters.ruby = {
-	command = "/home/jkogara/.rbenv/shims/rubocop",
-}
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
-})
+-- require("conform").formatters.ruby = {
+-- 	command = "/home/jkogara/.rbenv/shims/rubocop",
+-- }
 --   let g:ale_fixers = {
 --   \   '*': ['remove_trailing_lines'],
 --   \   'javascript': ['prettier', 'eslint', 'trim_whitespace'],
@@ -91,4 +75,4 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --   let g:ale_set_ballons = 1
 -- ]])
 -- require("lspconfig").tailwindcss.setup({})
-require("lspconfig").emmet_language_server.setup({})
+-- require("lspconfig").emmet_language_server.setup({})
