@@ -279,3 +279,7 @@ source ~/dotfiles/zoxide.sh
 if [ -f $HOME/.streamyard_secrets ]; then
   source $HOME/.streamyard_secrets
 fi
+function clean_nvim_cache(){
+  rm -rf ~/.local/share/nvim/*
+  rm -rf ~/.cache/nvim/*  
+}
