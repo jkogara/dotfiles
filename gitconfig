@@ -67,8 +67,10 @@
 [log]
   # date = short
   date = relative
-[format]
-  pretty = '%C(yellow)%h%Creset %ae %C(magenta)%cd%Creset %d %s'
+; [format]
+;   pretty = '%C(yellow)%h%Creset %ae %C(magenta)%cd%Creset %d %s'
+[pretty]
+    reflog = %C(auto)%h %<|(20)%gd %C(blue)%cr%C(reset) %gs (%s)
 [github]
 	user = jkogara
 [gitlab]

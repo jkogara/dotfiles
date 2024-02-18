@@ -71,3 +71,5 @@ vim.keymap.set("n", "<leader>y", ":call system('lemonade copy', @0)<CR>", { nore
 if vim.fn.exists("$TMUX") then
 	vim.g.gh_open_command = 'fn() { echo "$@" | lemonade copy; }; fn '
 end
+-- Set Ctrl u to toggle undo tree
+vim.keymap.set("n", "<C-u>", ":UndotreeToggle<CR>")
