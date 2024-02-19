@@ -2,3 +2,5 @@
 	name = John O'Gara
 	email = john.ogara@hopin.to
   signingkey = john.ogara@hopin.to
+[merge "translation_merge"]
+	driver = node /Users/jkogara/src/streamyard/streamyard/node-tools/src/translations/actions/gitMergeDriver/index.js %O %A %B

@@ -3,6 +3,7 @@
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore-rab
 	trustctime = false
+	editor = nvim
 [user]
 	name = John O'Gara
 	email = johnogara@gmail.com
@@ -82,7 +83,7 @@
 	insteadOf = https://github.com/
 [merge]
 	tool = vimdiff
-	conflictstyle = diff3
+  conflictstyle = diff3
 [mergetool]
 	prompt = false
 [init]

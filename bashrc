@@ -51,8 +51,8 @@ export BASH_IT=$HOME/.bash_it
 export BASH_IT_THEME='bakke'
 
 # Set my editor and git editor
-export EDITOR="vim"
-export GIT_EDITOR='vim'
+export EDITOR="nvim"
+export GIT_EDITOR='nvim'
 
 # Set the path nginx
 export NGINX_PATH='/opt/nginx'
