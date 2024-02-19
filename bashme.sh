@@ -281,21 +281,23 @@ function clean_nvim_cache(){
   rm -rf ~/.cache/nvim/*  
 }
 
-comp_include _get_cword _pids _signals
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  comp_include _get_cword _pids _signals
 
-_kill()
-{
-    local cur
+  _kill()
+  {
+      local cur
 
-    COMPREPLY=()
-    cur=`_get_cword`
+      COMPREPLY=()
+      cur=`_get_cword`
 
-    if [ $COMP_CWORD -eq 1 ] && [[ "$cur" == -* ]]; then
-        # return list of available signals
-        _signals
-    else
-        # return list of available PIDs
-        _pids
-    fi
-} # _kill()
+      if [ $COMP_CWORD -eq 1 ] && [[ "$cur" == -* ]]; then
+          # return list of available signals
+          _signals
+      else
+          # return list of available PIDs
+          _pids
+      fi
+  } # _kill()
+fi
 
