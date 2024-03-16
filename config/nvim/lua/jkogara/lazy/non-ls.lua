@@ -4,16 +4,11 @@ return {
 		config = function()
 			local null_ls = require("null-ls")
 			local sources = {
-				null_ls.builtins.code_actions.eslint_d,
 				null_ls.builtins.completion.luasnip,
-				null_ls.builtins.diagnostics.eslint_d,
-				null_ls.builtins.diagnostics.flake8,
 				null_ls.builtins.diagnostics.rubocop,
 				null_ls.builtins.diagnostics.terraform_validate,
-				null_ls.builtins.diagnostics.tsc,
 				null_ls.builtins.diagnostics.write_good,
 				null_ls.builtins.formatting.black.with({ extra_args = { "--fast" } }),
-				null_ls.builtins.formatting.fixjson,
 				null_ls.builtins.formatting.isort,
 				null_ls.builtins.formatting.prettier.with({
 					filetypes = {
@@ -29,7 +24,6 @@ return {
 					},
 				}),
 				null_ls.builtins.formatting.rubocop,
-				null_ls.builtins.formatting.rustfmt,
 				null_ls.builtins.formatting.shfmt,
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.terraform_fmt,

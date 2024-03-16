@@ -52,6 +52,12 @@ return {
 					"eslint_d", -- js linter
 					"rubyfmt", -- ruby formatter
 					"rubocop", -- ruby linter
+					"eslint_d",
+					"flake8",
+					"ts-standard",
+					"fixjson",
+					"rustfmt",
+					"typos_lsp",
 				},
 			})
 			require("mason-lspconfig").setup({

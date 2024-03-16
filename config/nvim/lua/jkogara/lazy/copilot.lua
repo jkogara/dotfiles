@@ -23,7 +23,7 @@ return {
           auto_trigger = false,
           debounce = 75,
           keymap = {
-            accept = "<M-l>",
+            accept = "<Tab>",
             accept_word = false,
             accept_line = false,
             next = "<M-]>",
@@ -32,7 +32,7 @@ return {
           },
         },
         filetypes = {
-          yaml = false,
+          yaml = true,
           markdown = false,
           help = false,
           gitcommit = false,
