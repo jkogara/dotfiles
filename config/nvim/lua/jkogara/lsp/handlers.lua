@@ -33,6 +33,7 @@ M.setup_language_servers = function(defaults)
 	lspconfig.sqlls.setup(defaults)
 	lspconfig.tsserver.setup(defaults)
 	lspconfig.yamlls.setup(defaults)
+	lspconfig.jedi_language_server.setup({})
 end
 
 M.default_on_attach = function(client, bufnr)
