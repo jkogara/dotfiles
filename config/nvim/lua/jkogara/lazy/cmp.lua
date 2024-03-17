@@ -3,13 +3,6 @@ return {
 		"Forsigg/nvim-cmp", -- hrsh7th/nvim-cmp",
 		commit = "d884a049bb66722668ebe5de97f341327e8422cf",
 		dependencies = {
-			{
-				"quangnguyen30192/cmp-nvim-tags",
-				ft = {
-					"ruby",
-					"eruby",
-				},
-			},
 			"hrsh7th/cmp-buffer",
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/cmp-cmdline",
@@ -91,22 +84,6 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lua" },
 					{ name = "path" },
-					{
-						name = "tags",
-						option = {
-							-- this is the default options, change them if you want.
-							-- Delayed time after user input, in milliseconds.
-							complete_defer = 100,
-							-- Max items when searching `taglist`.
-							max_items = 10,
-							-- Use exact word match when searching `taglist`, for better searching
-							-- performance.
-							exact_match = false,
-							-- Prioritize searching result for current buffer.
-							current_buffer_only = false,
-						},
-					},
-				}, {
 					{ name = "buffer" },
 				}),
 			})

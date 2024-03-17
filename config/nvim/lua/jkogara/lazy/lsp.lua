@@ -4,8 +4,7 @@ return {
 	{
 		"nvim-lua/lsp-status.nvim",
 		event = "BufReadPre",
-	}, -- Used by other plugins for basic lsp info
-
+	},
 	{
 		"j-hui/fidget.nvim",
 		event = "BufReadPre",
@@ -39,13 +38,13 @@ return {
 					"pylint", -- python linter
 					"eslint_d", -- js linter
 					"rubyfmt", -- ruby formatter
-					"eslint_d",
-					"flake8",
-					"shfmt",
-					"ts-standard",
-					"fixjson",
-					"rustfmt",
-					"typos_lsp",
+					"eslint_d", -- js linter
+					"flake8", -- python linter
+					"shfmt", -- shell formatter
+					"ts-standard", -- typescript linter
+					"fixjson", -- json formatter
+					"rustfmt", -- rust formatter
+					"typos_lsp", -- spell checker
 				},
 			})
 		end,

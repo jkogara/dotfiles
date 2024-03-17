@@ -13,7 +13,6 @@ M.setup = function()
 	end
 
 	vim.diagnostic.config({
-		-- update_in_insert = true,
 		signs = { active = signs },
 		float = {
 			focusable = false,
