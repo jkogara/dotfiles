@@ -7,7 +7,7 @@
 [user]
 	name = John O'Gara
 	email = johnogara@gmail.com
-#	signingkey = 47B158BF9D9096A3
+ 	signingkey = 47B158BF9D9096A3
 [includeif "gitdir:~/src/streamyard/*/"]
   path = ~/dotfiles/gitconfig.streamyard
 [commit]
@@ -88,6 +88,7 @@
 	prompt = false
 [init]
 	defaultBranch = main
+	templatedir = /home/jkogara/.git_template
 [credential]
 	helper = store
 [gpg]

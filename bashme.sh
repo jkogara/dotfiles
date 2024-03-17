@@ -32,12 +32,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   export PARALLEL_TEST_PROCESSORS=$(cat /proc/cpuinfo  | grep processor | wc -l)
 
-  # Autocomplete
-  if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-    . /usr/local/share/bash-completion/bash_completion
-  fi
+  . /usr/share/bash-completion/bash_completion
 
-  source /usr/share/bash-completion/bash_completion
   for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*
   do
     source $file
@@ -227,6 +223,14 @@ fi
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+  export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
+  export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin;
+  export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man";
+  export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info";  
+  export PATH=$PATH:/home/jkogara/.local/bin
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="/opt/homebrew/Cellar/pyenv-virtualenv/1.2.1/shims:${PATH}"
   export PYENV_VIRTUALENV_INIT=1
@@ -281,23 +285,25 @@ function clean_nvim_cache(){
   rm -rf ~/.cache/nvim/*  
 }
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  comp_include _get_cword _pids _signals
+# if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+# fi
 
-  _kill()
-  {
-      local cur
+#   # comp_include _get_cword _pids _signals
 
-      COMPREPLY=()
-      cur=`_get_cword`
+#   # _kill()
+#   # {
+#   #     local cur
 
-      if [ $COMP_CWORD -eq 1 ] && [[ "$cur" == -* ]]; then
-          # return list of available signals
-          _signals
-      else
-          # return list of available PIDs
-          _pids
-      fi
-  } # _kill()
-fi
+#   #     COMPREPLY=()
+#   #     cur=`_get_cword`
+
+#   #     if [ $COMP_CWORD -eq 1 ] && [[ "$cur" == -* ]]; then
+#   #         # return list of available signals
+#   #         _signals
+#   #     else
+#   #         # return list of available PIDs
+#   #         _pids
+#   #     fi
+#   # } # _kill()
+# fi
 

@@ -20,7 +20,7 @@ return {
 					},
 				},
 			}
-			lualine.setup(config)
+			lualine.setup(lualine_config)
 			lualine.refresh()
 		end,
 	},
