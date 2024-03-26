@@ -5,7 +5,6 @@ return {
     cmd = { "ConformInfo" },
     keys = {
       {
-        -- Customize or remove this keymap to your liking
         "<leader>f",
         function()
           require("conform").format({ async = true, lsp_fallback = true })
@@ -43,7 +42,6 @@ return {
       })
     end,
     init = function()
-      -- If you want the formatexpr, here is the place to set it
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       require("conform").formatters.ruby = {
         command = "/home/jkogara/.rbenv/shims/rubocop",
