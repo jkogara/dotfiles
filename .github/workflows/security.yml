@@ -18,3 +18,4 @@ jobs:
       - uses: gitleaks/gitleaks-action@e6dab246340401bf53eec993b8f05aebe80ac636
         env:
           GITHUB_TOKEN: ${{ secrets.GITLEAKS_GITHUB_TOKEN }}
+          GITLEAKS_NOTIFY_USER_LIST: "@jkogara"
