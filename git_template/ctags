@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+PATH="/usr/local/bin:$PATH"
+GEMDIR=`gem env gemdir`
+
+if test `find ".git/ctags-timestamp" -mmin +10`
+then
+  touch .git/ctags-timestamp
+  trap "rm -f .git/tags.$$" EXIT
+  ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --languages=-sql --exclude=log --exclude=*node_modules* \
+    --exclude=*bower_components* --exclude=*.log --exclude=doc --exclude=nohup.out --exclude=coverage \
+    --exclude=prototype --exclude=*coffee-script-source* --exclude=tmp --exclude=features \
+    --exclude=public --exclude=spec * $GEMDIR
+  mv .git/tags.$$ .git/tags
+fi

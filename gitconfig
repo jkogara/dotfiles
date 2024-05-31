@@ -1,0 +1,93 @@
+[core]
+	excludesfile = ~/.gitignore_global
+	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  excludesfile = ~/.gitignore-rab
+	trustctime = false
+	editor = nvim
+[user]
+	name = John O'Gara
+	email = johnogara@gmail.com
+ 	signingkey = 47B158BF9D9096A3
+[commit]
+	template = ~/.stCommitMsg
+  #gpgsign = true
+[alias]
+  pushf = push --force-with-lease
+	co = checkout
+	br = branch
+	ci = commit
+	st = status -sb
+  comf = commit --no-edit --no-verify --amend
+  graph = log --graph --oneline --decorate=short --branches='*'
+	df = diff --color-words='[^[:space:]]'
+	sh = show --color-words='[^[:space:]]'
+	lg = log -p
+  serve = !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+  pend = cherry -v origin/master
+  tree = log --graph --oneline --decorate
+
+[pull]
+  default = current
+
+[push]
+  default = current
+
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+  showbranch = auto
+	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+
+[apply]
+	whitespace = nowarn
+[branch]
+  autosetuprebase = always
+  sort=-committerdate  # DESC
+  sort=committerdate # ASC
+[rerere]
+	enabled = 1
+[log]
+  # date = short
+  date = relative
+; [format]
+;   pretty = '%C(yellow)%h%Creset %ae %C(magenta)%cd%Creset %d %s'
+[pretty]
+    reflog = %C(auto)%h %<|(20)%gd %C(blue)%cr%C(reset) %gs (%s)
+[github]
+	user = jkogara
+[gitlab]
+	email = johnogara@gmail.com
+	user = jkogara
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[merge]
+	tool = vimdiff
+  conflictstyle = diff3
+[mergetool]
+	prompt = false
+[init]
+	defaultBranch = main
+	templatedir = /home/jkogara/.git_template
+[credential]
+	helper = store
+[gpg]
+	program = gpg
+[fetch]
+	writeCommitGraph = true

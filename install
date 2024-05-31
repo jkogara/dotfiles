@@ -1,0 +1,28 @@
+#!/bin/bash
+dir=~/dotfiles
+olddir=~/dotfiles_old
+files=`ls $dir | grep -E -v install`
+
+
+echo "Creating $olddir for backup of any existing dotfiles in ~"
+mkdir -p $olddir
+echo "...done"
+
+echo "Changing to the $dir directory"
+cd $dir
+echo "...done"
+
+for file in $files; do
+    #if [ -a ~/.$file ]
+    #then
+    #    echo "Moving .$file from ~ to $olddir"
+    #    mv ~/.$file ~/dotfiles_old/
+    #fi
+    if [ -a ~/.$file ]
+    then
+        echo "Symlink already exists"
+    else
+        echo "Creating symlink to $file in home directory."
+        ln -s $dir/$file ~/.$file
+    fi
+done
