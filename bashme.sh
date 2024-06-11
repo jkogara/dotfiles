@@ -19,6 +19,10 @@ function prompt_command() {
   PS1="${bold_blue}[$(hostname)]${bold_red}${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}» "
 }
 
+function tmux_session() {
+  tmuxp load ~/.tmuxp/"$@".yaml
+}
+
 PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a'
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -39,10 +43,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   done
   if ! command -v fzf &>/dev/null; then
     echo "fd not found, installing"
-		sudo dnf install fd-find -y
-	fi
-	if ! command -v fzf &>/dev/null; then
-		echo "fzf not found, installing"
+    sudo dnf install fd-find -y
+  fi
+  if ! command -v fzf &>/dev/null; then
+    echo "fzf not found, installing"
     sudo dnf install fzf ripgrep -y
   fi
   source /etc/bash_completion.d/fzf
@@ -52,11 +56,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-	# The next line updates PATH for the Google Cloud SDK.
-	if [ -f '$HOME/.google-cloud-sdk/path.bash.inc' ]; then . '$HOME/.google-cloud-sdk/path.bash.inc'; fi
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '$HOME/.google-cloud-sdk/path.bash.inc' ]; then . '$HOME/.google-cloud-sdk/path.bash.inc'; fi
 
-	# The next line enables shell command completion for gcloud.
-	if [ -f '$HOME/.google-cloud-sdk/completion.bash.inc' ]; then . '$HOME/.google-cloud-sdk/completion.bash.inc'; fi
+  # The next line enables shell command completion for gcloud.
+  if [ -f '$HOME/.google-cloud-sdk/completion.bash.inc' ]; then . '$HOME/.google-cloud-sdk/completion.bash.inc'; fi
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   eval "$(jenv init -)"
@@ -97,7 +101,7 @@ export BROWSER=Chrome
 function start_lemonade() {
   if [ -f /tmp/lemonade.pid ]; then
     kill -9 $(cat /tmp/lemonade.pid)
-    rm /tmp/lemonade.pid
+    rm -f /tmp/lemonade.pid
   fi
   lemonade server 2>&1 >/dev/null &
   echo $! >/tmp/lemonade.pid
@@ -256,9 +260,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
   export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
   export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-	export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
-	export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
-	export PATH=$PATH:/home/jkogara/.local/bin
+  export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
+  export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
+  export PATH=$PATH:/home/jkogara/.local/bin
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="/opt/homebrew/Cellar/pyenv-virtualenv/1.2.1/shims:${PATH}"
   export PYENV_VIRTUALENV_INIT=1
