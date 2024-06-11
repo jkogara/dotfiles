@@ -2,6 +2,7 @@ local util = require("lspconfig.util")
 
 return {
   filetypes = { "ruby", "rakefile" },
+  cmd = { os.getenv("HOME") .. "/.rbenv/shims/solargraph", "stdio" },
   root_dir = util.root_pattern("Gemfile", ".git", "."),
   flags = {
     debounce_text_changes = 150,
