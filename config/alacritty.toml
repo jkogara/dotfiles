@@ -1,0 +1,23 @@
+import = [
+    "~/.config/alacritty/themes/themes/solarized_dark.toml"
+]
+
+[font]
+size = 12
+glyph_offset = { x = 0, y = 1 }
+
+[font.normal]
+family = "SauceCodePro Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "SauceCodePro Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "SauceCodePro Nerd Font Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "SauceCodePro Nerd Font Mono"
+style = "Bold Italic"

@@ -57,10 +57,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
   # The next line updates PATH for the Google Cloud SDK.
-  if [ -f '$HOME/.google-cloud-sdk/path.bash.inc' ]; then . '$HOME/.google-cloud-sdk/path.bash.inc'; fi
+  if [ -f "$HOME/.google-cloud-sdk/path.bash.inc" ]; then . "$HOME/.google-cloud-sdk/path.bash.inc"; fi
 
   # The next line enables shell command completion for gcloud.
-  if [ -f '$HOME/.google-cloud-sdk/completion.bash.inc' ]; then . '$HOME/.google-cloud-sdk/completion.bash.inc'; fi
+  if [ -f "$HOME/.google-cloud-sdk/completion.bash.inc" ]; then . "$HOME/.google-cloud-sdk/completion.bash.inc"; fi
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   eval "$(jenv init -)"
@@ -199,12 +199,13 @@ export NGROK_SUBDOMAIN=johnpestpulse
 export NGROK_REGION=eu
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH:/usr/pgsql-9.6/bin/"
+export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$ANDROID_HOME/tools:$PATH
 export PATH=$ANDROID_HOME/tools/bin:$PATH
 export PATH=$ANDROID_HOME/platform-tools:$PATH
 
 # android sdk root
-export ANDROID_SDK_ROOT=/usr/lib/Android
+export ANDROID_SDK_ROOT=$ANDROID_HOME
 export PATH=$ANDROID_SDK_ROOT:$PATH
 
 ## Gradle
