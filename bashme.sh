@@ -255,16 +255,16 @@ if [ -n "$POWERLIVE_DAEMON_INSTALLED" ]; then
 fi
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
 	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-	export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-	export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
-	export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-	export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
-	export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
-	export PATH=$PATH:/home/jkogara/.local/bin
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+  export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+  export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
+  export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
+  export PATH=$PATH:/home/jkogara/.local/bin
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 	export PATH="/opt/homebrew/Cellar/pyenv-virtualenv/1.2.1/shims:${PATH}"
 	export PYENV_VIRTUALENV_INIT=1

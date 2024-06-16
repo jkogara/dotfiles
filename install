@@ -1,8 +1,8 @@
 #!/bin/bash
 dir=~/dotfiles
 olddir=~/dotfiles_old
-files=`ls $dir | grep -E -v install`
-
+files=$(ls $dir | grep -E -v install | grep -E -v config)
+config_files=$(ls -d $dir/config/*)
 
 echo "Creating $olddir for backup of any existing dotfiles in ~"
 mkdir -p $olddir
@@ -13,16 +13,27 @@ cd $dir
 echo "...done"
 
 for file in $files; do
-    #if [ -a ~/.$file ]
-    #then
-    #    echo "Moving .$file from ~ to $olddir"
-    #    mv ~/.$file ~/dotfiles_old/
-    #fi
-    if [ -a ~/.$file ]
-    then
-        echo "Symlink already exists"
-    else
-        echo "Creating symlink to $file in home directory."
-        ln -s $dir/$file ~/.$file
-    fi
+  if [ -a ~/.$file ]; then
+    echo "Moving .$file from ~ to $olddir"
+    mv ~/.$file ~/dotfiles_old/
+  fi
+  if [ -a ~/.$file ]; then
+    echo "Symlink already exists"
+  else
+    echo "Creating symlink to $file in home directory."
+    ln -s $dir/$file ~/.$file
+  fi
+done
+
+for file in $config_files; do
+  if [ -a ~/.$file ]; then
+    echo "Moving .$file from ~ to $olddir"
+    mv ~/.$file ~/dotfiles_old/
+  fi
+  if [ -a ~/.$file ]; then
+    echo "Symlink already exists"
+  else
+    echo "Creating symlink to $file in home directory."
+    ln -s $file ~/.config/$(basename $file)
+  fi
 done
