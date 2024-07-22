@@ -3,7 +3,7 @@ import = [
 ]
 
 [font]
-size = 12
+size = 11
 glyph_offset = { x = 0, y = 1 }
 
 [font.normal]

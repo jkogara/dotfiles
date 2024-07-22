@@ -10,7 +10,7 @@
  	signingkey = 47B158BF9D9096A3
 [commit]
 	template = ~/.stCommitMsg
-  #gpgsign = true
+  gpgsign = true
 [alias]
   pushf = push --force-with-lease
 	co = checkout

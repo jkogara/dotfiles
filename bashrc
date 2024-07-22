@@ -73,9 +73,6 @@ eval "$(rbenv init -)"
 
 # Load my bash scripts
 
-if [ -f ~/.grubhub_dev_setup.sh ]; then
-	source ~/.grubhub_dev_setup.sh
-fi
 source ~/.bashme.sh
 
 ###-tns-completion-start-###

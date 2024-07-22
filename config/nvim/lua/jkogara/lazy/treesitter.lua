@@ -22,6 +22,8 @@ return { -- -- Treesitter
           "ruby",
           "javascript",
           "terraform",
+          "typescript",
+          "svelte",
           "yaml",
         },
         sync_install = true,

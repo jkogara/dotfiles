@@ -27,6 +27,7 @@ return {
         null_ls.builtins.formatting.rubocop,
         null_ls.builtins.formatting.shfmt,
         null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.rustywind, -- organize tailwind classes
         null_ls.builtins.formatting.terraform_fmt,
         require("none-ls.diagnostics.eslint_d"),
         require("none-ls.formatting.eslint_d"),

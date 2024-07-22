@@ -1,5 +1,7 @@
 vim.g.mapleader = "'"
 vim.g.maplocalleader = "'"
+vim.g.ruby_host_prog = '/home/jkogara/.rbenv/shims/neovim-ruby-host'
+
 
 vim.cmd("autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi")
 vim.cmd(

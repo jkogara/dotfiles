@@ -31,22 +31,25 @@ return {
       local mason_tool_installer = require("mason-tool-installer")
       mason_tool_installer.setup({
         ensure_installed = {
-          "prettier",            -- prettier formatter
-          "stylua",              -- lua formatter
-          "isort",               -- python formatter
-          "black",               -- python formatter
-          "pylint",              -- python linter
-          "eslint_d",            -- js linter
-          "rubyfmt",             -- ruby formatter
-          "eslint_d",            -- js linter
-          "flake8",              -- python linter
-          "shfmt",               -- shell formatter
-          "ts-standard",         -- typescript linter
-          "fixjson",             -- json formatter
-          "typos_lsp",           -- spell checker
-          "jq",                  -- json formatter
-          "terraform-ls",        -- terraform language server
-          "lemonade",            -- lemonade copy paste util
+          "typos-lsp",
+          "prettier",               -- prettier formatter
+          "stylua",                 -- lua formatter
+          "isort",                  -- python formatter
+          "black",                  -- python formatter
+          "pylint",                 -- python linter
+          "eslint_d",               -- js linter
+          "rubyfmt",                -- ruby formatter
+          "eslint_d",               -- js linter
+          "flake8",                 -- python linter
+          "shfmt",                  -- shell formatter
+          "ts-standard",            -- typescript linter
+          "tailwindcss-language-server", --tailwindcss
+          "fixjson",                -- json formatter
+          "typos_lsp",              -- spell checker
+          "jq",                     -- json formatter
+          "terraform-ls",           -- terraform language server
+          "tflint",
+          "lemonade",               -- lemonade copy paste util
           "stimulus-language-server", -- stimulus language server
           "lua-language-server",
           "bash-language-server",
@@ -56,6 +59,10 @@ return {
           "typescript-language-server",
           "write-good",
           "jedi-language-server",
+          "svelte-language-server",
+          "erb-lint",
+          "rubocop",
+          "rustywind",
         },
       })
     end,
