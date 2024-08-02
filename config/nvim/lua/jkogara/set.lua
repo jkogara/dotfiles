@@ -49,27 +49,27 @@ vim.opt.splitright = true
 vim.opt.wildmenu = true
 vim.opt.wildmode = "list:longest"
 local wildIgnoreList = {
-	"bower_components",
-	"node_modules",
-	"dist",
-	"vendor",
-	"log",
-	"tmp",
-	"*.swp",
-	"gems",
-	".bundle",
-	"Gemfile.lock",
-	".gem",
-	".gitignore",
-	".DS_Store",
-	"*/doc/*",
-	"*/_build/*",
+  "bower_components",
+  "node_modules",
+  "dist",
+  "vendor",
+  "log",
+  "tmp",
+  "*.swp",
+  "gems",
+  ".bundle",
+  "Gemfile.lock",
+  ".gem",
+  ".gitignore",
+  ".DS_Store",
+  "*/doc/*",
+  "*/_build/*",
 }
 for _, v in pairs(wildIgnoreList) do
-	vim.opt.wildignore:append(v)
+  vim.opt.wildignore:append(v)
 end
 vim.opt.history = 5000
-vim.opt.autowrite = true
+vim.opt.autowrite = false
 vim.opt.ruler = true
 vim.opt.number = true
 vim.opt.numberwidth = 4
@@ -91,11 +91,11 @@ vim.opt.mat = 5
 vim.opt.list = false
 vim.opt.wrap = false
 vim.opt.listchars = {
-	tab = "▸ ",
-	eol = "↲",
-	trail = "·",
-	extends = "»",
-	precedes = "«",
+  tab = "▸ ",
+  eol = "↲",
+  trail = "·",
+  extends = "»",
+  precedes = "«",
 }
 vim.opt.colorcolumn = "120"
 
@@ -115,21 +115,21 @@ vim.cmd("augroup END")
 
 -- prevent buffers that are not files from being written to disk
 if not vim.fn.exists("*WipeBuffersWithoutFiles") then
-	function WipeBuffersWithoutFiles()
-		local bufs = {}
-		for i = 1, vim.fn.bufnr("$") do
-			if
-				vim.fn.bufexists(i)
-				and vim.fn.empty(vim.fn.getbufvar(i, "&buftype"))
-				and not vim.fn.filereadable(vim.fn.bufname(i))
-			then
-				table.insert(bufs, i)
-			end
-		end
-		if #bufs > 0 then
-			vim.cmd("bwipeout " .. table.concat(bufs, " "))
-		end
-	end
+  function WipeBuffersWithoutFiles()
+    local bufs = {}
+    for i = 1, vim.fn.bufnr("$") do
+      if
+          vim.fn.bufexists(i)
+          and vim.fn.empty(vim.fn.getbufvar(i, "&buftype"))
+          and not vim.fn.filereadable(vim.fn.bufname(i))
+      then
+        table.insert(bufs, i)
+      end
+    end
+    if #bufs > 0 then
+      vim.cmd("bwipeout " .. table.concat(bufs, " "))
+    end
+  end
 
-	vim.cmd("command! BWnex call v:lua.WipeBuffersWithoutFiles()")
+  vim.cmd("command! BWnex call v:lua.WipeBuffersWithoutFiles()")
 end

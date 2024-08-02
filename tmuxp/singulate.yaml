@@ -1,0 +1,26 @@
+session_name: singulate
+windows:
+  - focus: "true"
+    layout: c7c9,384x100,0,0{92x100,0,0[92x8,0,0,1,92x10,0,9,2,92x13,0,20,3,92x12,0,34,4,92x20,0,47,5,92x32,0,68,6],291x100,93,0,7}
+    options: {}
+    panes:
+      - shell_command:
+          - docker compose up
+      - shell_command:
+          - bundle install
+          - pnpm install
+          - foreman start -f Procfile.frontend
+      - shell_command:
+          - bundle exec rake db:migrate
+          - bundle exec good_job start
+      - shell_command:
+          - bundle exec rails s
+      - shell_command:
+          - bundle exec guard
+      - shell_command:
+          - bash
+      - shell_command:
+          - nvim .
+        focus: "true"
+    start_directory: /home/jkogara/src/singulate/singulate-poc/
+    window_name: singulate

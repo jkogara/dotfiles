@@ -14,7 +14,14 @@ return {
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
   },
-
+  {
+    "tkatsu/vim-erblint",
+    config = function()
+      vim.cmd([[
+          autocmd BufWritePost *.erb ErbLint --autocorrect
+        ]])
+    end,
+  },
   { "uarun/vim-protobuf" },
   { "jparise/vim-graphql" },
   { "tyru/open-browser.vim" },
@@ -33,10 +40,7 @@ return {
 
   -- -- Markdown preview
   {
-    "iamcco/markdown-preview.nvim",
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
+    "jannis-baum/vivify.vim",
   },
 
   { "shinglyu/vim-codespell" },

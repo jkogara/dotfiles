@@ -31,17 +31,17 @@ return {
         null_ls.builtins.formatting.terraform_fmt,
         require("none-ls.diagnostics.eslint_d"),
         require("none-ls.formatting.eslint_d"),
-        null_ls.builtins.formatting.erb_lint.with({
-          on_output = function(params, done)
-            local output = params.output
-            if output:find("No errors were found in ERB files") then
-              return done()
-            end
+        -- null_ls.builtins.formatting.erb_lint.with({
+        --   on_output = function(params, done)
+        --     local output = params.output
+        --     if output:find("No errors were found in ERB files") then
+        --       return done()
+        --     end
 
-            local metadata_end = output:match(".*==()") + 1
-            return done({ { text = output:sub(metadata_end) } })
-          end,
-        }),
+        --     local metadata_end = output:match(".*==()") + 1
+        --     return done({ { text = output:sub(metadata_end) } })
+        --   end,
+        -- }),
         null_ls.builtins.diagnostics.erb_lint.with({}),
       }
       null_ls.setup({
