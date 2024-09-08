@@ -33,6 +33,7 @@ return {
         ensure_installed = {
           "typos-lsp",
           "prettier",               -- prettier formatter
+          "prettierd",              -- prettier formatter
           "stylua",                 -- lua formatter
           "isort",                  -- python formatter
           "black",                  -- python formatter
@@ -61,7 +62,7 @@ return {
           "jedi-language-server",
           "svelte-language-server",
           "erb-lint",
-          "rubocop",
+          -- "rubocop",
           "rustywind",
         },
       })

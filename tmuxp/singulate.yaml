@@ -12,7 +12,7 @@ windows:
           - foreman start -f Procfile.frontend
       - shell_command:
           - bundle exec rake db:migrate
-          - bundle exec good_job start
+          - bundle exec sidekiq
       - shell_command:
           - bundle exec rails s
       - shell_command:
