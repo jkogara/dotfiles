@@ -18,7 +18,7 @@ windows:
       - shell_command:
           - bundle exec guard
       - shell_command:
-          - bash
+          - echo "Welcome!"
       - shell_command:
           - nvim .
         focus: "true"

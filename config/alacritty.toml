@@ -7,17 +7,21 @@ size = 11
 glyph_offset = { x = 0, y = 1 }
 
 [font.normal]
-family = "SauceCodePro Nerd Font Mono"
+# family = "SauceCodePro Nerd Font Mono"
+family = "NotoMono Nerd Font"
 style = "Regular"
 
 [font.bold]
-family = "SauceCodePro Nerd Font Mono"
+family = "NotoMono Nerd Font"
+# family = "SauceCodePro Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "SauceCodePro Nerd Font Mono"
+family = "NotoMono Nerd Font"
+# family = "SauceCodePro Nerd Font Mono"
 style = "Italic"
 
 [font.bold_italic]
-family = "SauceCodePro Nerd Font Mono"
+family = "NotoMono Nerd Font"
+# family = "SauceCodePro Nerd Font Mono"
 style = "Bold Italic"

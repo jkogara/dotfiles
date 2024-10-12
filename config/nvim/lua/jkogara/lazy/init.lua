@@ -40,9 +40,19 @@ return {
 
   -- -- Markdown preview
   {
-    "jannis-baum/vivify.vim",
+    "toppair/peek.nvim",
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    config = function()
+      require("peek").setup({
+        auto_load = true,
+        app = "firefox",
+        theme = "light",
+      })
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+    end,
   },
-
   { "shinglyu/vim-codespell" },
   { "cappyzawa/starlark.vim" },
 
