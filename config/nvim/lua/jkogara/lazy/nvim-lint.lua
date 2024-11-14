@@ -30,7 +30,7 @@ return {
         rust = { "analyzer" },
         elixir = { "elixir-ls" },
         eruby = { "erblint" },
-        ruby = { "bundle exec rubocop", "ruby" },
+        -- ruby = { "bundle exec rubocop", "ruby" },
       }
 
       vim.keymap.set("n", "<leader>L", function()

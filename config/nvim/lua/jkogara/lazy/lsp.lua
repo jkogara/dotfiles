@@ -64,6 +64,8 @@ return {
           "erb-lint",
           -- "rubocop",
           "rustywind",
+          "jupytext",
+          "ruby-lsp",
         },
       })
     end,

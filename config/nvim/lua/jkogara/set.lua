@@ -42,6 +42,7 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.mouse = "r"
 
 vim.g.nonels_supress_issue58 = true
+vim.g.python3_host_prog = "/home/jkogara/.pyenv/shims/python3"
 
 vim.opt.cursorline = true
 vim.opt.splitbelow = true

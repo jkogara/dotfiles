@@ -44,9 +44,9 @@ return {
     end,
     init = function()
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-      require("conform").formatters.ruby = {
-        command = "/home/jkogara/.rbenv/shims/rubocop",
-      }
+      -- require("conform").formatters.ruby = {
+      --   command = "/home/jkogara/.rbenv/shims/rubocop",
+      -- }
     end,
   },
 }
