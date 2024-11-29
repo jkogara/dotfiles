@@ -25,7 +25,7 @@ M.setup_language_servers = function(defaults)
 
   lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.lua_ls"), defaults))
   -- lspconfig.solargraph.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.solargraph"), defaults))
-  lspconfig.ruby_lsp.setup({ init_options = { formatter = "rubocop", linters = { "rubocop" } } })
+  lspconfig.ruby_lsp.setup({ init_options = { formatter = "rubocop", linters = { "rubocop" } } }, defaults)
   lspconfig.jsonls.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.jsonls"), defaults))
   lspconfig.bashls.setup(defaults)
   lspconfig.terraformls.setup({})

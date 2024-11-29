@@ -9,6 +9,8 @@ return {
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = false
+      vim.g.molten_open_cmd = "firefox"
+      vim.g.auto_open_html_in_browser = true
 
       -- optional, I like wrapping. works for virt text and the output window
       vim.g.molten_wrap_output = true
