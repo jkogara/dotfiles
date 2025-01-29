@@ -20,6 +20,8 @@ return {
           _ = { "remove_trailing_lines" },
           javascript = { "prettierd", "prettier", "trim_whitespace" },
           typescriptreact = { "prettierd", "prettier", "trim_whitespace" },
+          erb = { "htmlbeautifier" },
+          eruby = { "htmlbeautifier" },
           typescript = { "prettierd", "prettier", "trim_whitespace" },
           css = { "prettier", "trim_whitespace" },
           python = { "black", "trim_whitespace" },

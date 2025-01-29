@@ -5,6 +5,7 @@ vim.opt.ignorecase = true
 -- enable syntax highlighting
 vim.cmd("syntax enable")
 
+vim.opt.laststatus = 3
 vim.opt.timeout = true
 vim.opt.timeoutlen = 3000
 vim.opt.ttimeoutlen = 50
