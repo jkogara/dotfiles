@@ -5,12 +5,21 @@ return {
     lazy = false,
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     config = {
-      claude = {
-        endpoint = "https://api.anthropic.com",
-        model = "claude-3-5-sonnet-20241022",
-        timeout = 30000, -- Timeout in milliseconds
-        temperature = 0,
-        max_tokens = 8000,
+      provider = "ollama",
+      vendors = {
+        ollama = {
+          __inherited_from = "openai",
+          api_key_name = "",
+          endpoint = "http://127.0.0.1:11434/v1",
+          model = "deepseek-r1:14b",
+        },
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-3-5-sonnet-20241022",
+          timeout = 30000, -- Timeout in milliseconds
+          temperature = 0,
+          max_tokens = 8000,
+        },
       },
     },
     opts = {
