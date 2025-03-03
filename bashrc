@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	source /etc/profile.d/vte.sh
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
 	export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 	export PUPPETEER_EXECUTABLE_PATH=/opt/homebrew/bin/chromium
 	eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -69,7 +67,6 @@ source $BASH_IT/bash_it.sh
 export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 
 # Load my bash scripts
 
@@ -112,3 +109,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+. "$HOME/.cargo/env"
+eval "$(pyenv init -)"
+eval "$(rbenv init -)"

@@ -12,7 +12,7 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='lsd'
 if [ -f $HOME/.local/bin/tilt ]; then
-  alias tilt=~/.local/bin/tilt
+	alias tilt=~/.local/bin/tilt
 fi
 export LC_ADDRESS=en_US.UTF-8
 
@@ -22,79 +22,77 @@ if test -f /run/.containerenv; then
     PS1="${bold_blue}[DISTROBOX]${bold_red}${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}\n» "
   }
   PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a'
-else
-  # shell prompt
-  function prompt_command() {
-    PS1="${bold_blue}[$(hostname)]${bold_red}${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}\n» "
-  }
+else# shell prompt
+function prompt_command() {
+	PS1="${bold_blue}[$(hostname)]${bold_red}${normal} \w${normal} ${bold_white}\n[$(git_prompt_info)]${normal}\n» "
+}
 
-  function tmux_session() {
-    tmuxp load ~/.tmuxp/"$@".yaml
-  }
+function tmux_session() {
+	tmuxp load ~/.tmuxp/"$@".yaml
+}
 
   PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007";prompt_command;history -a'
 
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    function cat() {
-      if hash bat 2>/dev/null; then
-        bat "$@"
-      else
-        cat "$@"
-      fi
-    }
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	function cat() {
+		if hash bat 2>/dev/null; then
+			bat "$@"
+		else
+			cat "$@"
+		fi
+	}
 
-    export PARALLEL_TEST_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
+	export PARALLEL_TEST_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 
-    source /usr/share/bash-completion/bash_completion
-    source <(git-town completions bash)
+	source /usr/share/bash-completion/bash_completionsource <(git-town completions bash)
 
-    for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*; do
-      source $file
-    done
-    if ! command -v fzf &>/dev/null; then
-      echo "fd not found, installing"
-      sudo dnf install fd-find -y
-    fi
-    if ! command -v fzf &>/dev/null; then
-      echo "fzf not found, installing"
-      sudo dnf install fzf ripgrep -y
-    fi
-    source /etc/bash_completion.d/fzf
-    [ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
+	for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*; do
+		source $file
+	done
+	if ! command -v fzf &>/dev/null; then
+		echo "fd not found, installing"
+		sudo dnf install fd-find -y
+	fi
+	if ! command -v fzf &>/dev/null; then
+		echo "fzf not found, installing"
+		sudo dnf install fzf ripgrep -y
+	fi
+	source /etc/bash_completion.d/fzf
+	[ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
 
-    export NVM_DIR="$HOME/.config/nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+	export NVM_DIR="$HOME/.config/nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-    # The next line updates PATH for the Google Cloud SDK.
-    if [ -f "$HOME/.google-cloud-sdk/path.bash.inc" ]; then . "$HOME/.google-cloud-sdk/path.bash.inc"; fi
+	# The next line updates PATH for the Google Cloud SDK.
+	if [ -f "$HOME/.google-cloud-sdk/path.bash.inc" ]; then . "$HOME/.google-cloud-sdk/path.bash.inc"; fi
 
-    # The next line enables shell command completion for gcloud.
-    if [ -f "$HOME/.google-cloud-sdk/completion.bash.inc" ]; then . "$HOME/.google-cloud-sdk/completion.bash.inc"; fi
+	# The next line enables shell command completion for gcloud.
+	if [ -f "$HOME/.google-cloud-sdk/completion.bash.inc" ]; then . "$HOME/.google-cloud-sdk/completion.bash.inc"; fi
 
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    eval "$(jenv init -)"
-    alias cat='bat --paging=never'
-    source ~/dotfiles/zoxide.sh
-    source /opt/homebrew/etc/bash_completion # Mac OSX
-    if ! command -v fzf &>/dev/null; then
-      echo "fzf not found, installing"
-      brew install fzf ripgrep
-    fi
-    eval "$(fzf --bash)" # This is only available in > 0.48, 0.44 currently distributed in dnf
-    eval "$(jenv init -)"
-    alias cat='bat --paging=never'
-    source ~/dotfiles/zoxide.sh
-    source /opt/homebrew/etc/bash_completion # Mac OSX
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
-    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
-  fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	eval "$(jenv init -)"
+	alias cat='bat --paging=never'
+	source ~/dotfiles/zoxide.sh
+	source /opt/homebrew/etc/bash_completion # Mac OSX
+	if ! command -v fzf &>/dev/null; then
+		echo "fzf not found, installing"
+		brew install fzf ripgrep
+	fi
+	eval "$(fzf --bash)" # This is only available in > 0.48, 0.44 currently distributed in dnf
+	eval "$(jenv init -)"
+	alias cat='bat --paging=never'
+	source ~/dotfiles/zoxide.sh
+	source /opt/homebrew/etc/bash_completion # Mac OSX
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
+	[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+fi
 
-  # nvm cd auto select hack
-  cd() {
-    builtin cd "$@" && [ -e ".nvmrc" ] && nvm use &>/dev/null
-  }
+# nvm cd auto select hack
+cd() {
+	builtin cd "$@" && [ -e ".nvmrc" ] && nvm use &>/dev/null
+}
 
   export FZF_CTRL_T_OPTS="--height 50% -1 --layout=reverse-list --multi --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300'"
   export FZF_DEFAULT_OPTS="--height=50% --info=inline --border --margin=1 --padding=1"
@@ -102,61 +100,61 @@ else
 
   complete -C '/usr/local/bin/aws_completer' aws
 
-  function replace_all_strings() {
-    find ./ -not -iwholename '*.git*' -type f -exec sed -i -e "s/${1}/${2}/g" {} \;
-  }
-  # End to end testing multiple environments
-  export BROWSER=Chrome
+function replace_all_strings() {
+	find ./ -not -iwholename '*.git*' -type f -exec sed -i -e "s/${1}/${2}/g" {} \;
+}
+# End to end testing multiple environments
+export BROWSER=Chrome
 
-  function start_lemonade() {
-    if [ -f /tmp/lemonade.pid ]; then
-      kill -9 $(cat /tmp/lemonade.pid)
-      rm -f /tmp/lemonade.pid
-    fi
-    lemonade server 2>&1 >/dev/null &
-    echo $! >/tmp/lemonade.pid
-  }
+function start_lemonade() {
+	if [ -f /tmp/lemonade.pid ]; then
+		kill -9 $(cat /tmp/lemonade.pid)
+		rm -f /tmp/lemonade.pid
+	fi
+	lemonade server 2>&1 >/dev/null &
+	echo $! >/tmp/lemonade.pid
+}
 
-  # Git related
-  export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
-  function clean_merged_branches() {
-    if [ -z "$1" ]; then
-      local reference_branch="main"
-    else
-      local reference_branch=$1
-    fi
+# Git related
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
+function clean_merged_branches() {
+	if [ -z "$1" ]; then
+		local reference_branch="main"
+	else
+		local reference_branch=$1
+	fi
 
-    for k in $(git branch | sed /\*/d | grep -E -v reference_branch); do
-      if [[ ! $(git log -1 --since='1 weeks ago' -s $k) ]]; then
-        git branch -D $k
-      fi
-    done
-    git remote prune origin
-  }
+	for k in $(git branch | sed /\*/d | grep -E -v reference_branch); do
+		if [[ ! $(git log -1 --since='1 weeks ago' -s $k) ]]; then
+			git branch -D $k
+		fi
+	done
+	git remote prune origin
+}
 
-  function kill_spring() {
-    ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
-  }
+function kill_spring() {
+	ps ax | grep [s]pring | awk '{print $1}' | xargs kill -9
+}
 
-  function kafka-up() {
-    cd /opt/kafka_2.13-3.0.0 && foreman start
-  }
+function kafka-up() {
+	cd /opt/kafka_2.13-3.0.0 && foreman start
+}
 
   export GPG_TTY=$(tty)
 
-  function start_or_load_gpg_agent() {
-    # Refresh gpg-agent tty in case user switches into an X session
-    gpg-connect-agent updatestartuptty /bye >/dev/null
-    # Set SSH to use gpg-agent
-    unset SSH_AGENT_PID
-    if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-      export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-    fi
-    # Start the gpg-agent if not already running
-    if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-      gpg-connect-agent /bye >/dev/null 2>&1
-    fi
-  }
+function start_or_load_gpg_agent() {
+	# Refresh gpg-agent tty in case user switches into an X session
+	gpg-connect-agent updatestartuptty /bye >/dev/null
+	# Set SSH to use gpg-agent
+	unset SSH_AGENT_PID
+	if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+		export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+	fi
+	# Start the gpg-agent if not already running
+	if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
+		gpg-connect-agent /bye >/dev/null 2>&1
+	fi
+}
 
   start_or_load_gpg_agent
 
@@ -188,14 +186,14 @@ else
   if [ -f ~/.secrets ]; then . ~/.secrets; fi
   if [ -f ~/.work_specific.sh ]; then . ~/.work_specific.sh; fi
 
-  function rails_clean_g() {
-    bundle exec rails g "$@" --no-javascripts --no-stylesheets --no-helper --no-assets
-  }
+function rails_clean_g() {
+	bundle exec rails g "$@" --no-javascripts --no-stylesheets --no-helper --no-assets
+}
 
-  function git-reset-new-files() {
-    git add .
-    git reset --hard
-  }
+function git-reset-new-files() {
+	git add .
+	git reset --hard
+}
 
   # Java - gradle
   export GRADLE_HOME=/opt/gradle-2.2.1
@@ -240,10 +238,10 @@ else
   export DISABLE_SPRING=true
   source $HOME/.cargo/env
 
-  function connect-to-console() {
-    args=("$@")
-    kubectl exec -it ${args[0]} -c rails -n ${args[1]} -- ./docker-entrypoint.sh /bin/bash
-  }
+function connect-to-console() {
+	args=("$@")
+	kubectl exec -it ${args[0]} -c rails -n ${args[1]} -- ./docker-entrypoint.sh /bin/bash
+}
 
   export XDG_CONFIG_HOME=$HOME/.config
 
@@ -251,59 +249,55 @@ else
   export PATH=$PATH:./node_modules/.bin
 
   export PATH="$HOME/.tfenv/bin:$PATH"
-  eval "$(rbenv init -)"
   export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  POWERLIVE_DAEMON_INSTALLED=$(command -pv powerline-daemon)
+export PATH="$PYENV_ROOT/bin:$PATH"
+POWERLIVE_DAEMON_INSTALLED=$(command -pv powerline-daemon)
 
-  if [ -n "$POWERLIVE_DAEMON_INSTALLED" ]; then
-    powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . /usr/share/powerline/bash/powerline.sh
-  fi
+if [ -n "$POWERLIVE_DAEMON_INSTALLED" ]; then
+	powerline-daemon -q
+	POWERLINE_BASH_CONTINUATION=1
+	POWERLINE_BASH_SELECT=1
+	. /usr/share/powerline/bash/powerline.sh
+fi
 
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-    export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-    export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
-    export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-    export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
-    export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
-    export PATH=$PATH:/home/jkogara/.local/bin
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+	export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+	export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+	export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+	export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
+	export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
+	export PATH=$PATH:/home/jkogara/.local/bin
+	eval "$(pyenv virtualenv-init -)"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	export PATH="/opt/homebrew/Cellar/pyenv-virtualenv/1.2.1/shims:${PATH}"
+	export PYENV_VIRTUALENV_INIT=1
 
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="/opt/homebrew/Cellar/pyenv-virtualenv/1.2.1/shims:${PATH}"
-    export PYENV_VIRTUALENV_INIT=1
+	TEMP_PYENV_VIRTUALENV_PROJECT_DIR=$(mktemp -t pyenv_virtualenv_project_dir_XXXXXX)
 
-    TEMP_PYENV_VIRTUALENV_PROJECT_DIR=$(mktemp -t pyenv_virtualenv_project_dir_XXXXXX)
+	_pyenv_virtualenv_hook() {
+		local ret=$?
+		project_dir=$(cat "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR")
+		if [[ $project_dir == "" ]]; then
+			if [ -f .python-version ] || [ -d venv ]; then
+				echo $PWD >"$TEMP_PYENV_VIRTUALENV_PROJECT_DIR"
+				eval "$(pyenv sh-activate --quiet || true)" || . venv/bin/activate 2>/dev/null || true
+			fi
+		elif [[ ! $PWD =~ $project_dir ]]; then
+			echo >"$TEMP_PYENV_VIRTUALENV_PROJECT_DIR"
+			eval "$(pyenv sh-deactivate --quiet || true)" || deactivate 2>/dev/null || true
+		fi
+		return $ret
+	}
 
-    _pyenv_virtualenv_hook() {
-      local ret=$?
-      project_dir=$(cat "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR")
-      if [[ $project_dir == "" ]]; then
-        if [ -f .python-version ] || [ -d venv ]; then
-          echo $PWD >"$TEMP_PYENV_VIRTUALENV_PROJECT_DIR"
-          eval "$(pyenv sh-activate --quiet || true)" || . venv/bin/activate 2>/dev/null || true
-        fi
-      elif [[ ! $PWD =~ $project_dir ]]; then
-        echo >"$TEMP_PYENV_VIRTUALENV_PROJECT_DIR"
-        eval "$(pyenv sh-deactivate --quiet || true)" || deactivate 2>/dev/null || true
-      fi
-      return $ret
-    }
+	PROMPT_COMMAND="_pyenv_virtualenv_hook; $PROMPT_COMMAND"
 
-    PROMPT_COMMAND="_pyenv_virtualenv_hook; $PROMPT_COMMAND"
-
-    shellExit() {
-      rm "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR" 2>/dev/null
-    }
-    trap shellExit EXIT
-    eval "$(pyenv init -)"
-  fi
+	shellExit() {
+		rm "$TEMP_PYENV_VIRTUALENV_PROJECT_DIR" 2>/dev/null
+	}
+	trap shellExit EXIT
+fi
 
   # alias yarn="corepack yarn"
   # alias yarnpkg="corepack yarnpkg"
@@ -325,9 +319,8 @@ else
   alias fabric=/home/jkogara/src/fabric/client/fabric
   source ~/dotfiles/zoxide.sh
 
-  function clean_nvim_cache() {
-    rm -rf ~/.local/share/nvim/*
-    rm -rf ~/.cache/nvim/*
-  }
-  unalias rg
-fi
+function clean_nvim_cache() {
+	rm -rf ~/.local/share/nvim/*
+	rm -rf ~/.cache/nvim/*
+}
+unalias rgfi
