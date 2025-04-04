@@ -20,7 +20,6 @@ export NGINX_PATH='/opt/nginx'
 # Don't check mail when opening terminal.
 unset MAILCHECK
 
-
 # Change this to your console based IRC client of choice.
 
 export IRC_CLIENT='irssi'
@@ -42,6 +41,9 @@ source $BASH_IT/bash_it.sh
 # Appending pyspark-shell is needed for Spark 1.4+
 export PYSPARK_SUBMIT_ARGS='--master local[2] pyspark-shell'
 
-export RUST_SRC_PATH=`rustc --print sysroot`/lib/rustlib/src/rust/src
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src
 . "$HOME/.cargo/env"
 
+if [ $(hostname) == "jono120-amd-9700" ]; then
+  ddcutil -d 2 setvcp 10 80
+fi
