@@ -1,0 +1,44 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--mount",
+        "type=bind,src=/home/jkogara/src/singulate/singulate-poc,dst=/projects/singulate-poc",
+        "mcp/filesystem",
+        "/projects"
+      ],
+      "command": "docker"
+    },
+    "git": {
+      "args": [
+        "--directory",
+        "/home/jkogara/src/mcp-servers/src/git/",
+        "run",
+        "mcp-server-git"
+      ],
+      "command": "uv"
+    },
+    "postgres": {
+      "env": {
+        "PG_PASSWORD": "singulate_password",
+        "PG_DATABASE": "singulate_development",
+        "PG_HOST": "localhost",
+        "PG_PORT": "5432",
+        "PG_USER": "singulate"
+      },
+      "command": "npx",
+      "disabled": false,
+      "type": "stdio",
+      "args": [
+        "-y",
+        "mcp-postgres-server"
+      ]
+    }
+  },
+  "nativeMCPServers": [
+    
+  ]
+}

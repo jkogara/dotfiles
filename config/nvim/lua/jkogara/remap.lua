@@ -42,7 +42,7 @@ vim.keymap.set("n", "<leader>h", ":split<cr>", { noremap = true, silent = true }
 vim.g.grepper = {
   tools = { "grep", "git", "ag" },
   ag = {
-    grepprg = 'ag $* --vimgrep --smart-case --nogroup --column --ignore={"*node_modules*","*dist*"}',
+    grepprg = 'ag $* --vimgrep --smart-case --nogroup --column --ignore={"*node_modules*","*dist*","*builds*"}',
   },
 }
 vim.keymap.set("x", "gs", "<plug>(GrepperOperator)")
