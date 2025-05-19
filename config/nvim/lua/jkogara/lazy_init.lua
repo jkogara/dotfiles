@@ -14,4 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   change_detection = { notify = false },
   spec = "jkogara.lazy",
+  git = {
+    timeout = 600
+  }
 })

@@ -37,6 +37,15 @@ M.setup_language_servers = function(defaults)
   lspconfig.stimulus_ls.setup({})
   lspconfig.yamlls.setup(defaults)
   lspconfig.jedi_language_server.setup({})
+  lspconfig.eslint.setup({
+    --- ...
+    on_attach = function(client, bufnr)
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        command = "EslintFixAll",
+      })
+    end,
+  })
 end
 
 M.default_on_attach = function(client, bufnr)

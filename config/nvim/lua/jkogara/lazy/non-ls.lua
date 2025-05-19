@@ -54,8 +54,6 @@ return {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.rustywind, -- organize tailwind classes
         null_ls.builtins.formatting.terraform_fmt,
-        require("none-ls.diagnostics.eslint_d"),
-        require("none-ls.formatting.eslint_d"),
         -- null_ls.builtins.formatting.erb_lint.with({
         --   on_output = function(params, done)
         --     local output = params.output
@@ -86,6 +84,26 @@ return {
           end
         end,
       })
+      -- local eslint = require("eslint")
+      -- eslint.setup({
+      --   bin = "eslint", -- or `eslint_d`
+      --   code_actions = {
+      --     enable = true,
+      --     apply_on_save = {
+      --       enable = true,
+      --       types = { "directive", "problem", "suggestion", "layout" },
+      --     },
+      --     disable_rule_comment = {
+      --       enable = true,
+      --       location = "separate_line", -- or `same_line`
+      --     },
+      --   },
+      --   diagnostics = {
+      --     enable = false,
+      --     report_unused_disable_directives = false,
+      --     run_on = "type", -- or `save`
+      --   },
+      -- })
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",

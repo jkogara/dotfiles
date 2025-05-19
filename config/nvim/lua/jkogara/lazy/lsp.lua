@@ -12,10 +12,14 @@ return {
       require("fidget").setup({})
     end,
   },
-
+  {
+    "mason-org/mason-lspconfig.nvim",
+    version = "v1.32.0",
+  },
   {
     "williamboman/mason.nvim",
     event = "BufReadPre",
+    version = "v1.11.0",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
@@ -38,7 +42,6 @@ return {
           "isort",                  -- python formatter
           "black",                  -- python formatter
           "pylint",                 -- python linter
-          "eslint_d",               -- js linter
           "rubyfmt",                -- ruby formatter
           "eslint_d",               -- js linter
           "flake8",                 -- python linter
