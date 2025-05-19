@@ -44,6 +44,7 @@ return {
           "pylint",                 -- python linter
           "rubyfmt",                -- ruby formatter
           "eslint_d",               -- js linter
+          "eslint-lsp",
           "flake8",                 -- python linter
           "shfmt",                  -- shell formatter
           "ts-standard",            -- typescript linter
