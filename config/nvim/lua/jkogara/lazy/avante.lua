@@ -9,7 +9,10 @@ return {
       provider = "claude",
       behaviour = {
         enable_claude_text_editor_tool_mode = true,
+        enable_cursor_planning_mode = true,
       },
+    },
+    vendors = {
       openai = {
         endpoint = "https://api.openai.com/v1",
         model = "gpt-4o",         -- your desired model (or use gpt-4o, etc.)
