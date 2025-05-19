@@ -130,7 +130,7 @@ else
         git branch -D $k
       fi
     done
-    git remote prune origin
+    git fetch --prune
   }
 
   function kill_spring() {
