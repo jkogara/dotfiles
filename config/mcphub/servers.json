@@ -12,6 +12,14 @@
       ],
       "command": "docker"
     },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "fetch": {
+      "command": "node",
+      "args": ["/home/jkogara/src/fetch-mcp/dist/index.js"]
+    },
     "git": {
       "args": [
         "--directory",
@@ -32,13 +40,8 @@
       "command": "npx",
       "disabled": false,
       "type": "stdio",
-      "args": [
-        "-y",
-        "mcp-postgres-server"
-      ]
+      "args": ["-y", "mcp-postgres-server"]
     }
   },
-  "nativeMCPServers": [
-    
-  ]
+  "nativeMCPServers": []
 }
