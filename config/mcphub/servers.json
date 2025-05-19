@@ -29,6 +29,14 @@
       ],
       "command": "uv"
     },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "fetch": {
+      "command": "node",
+      "args": ["/home/jkogara/src/fetch-mcp/dist/index.js"]
+    },
     "postgres": {
       "env": {
         "PG_PASSWORD": "singulate_password",
