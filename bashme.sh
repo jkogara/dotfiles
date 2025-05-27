@@ -50,13 +50,42 @@ else
     for file in /home/linuxbrew/.linuxbrew/etc/bash_completion.d/*; do
       source $file
     done
-    if ! command -v fzf &>/dev/null; then
+
+    # Detect Linux distribution
+    if [[ -f /etc/os-release ]]; then
+      source /etc/os-release
+      DISTRO=$ID
+    else
+      DISTRO="unknown"
+    fi
+
+    if ! command -v fd &>/dev/null; then
       echo "fd not found, installing"
-      sudo dnf install fd-find -y
+      case $DISTRO in
+        fedora)
+          sudo dnf install fd-find -y
+          ;;
+        opensuse*)
+          sudo zypper install -y fd
+          ;;
+        *)
+          echo "Unknown distribution, please install fd manually"
+          ;;
+      esac
     fi
     if ! command -v fzf &>/dev/null; then
       echo "fzf not found, installing"
-      sudo dnf install fzf ripgrep -y
+      case $DISTRO in
+        fedora)
+          sudo dnf install fzf ripgrep -y
+          ;;
+        opensuse*)
+          sudo zypper install -y fzf ripgrep
+          ;;
+        *)
+          echo "Unknown distribution, please install fzf and ripgrep manually"
+          ;;
+      esac
     fi
     source /etc/bash_completion.d/fzf
     [ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
