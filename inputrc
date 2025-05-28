@@ -1,36 +1,31 @@
-# Makes console in mac sane.
+################################################################################
+## ~/.inputrc
+##
+## Control the behaviour of the readline library used e.g.
+## by the bash in the interactive mode for line editing.
+##
+################################################################################
 #
-# ln -s /path/here/inputrc ~/.inputrc
+# The bell style used e.g. on error or tab completion, possible values
+# are `none', `visible', and `audible' the ringing the bell.
+#
+#set bell-style none
 
-set input-meta on
-set output-meta on
-set convert-meta off
-# To use these in ITerm2 you may also need to configure preferences to send the correct escape
-# code for the key combination.
+#
+# If set to on, words which have more than one possible completion without
+# any possible partial completion cause the matches to be listed immediately
+# instead of ringing the bell.
+#
+#set show-all-if-unmodified on
 
-# Option + Arrows to jump words.
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
-"\e[1;9D": backward-word
-"\e[1;9C": forward-word
+#
+# If set to on, words which have more than one possible completion cause the
+# matches to be listed immediately instead of ringing the bell.
+#
+#set show-all-if-ambiguous on
 
-
-# The following are other escape sequences that can be configured in Iterm2 preferences.
-#        ESC ^H   Delete previous word (backspace key) [n]
-#        ESC DEL  Delete previous word (delete key) [n]
-#        ESC SP   Set the mark (space key); see ^X^X and ^Y above
-#        ESC .    Get the last (or [n]'th) word from previous line
-#        ESC ?    Show possible completions; see below
-#        ESC <    Move to start of history
-#        ESC >    Move to end of history
-#        ESC b    Move backward a word [n]
-#        ESC d    Delete word under cursor [n]
-#        ESC f    Move forward a word [n]
-#        ESC l    Make word lowercase [n]
-#        ESC u    Make word uppercase [n]
-#        ESC y    Yank back last killed text
-#        ESC v    Show library version
-#        ESC w    Make area up to mark yankable
-#        ESC nn   Set repeat count to the number nn
-#        ESC C    Read from environment variable ``_C_'', where C is
-#                 an uppercase letter
+#
+# end
+#
+"\033[1;5C": forward-word
+"\033[1;5D": backward-word
