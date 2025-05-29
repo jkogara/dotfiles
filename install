@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Dotfiles installation script
-# Backs up existing dotfiles and creates symlinks to this repository
+# Backs up existing dotfiles, creates symlinks, and installs required packages
 
 set -euo pipefail # Exit on error, undefined vars, pipe failures
 
 # Configuration
-readonly SCRIPT_VERSION="2.5"
+readonly SCRIPT_VERSION="2.6"
 readonly REQUIRED_COMMANDS=("ln" "mv" "mkdir" "find" "readlink")
 
 # Files and directories to exclude from dotfile processing
@@ -291,6 +291,76 @@ if [[ -d "$BACKUP_DIR" ]]; then
   print_warning "You can safely remove the backup directory after verifying everything works correctly"
 else
   print_status "No existing files needed to be backed up"
+fi
+
+# Function to install required tools based on OS/platform
+install_required_tools() {
+  print_status "Installing required tools based on OS/platform..."
+
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Detect Linux distribution
+    if [[ -f /etc/os-release ]]; then
+      source /etc/os-release
+      DISTRO=$ID
+    else
+      DISTRO="unknown"
+    fi
+
+    linux_tools_to_install=("fd-find" "fzf" "ripgrep" "nvim" "git" "curl" "wget" "golang" "thefuck")
+
+    for tool in "${linux_tools_to_install[@]}"; do
+      if ! command -v "$tool" &>/dev/null; then
+        print_status "$tool not found, installing"
+        case $DISTRO in
+        fedora)
+          execute_cmd sudo dnf install -y "$tool"
+          ;;
+        opensuse*)
+          execute_cmd sudo zypper install -y "$tool"
+          ;;
+        *)
+          print_warning "Unknown distribution, please install fzf and ripgrep manually"
+          ;;
+        esac
+      else
+        print_status "$tool is already installed"
+      fi
+    done
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS installations
+    if ! command -v fzf &>/dev/null; then
+      print_status "fzf not found, installing"
+      execute_cmd brew install fzf ripgrep
+    fi
+  fi
+
+  # install nvm
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  brew install rbenv
+  brew install pyenv
+  pip install powerline-status
+  curl -fsSL https://bun.sh/install | bash -s "bun-v1.2.15"
+  git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  return 0
+}
+
+# Ask user if they want to install tools
+if [[ "$FORCE" != "true" && "$DRY_RUN" != "true" ]]; then
+  echo -n "Would you like to install required tools (fd, fzf, ripgrep)? (y/n): "
+  read -r install_tools
+  if [[ "$install_tools" =~ ^[Yy] ]]; then
+    install_required_tools
+  else
+    print_status "Skipping tool installation"
+  fi
+elif [[ "$FORCE" == "true" && "$DRY_RUN" != "true" ]]; then
+  # Force mode - install without asking
+  install_required_tools
+elif [[ "$DRY_RUN" == "true" ]]; then
+  print_status "Would install required tools (fd, fzf, ripgrep) based on OS/platform"
 fi
 
 print_status "Installation summary:"
