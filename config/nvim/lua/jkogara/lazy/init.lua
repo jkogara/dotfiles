@@ -15,12 +15,15 @@ return {
     end,
   },
   {
-    "tkatsu/vim-erblint",
+    "jkogara/nvim-erblint",
     config = function()
       vim.cmd([[
           autocmd BufWritePost *.erb ErbLint --autocorrect
         ]])
     end,
+    dependencies = {
+      "rcarriga/nvim-notify",
+    },
   },
   { "uarun/vim-protobuf" },
   { "jparise/vim-graphql" },

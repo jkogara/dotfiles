@@ -7,37 +7,33 @@ return {
       -- add any opts here
       -- for example
       provider = "claude",
-      claude = {
-        endpoint = "https://api.anthropic.com",
-        model = "claude-3-7-sonnet-20250219",
-        -- model = "claude-sonnet-4-20250514",
-        disable_tools = true,
-        temperature = 0,
-        max_tokens = 8192,
-      },
-      behaviour = {
-        auto_suggestions = false,
-        minimize_diff = false,
-        enable_cursor_planning_mode = true,
-        enable_claude_text_editor_tool_mode = true,
-      },
-    },
-    vendors = {
-      openai = {
-        endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o",         -- your desired model (or use gpt-4o, etc.)
-        timeout = 30000,          -- Timeout in milliseconds, increase this for reasoning models
-        temperature = 0,
-        max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-        --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-      },
-      claude = {
-        endpoint = "https://api.anthropic.com",
-        -- model = "claude-3-5-sonnet-20241022",
-        -- model = "claude-3-7-sonnet-20250219",
-        model = "claude-sonnet-4-20250514",
-        timeout = 30000, -- Timeout in milliseconds
-        temperature = 0,
+      providers = {
+        openai = {
+          endpoint = "https://api.openai.com/v1",
+          model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
+          timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+          extra_request_body = {
+            temperature = 0,
+            max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+          },
+          --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+        },
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-3-7-sonnet-20250219",
+          -- model = "claude-sonnet-4-20250514",
+          disable_tools = true,
+          extra_request_body = {
+            temperature = 0,
+            max_tokens = 8192,
+          },
+          behaviour = {
+            auto_suggestions = false,
+            minimize_diff = false,
+            enable_cursor_planning_mode = true,
+            enable_claude_text_editor_tool_mode = true,
+          },
+        },
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
