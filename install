@@ -11,16 +11,16 @@ readonly REQUIRED_COMMANDS=("ln" "mv" "mkdir" "find" "readlink")
 
 # Files and directories to exclude from dotfile processing
 readonly EXCLUDE_LIST=(
-  "install"
-  "config"
-  ".git"
-  ".gitmodules"
-  ".gitignore"
-  "README.md"
-  "alacritty"
-  "vim"
-  "LICENSE"
-  "*.md"
+	"install"
+	"config"
+	".git"
+	".gitmodules"
+	".gitignore"
+	"README.md"
+	"alacritty"
+	"vim"
+	"LICENSE"
+	"*.md"
 )
 
 # Directories that should be symlinked as dotfiles (without dot prefix)
@@ -48,7 +48,7 @@ FORCE=false
 SHOW_HELP=false
 
 show_help() {
-  cat <<EOF
+	cat <<EOF
 Dotfiles Installation Script v${SCRIPT_VERSION}
 
 USAGE:
@@ -71,37 +71,37 @@ EOF
 }
 
 while [[ $# -gt 0 ]]; do
-  case $1 in
-  --dry-run)
-    DRY_RUN=true
-    shift
-    ;;
-  --debug)
-    set -x # Enable debug mode
-    shift
-    ;;
-  --no-backup)
-    NO_BACKUP=true
-    shift
-    ;;
-  --force)
-    FORCE=true
-    shift
-    ;;
-  --help | -h)
-    show_help
-    exit 0
-    ;;
-  --version)
-    echo "Dotfiles installer version ${SCRIPT_VERSION}"
-    exit 0
-    ;;
-  *)
-    echo "Error: Unknown option '$1'"
-    echo "Use --help for usage information"
-    exit 1
-    ;;
-  esac
+	case $1 in
+	--dry-run)
+		DRY_RUN=true
+		shift
+		;;
+	--debug)
+		set -x # Enable debug mode
+		shift
+		;;
+	--no-backup)
+		NO_BACKUP=true
+		shift
+		;;
+	--force)
+		FORCE=true
+		shift
+		;;
+	--help | -h)
+		show_help
+		exit 0
+		;;
+	--version)
+		echo "Dotfiles installer version ${SCRIPT_VERSION}"
+		exit 0
+		;;
+	*)
+		echo "Error: Unknown option '$1'"
+		echo "Use --help for usage information"
+		exit 1
+		;;
+	esac
 done
 
 # Get the directory where this script is located
@@ -111,125 +111,125 @@ PROMPTED_FOR_BACKUP=false
 
 # Function to find existing backup directories
 find_existing_backups() {
-  find "$HOME" -maxdepth 1 -type d -name "dotfiles_old_*" 2>/dev/null | sort -r
+	find "$HOME" -maxdepth 1 -type d -name "dotfiles_old_*" 2>/dev/null | sort -r
 }
 
 # Function to set the backup directory
 set_backup_directory() {
-  # If we've already prompted the user, use the already set BACKUP_DIR
-  if [[ "$PROMPTED_FOR_BACKUP" == "true" ]]; then
-    return
-  fi
+	# If we've already prompted the user, use the already set BACKUP_DIR
+	if [[ "$PROMPTED_FOR_BACKUP" == "true" ]]; then
+		return
+	fi
 
-  local existing_backups=($(find_existing_backups))
+	local existing_backups=($(find_existing_backups))
 
-  if [[ ${#existing_backups[@]} -gt 0 && "$DRY_RUN" == "false" ]]; then
-    echo "Found existing backup directories:"
-    for i in "${!existing_backups[@]}"; do
-      echo "  $((i + 1)). ${existing_backups[$i]}"
-    done
+	if [[ ${#existing_backups[@]} -gt 0 && "$DRY_RUN" == "false" ]]; then
+		echo "Found existing backup directories:"
+		for i in "${!existing_backups[@]}"; do
+			echo "  $((i + 1)). ${existing_backups[$i]}"
+		done
 
-    echo -n "Would you like to reuse one of these directories? (y/n): "
-    read -r reuse_backup
+		echo -n "Would you like to reuse one of these directories? (y/n): "
+		read -r reuse_backup
 
-    if [[ "$reuse_backup" =~ ^[Yy] ]]; then
-      echo -n "Enter the number of the directory to use: "
-      read -r backup_num
+		if [[ "$reuse_backup" =~ ^[Yy] ]]; then
+			echo -n "Enter the number of the directory to use: "
+			read -r backup_num
 
-      if [[ "$backup_num" =~ ^[0-9]+$ && "$backup_num" -ge 1 && "$backup_num" -le ${#existing_backups[@]} ]]; then
-        BACKUP_DIR="${existing_backups[$((backup_num - 1))]}"
-        print_status "Using existing backup directory: $BACKUP_DIR"
-      else
-        print_error "Invalid selection. Creating a new backup directory."
-        BACKUP_DIR="$HOME/dotfiles_old_$(date +%Y%m%d_%H%M%S)"
-      fi
-    else
-      BACKUP_DIR="$HOME/dotfiles_old_$(date +%Y%m%d_%H%M%S)"
-      print_status "Creating new backup directory: $BACKUP_DIR"
-    fi
-  else
-    # No existing backups or dry run mode
-    BACKUP_DIR="$HOME/dotfiles_old_$(date +%Y%m%d_%H%M%S)"
-  fi
+			if [[ "$backup_num" =~ ^[0-9]+$ && "$backup_num" -ge 1 && "$backup_num" -le ${#existing_backups[@]} ]]; then
+				BACKUP_DIR="${existing_backups[$((backup_num - 1))]}"
+				print_status "Using existing backup directory: $BACKUP_DIR"
+			else
+				print_error "Invalid selection. Creating a new backup directory."
+				BACKUP_DIR="$HOME/dotfiles_old_$(date +%Y%m%d_%H%M%S)"
+			fi
+		else
+			BACKUP_DIR="$HOME/dotfiles_old_$(date +%Y%m%d_%H%M%S)"
+			print_status "Creating new backup directory: $BACKUP_DIR"
+		fi
+	else
+		# No existing backups or dry run mode
+		BACKUP_DIR="$HOME/dotfiles_old_$(date +%Y%m%d_%H%M%S)"
+	fi
 
-  PROMPTED_FOR_BACKUP=true
+	PROMPTED_FOR_BACKUP=true
 }
 
 # Function to print colored output
 print_status() {
-  local prefix="[INFO]"
-  if [[ "$DRY_RUN" == "true" ]]; then
-    prefix="[DRY-RUN]"
-  fi
-  echo -e "\033[0;32m$prefix\033[0m $1"
+	local prefix="[INFO]"
+	if [[ "$DRY_RUN" == "true" ]]; then
+		prefix="[DRY-RUN]"
+	fi
+	echo -e "\033[0;32m$prefix\033[0m $1"
 }
 
 print_error() {
-  echo -e "\033[0;31m[ERROR]\033[0m $1" >&2
+	echo -e "\033[0;31m[ERROR]\033[0m $1" >&2
 }
 
 print_warning() {
-  echo -e "\033[0;33m[WARNING]\033[0m $1"
+	echo -e "\033[0;33m[WARNING]\033[0m $1"
 }
 
 # Command execution wrapper - executes or logs based on dry-run flag
 execute_cmd() {
-  local cmd=("$@")
+	local cmd=("$@")
 
-  if [[ "$DRY_RUN" == "true" ]]; then
-    print_status "Would execute: ${cmd[*]}"
-  else
-    "${cmd[@]}"
-  fi
+	if [[ "$DRY_RUN" == "true" ]]; then
+		print_status "Would execute: ${cmd[*]}"
+	else
+		"${cmd[@]}"
+	fi
 }
 
 # Function to backup existing file/directory
 backup_if_exists() {
-  local target="$1"
-  local backup_name="$2"
+	local target="$1"
+	local backup_name="$2"
 
-  if [[ -e "$target" || -L "$target" ]]; then
-    # Ensure we have a backup directory set
-    set_backup_directory
+	if [[ -e "$target" || -L "$target" ]]; then
+		# Ensure we have a backup directory set
+		set_backup_directory
 
-    if [[ ! -d "$BACKUP_DIR" ]]; then
-      execute_cmd mkdir -p "$BACKUP_DIR"
-      print_status "Created backup directory: $BACKUP_DIR"
-    fi
+		if [[ ! -d "$BACKUP_DIR" ]]; then
+			execute_cmd mkdir -p "$BACKUP_DIR"
+			print_status "Created backup directory: $BACKUP_DIR"
+		fi
 
-    print_status "Backing up $target to $BACKUP_DIR/$backup_name"
-    execute_cmd mv "$target" "$BACKUP_DIR/$backup_name"
-    return 0 # Backup was performed
-  fi
+		print_status "Backing up $target to $BACKUP_DIR/$backup_name"
+		execute_cmd mv "$target" "$BACKUP_DIR/$backup_name"
+		return 0 # Backup was performed
+	fi
 
-  # No backup needed (file doesn't exist) - this is not an error
-  return 0
+	# No backup needed (file doesn't exist) - this is not an error
+	return 0
 }
 
 # Function to create symlink with error handling
 create_symlink() {
-  local source="$1"
-  local target="$2"
-  local target_dir="$(dirname "$target")"
+	local source="$1"
+	local target="$2"
+	local target_dir="$(dirname "$target")"
 
-  # Ensure target directory exists
-  if [[ ! -d "$target_dir" ]]; then
-    print_status "Creating directory: $target_dir"
-    execute_cmd mkdir -p "$target_dir"
-  fi
+	# Ensure target directory exists
+	if [[ ! -d "$target_dir" ]]; then
+		print_status "Creating directory: $target_dir"
+		execute_cmd mkdir -p "$target_dir"
+	fi
 
-  # Check if target already exists and is the correct symlink
-  if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
-    print_status "Symlink already exists and is correct: $target"
-    return 0
-  fi
+	# Check if target already exists and is the correct symlink
+	if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
+		print_status "Symlink already exists and is correct: $target"
+		return 0
+	fi
 
-  # Backup existing file/directory if it exists
-  backup_if_exists "$target" "$(basename "$target")"
+	# Backup existing file/directory if it exists
+	backup_if_exists "$target" "$(basename "$target")"
 
-  # Create the symlink
-  print_status "Creating symlink: $target -> $source"
-  execute_cmd ln -s "$source" "$target"
+	# Create the symlink
+	print_status "Creating symlink: $target -> $source"
+	execute_cmd ln -s "$source" "$target"
 }
 
 print_status "Starting dotfiles installation from: $SCRIPT_DIR"
@@ -237,130 +237,130 @@ print_status "Starting dotfiles installation from: $SCRIPT_DIR"
 # Get list of dotfiles (exclude install script, config directory, and common non-dotfiles)
 dotfiles=()
 while IFS= read -r -d '' file; do
-  filename="$(basename "$file")"
-  # Skip install script, config directory, hidden files, and directories that shouldn't be top-level dotfiles
-  if [[ "$filename" != "install" &&
-    "$filename" != "config" &&
-    "$filename" != ".git" &&
-    "$filename" != ".gitmodules" &&
-    "$filename" != ".gitignore" &&
-    "$filename" != "README.md" &&
-    "$filename" != "alacritty" &&
-    "$filename" != "vim" ]]; then
-    dotfiles+=("$filename")
-  fi
+	filename="$(basename "$file")"
+	# Skip install script, config directory, hidden files, and directories that shouldn't be top-level dotfiles
+	if [[ "$filename" != "install" &&
+		"$filename" != "config" &&
+		"$filename" != ".git" &&
+		"$filename" != ".gitmodules" &&
+		"$filename" != ".gitignore" &&
+		"$filename" != "README.md" &&
+		"$filename" != "alacritty" &&
+		"$filename" != "vim" ]]; then
+		dotfiles+=("$filename")
+	fi
 done < <(find "$SCRIPT_DIR" -maxdepth 1 -type f -print0)
 
 # Add directories that should be symlinked as dotfiles
 for dir in vim; do
-  if [[ -d "$SCRIPT_DIR/$dir" ]]; then
-    dotfiles+=("$dir")
-  fi
+	if [[ -d "$SCRIPT_DIR/$dir" ]]; then
+		dotfiles+=("$dir")
+	fi
 done
 
 print_status "Found dotfiles: ${dotfiles[*]}"
 
 # Process regular dotfiles (symlink to ~/.<filename>)
 for file in "${dotfiles[@]}"; do
-  source_path="$SCRIPT_DIR/$file"
-  # If file already starts with a dot, don't add another one
-  if [[ "$file" == .* ]]; then
-    target_path="$HOME/$file"
-  else
-    target_path="$HOME/.$file"
-  fi
-  create_symlink "$source_path" "$target_path"
+	source_path="$SCRIPT_DIR/$file"
+	# If file already starts with a dot, don't add another one
+	if [[ "$file" == .* ]]; then
+		target_path="$HOME/$file"
+	else
+		target_path="$HOME/.$file"
+	fi
+	create_symlink "$source_path" "$target_path"
 done
 
 # Process config files (symlink to ~/.config/<filename>)
 if [[ -d "$SCRIPT_DIR/config" ]]; then
-  print_status "Processing config files..."
+	print_status "Processing config files..."
 
-  while IFS= read -r -d '' config_file; do
-    filename="$(basename "$config_file")"
-    source_path="$config_file"
-    target_path="$HOME/.config/$filename"
-    create_symlink "$source_path" "$target_path"
-  done < <(find "$SCRIPT_DIR/config" -mindepth 1 -maxdepth 1 -print0)
+	while IFS= read -r -d '' config_file; do
+		filename="$(basename "$config_file")"
+		source_path="$config_file"
+		target_path="$HOME/.config/$filename"
+		create_symlink "$source_path" "$target_path"
+	done < <(find "$SCRIPT_DIR/config" -mindepth 1 -maxdepth 1 -print0)
 fi
 
 print_status "Dotfiles installation completed successfully!"
 
 if [[ -d "$BACKUP_DIR" ]]; then
-  print_status "Backed up files are in: $BACKUP_DIR"
-  print_warning "You can safely remove the backup directory after verifying everything works correctly"
+	print_status "Backed up files are in: $BACKUP_DIR"
+	print_warning "You can safely remove the backup directory after verifying everything works correctly"
 else
-  print_status "No existing files needed to be backed up"
+	print_status "No existing files needed to be backed up"
 fi
 
 # Function to install required tools based on OS/platform
 install_required_tools() {
-  print_status "Installing required tools based on OS/platform..."
+	print_status "Installing required tools based on OS/platform..."
 
-  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Detect Linux distribution
-    if [[ -f /etc/os-release ]]; then
-      source /etc/os-release
-      DISTRO=$ID
-    else
-      DISTRO="unknown"
-    fi
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		# Detect Linux distribution
+		if [[ -f /etc/os-release ]]; then
+			source /etc/os-release
+			DISTRO=$ID
+		else
+			DISTRO="unknown"
+		fi
 
-    linux_tools_to_install=("fd-find" "fzf" "ripgrep" "nvim" "git" "curl" "wget" "golang" "thefuck")
+		linux_tools_to_install=("silver-surfer" "fzf" "ripgrep" "nvim" "git" "curl" "wget" "golang" "zoxide" "node-js")
 
-    for tool in "${linux_tools_to_install[@]}"; do
-      if ! command -v "$tool" &>/dev/null; then
-        print_status "$tool not found, installing"
-        case $DISTRO in
-        fedora)
-          execute_cmd sudo dnf install -y "$tool"
-          ;;
-        opensuse*)
-          execute_cmd sudo zypper install -y "$tool"
-          ;;
-        *)
-          print_warning "Unknown distribution, please install fzf and ripgrep manually"
-          ;;
-        esac
-      else
-        print_status "$tool is already installed"
-      fi
-    done
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS installations
-    if ! command -v fzf &>/dev/null; then
-      print_status "fzf not found, installing"
-      execute_cmd brew install fzf ripgrep
-    fi
-  fi
+		for tool in "${linux_tools_to_install[@]}"; do
+			if ! command -v "$tool" &>/dev/null; then
+				print_status "$tool not found, installing"
+				case $DISTRO in
+				fedora)
+					execute_cmd sudo dnf install -y "$tool"
+					;;
+				opensuse*)
+					execute_cmd sudo zypper install -y "$tool"
+					;;
+				*)
+					print_warning "Unknown distribution, please install fzf and ripgrep manually"
+					;;
+				esac
+			else
+				print_status "$tool is already installed"
+			fi
+		done
+	elif [[ "$OSTYPE" == "darwin"* ]]; then
+		# macOS installations
+		if ! command -v fzf &>/dev/null; then
+			print_status "fzf not found, installing"
+			execute_cmd brew install fzf ripgrep
+		fi
+	fi
 
-  # install nvm
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-  brew install rbenv
-  brew install pyenv
-  pip install powerline-status
-  curl -fsSL https://bun.sh/install | bash -s "bun-v1.2.15"
-  git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  return 0
+	# install nvm
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+	brew install rbenv
+	brew install pyenv
+	brew install jandedobbeleer/oh-my-posh/oh-my-posh
+	pip install powerline-status
+	curl -fsSL https://bun.sh/install | bash -s "bun-v1.2.15"
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	return 0
 }
 
 # Ask user if they want to install tools
 if [[ "$FORCE" != "true" && "$DRY_RUN" != "true" ]]; then
-  echo -n "Would you like to install required tools (fd, fzf, ripgrep)? (y/n): "
-  read -r install_tools
-  if [[ "$install_tools" =~ ^[Yy] ]]; then
-    install_required_tools
-  else
-    print_status "Skipping tool installation"
-  fi
+	echo -n "Would you like to install required tools (fd, fzf, ripgrep)? (y/n): "
+	read -r install_tools
+	if [[ "$install_tools" =~ ^[Yy] ]]; then
+		install_required_tools
+	else
+		print_status "Skipping tool installation"
+	fi
 elif [[ "$FORCE" == "true" && "$DRY_RUN" != "true" ]]; then
-  # Force mode - install without asking
-  install_required_tools
+	# Force mode - install without asking
+	install_required_tools
 elif [[ "$DRY_RUN" == "true" ]]; then
-  print_status "Would install required tools (fd, fzf, ripgrep) based on OS/platform"
+	print_status "Would install required tools (fd, fzf, ripgrep) based on OS/platform"
 fi
 
 print_status "Installation summary:"

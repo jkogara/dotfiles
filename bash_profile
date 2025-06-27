@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-
-# Path to the bash it configuration
-export BASH_IT=$HOME/.bash_it
-
-# Lock and Load a custom theme file
-# location /.bash_it/themes/
-export BASH_IT_THEME='bobby'
-
 # Your place for hosting Git repos. I use this for private repos.
 export GIT_HOSTING='git@git.domain.com'
 
@@ -34,8 +26,6 @@ export SCM_CHECK=true
 # https://github.com/xvzf/vcprompt
 #export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
 
-# Load Bash It
-source $BASH_IT/bash_it.sh
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 
 # Appending pyspark-shell is needed for Spark 1.4+
@@ -45,5 +35,5 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src
 . "$HOME/.cargo/env"
 
 if [ $(hostname) == "jono120-amd-9700" ]; then
-  ddcutil -d 2 setvcp 10 80
+	ddcutil -d 2 setvcp 10 80
 fi
