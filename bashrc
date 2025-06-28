@@ -19,6 +19,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 		#for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
 		export PATH=$(echo ${NEWPATH} | tr ':' '\n' | cat -n | sort -uk2 | sort -n | cut -f2- | xargs | tr ' ' ':')
 	fi
+else
+	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+	export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+	export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+	export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+	export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
+	export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
 fi
 
 #####  DEBUG BASH
