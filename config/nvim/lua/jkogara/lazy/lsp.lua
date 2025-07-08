@@ -34,42 +34,41 @@ return {
     config = function()
       local mason_tool_installer = require("mason-tool-installer")
       mason_tool_installer.setup({
+
         ensure_installed = {
-          "typos-lsp",
-          "prettier",               -- prettier formatter
-          "prettierd",              -- prettier formatter
-          "stylua",                 -- lua formatter
-          "isort",                  -- python formatter
-          "black",                  -- python formatter
-          "pylint",                 -- python linter
-          "rubyfmt",                -- ruby formatter
-          "eslint_d",               -- js linter
-          "eslint-lsp",
-          "flake8",                 -- python linter
-          "shfmt",                  -- shell formatter
-          "ts-standard",            -- typescript linter
-          "tailwindcss-language-server", --tailwindcss
-          "fixjson",                -- json formatter
-          "typos_lsp",              -- spell checker
-          "jq",                     -- json formatter
-          "terraform-ls",           -- terraform language server
-          "tflint",
-          "lemonade",               -- lemonade copy paste util
-          "stimulus-language-server", -- stimulus language server
-          "lua-language-server",
           "bash-language-server",
+          "black",
           "dockerfile-language-server",
-          "json-lsp",
-          "yaml-language-server",
-          "typescript-language-server",
-          "write-good",
-          "jedi-language-server",
-          "svelte-language-server",
           "erb-lint",
-          -- "rubocop",
-          "rustywind",
+          "eslint-lsp",
+          "eslint_d",
+          "fixjson",
+          "flake8",
+          "isort",
+          "jedi-language-server",
+          "jq",
+          "json-lsp",
           "jupytext",
+          "lemonade",
+          "lua-language-server",
+          "prettier",
+          "prettierd",
+          "pylint",
           "ruby-lsp",
+          "rubyfmt",
+          "rustywind",
+          "shfmt",
+          "stimulus-language-server",
+          "stylua",
+          "svelte-language-server",
+          "tailwindcss-language-server",
+          "terraform-ls",
+          "tflint",
+          "ts-standard",
+          "typescript-language-server",
+          "typos-lsp",
+          "write-good",
+          "yaml-language-server",
         },
       })
     end,

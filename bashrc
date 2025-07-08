@@ -1,32 +1,32 @@
 #!/usr/bin/env bash
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-	export PUPPETEER_EXECUTABLE_PATH=/opt/homebrew/bin/chromium
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+  export PUPPETEER_EXECUTABLE_PATH=/opt/homebrew/bin/chromium
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
-	BREW_BIN="/usr/local/bin/brew"
-	if [ -f "/opt/homebrew/bin/brew" ]; then
-		BREW_BIN="/opt/homebrew/bin/brew"
-	fi
+  BREW_BIN="/usr/local/bin/brew"
+  if [ -f "/opt/homebrew/bin/brew" ]; then
+    BREW_BIN="/opt/homebrew/bin/brew"
+  fi
 
-	if type "${BREW_BIN}" &>/dev/null; then
-		HOMEBREW_PREFIX=$($BREW_BIN --prefix)
-		NEWPATH=${PATH}
-		# gnubin; gnuman
-		for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnubin; do NEWPATH=$d:$NEWPATH; done
-		# I actually like that man grep gives the BSD grep man page
-		#for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
-		export PATH=$(echo ${NEWPATH} | tr ':' '\n' | cat -n | sort -uk2 | sort -n | cut -f2- | xargs | tr ' ' ':')
-	fi
+  if type "${BREW_BIN}" &>/dev/null; then
+    HOMEBREW_PREFIX=$($BREW_BIN --prefix)
+    NEWPATH=${PATH}
+    # gnubin; gnuman
+    for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnubin; do NEWPATH=$d:$NEWPATH; done
+    # I actually like that man grep gives the BSD grep man page
+    #for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
+    export PATH=$(echo ${NEWPATH} | tr ':' '\n' | cat -n | sort -uk2 | sort -n | cut -f2- | xargs | tr ' ' ':')
+  fi
 else
-	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-	export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-	export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
-	export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
-	export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-	export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
-	export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
+  export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+  export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+  export MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
+  export INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
 fi
 
 #####  DEBUG BASH
@@ -42,7 +42,7 @@ fi
 #####  DEBUG BASH
 
 unset PROMPT_COMMAND
-eval "$(/home/linuxbrew/.linuxbrew/bin/oh-my-posh init bash --config $(brew --prefix oh-my-posh)/themes/slimfat.omp.json)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/oh-my-posh init bash --config $(brew --prefix oh-my-posh)/themes/craver.omp.json)"
 
 # Set my editor and git editor
 export EDITOR="nvim"
@@ -74,7 +74,7 @@ source ~/.bashme.sh
 
 ###-tns-completion-start-###
 if [ -f $HOME/.tnsrc ]; then
-	source $HOME/.tnsrc
+  source $HOME/.tnsrc
 fi
 
 source <(kubectl completion bash)
@@ -99,13 +99,13 @@ esac
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/usr/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
-	eval "$__conda_setup"
+  eval "$__conda_setup"
 else
-	if [ -f "/usr/etc/profile.d/conda.sh" ]; then
-		. "/usr/etc/profile.d/conda.sh"
-	else
-		export PATH="/usr/bin:$PATH"
-	fi
+  if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+    . "/usr/etc/profile.d/conda.sh"
+  else
+    export PATH="/usr/bin:$PATH"
+  fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<

@@ -20,12 +20,12 @@ return {
         },
         claude = {
           endpoint = "https://api.anthropic.com",
-          model = "claude-3-7-sonnet-20250219",
-          -- model = "claude-sonnet-4-20250514",
+          -- model = "claude-3-7-sonnet-20250219",
+          model = "claude-sonnet-4-20250514",
           disable_tools = true,
           extra_request_body = {
             temperature = 0,
-            max_tokens = 8192,
+            max_tokens = 16000,
           },
           behaviour = {
             auto_suggestions = false,
@@ -34,6 +34,28 @@ return {
             enable_claude_text_editor_tool_mode = true,
           },
         },
+      },
+      system_prompt = function()
+        local hub = require("mcphub").get_hub_instance()
+        return hub and hub:get_active_servers_prompt() or ""
+      end,
+      -- Using function prevents requiring mcphub before it's loaded
+      custom_tools = function()
+        return {
+          require("mcphub.extensions.avante").mcp_tool(),
+        }
+      end,
+      disabled_tools = {
+        "list_files", -- Built-in file operations
+        "search_files",
+        "read_file",
+        "create_file",
+        "rename_file",
+        "delete_file",
+        "create_dir",
+        "rename_dir",
+        "delete_dir",
+        "bash", -- Built-in terminal access
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -78,17 +100,5 @@ return {
         ft = { "markdown", "Avante" },
       },
     },
-    config = function(_, opts)
-      opts.system_prompt = function()
-        local hub = require("mcphub").get_hub_instance()
-        return hub:get_active_servers_prompt()
-      end
-      opts.custom_tools = function()
-        return {
-          require("mcphub.extensions.avante").mcp_tool(),
-        }
-      end
-      require("avante").setup(opts)
-    end,
   },
 }

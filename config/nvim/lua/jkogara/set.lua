@@ -1,6 +1,7 @@
 vim.opt.encoding = "utf-8"
 vim.opt.viminfo:append("!")
 vim.opt.ignorecase = true
+vim.g.root_spec = { { ".git" }, "lsp", "cwd" }
 
 -- enable syntax highlighting
 vim.cmd("syntax enable")

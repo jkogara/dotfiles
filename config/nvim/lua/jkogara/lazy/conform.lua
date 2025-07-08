@@ -23,6 +23,7 @@ return {
           erb = { "htmlbeautifier" },
           -- eruby = { "htmlbeautifier" },
           typescript = { "prettierd", "prettier", "trim_whitespace" },
+          svelte = { "prettierd", "prettier", "trim_whitespace" },
           css = { "prettier", "trim_whitespace" },
           python = { "black", "trim_whitespace" },
           terraform = { "terraform" },
