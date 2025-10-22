@@ -72,7 +72,65 @@ return {
       "hrsh7th/nvim-cmp",           -- autocompletion for avante commands and mentions
       "ibhagwan/fzf-lua",           -- for file_selector provider fzf
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",     -- for providers='copilot'
+      {
+        "zbirenbaum/copilot.lua",
+        config = function()
+          require("copilot").setup({
+            panel = {
+              enabled = true,
+              auto_refresh = false,
+              keymap = {
+                jump_prev = "[[",
+                jump_next = "]]",
+                accept = "<CR>",
+                refresh = "gr",
+                open = "<M-CR>",
+              },
+              layout = {
+                position = "bottom", -- | top | left | right
+                ratio = 0.4,
+              },
+            },
+            suggestion = {
+              enabled = true,
+              auto_trigger = false,
+              debounce = 75,
+              keymap = {
+                accept = false,
+                accept_word = false,
+                accept_line = false,
+                next = "<M-]>",
+                prev = "<M-[>",
+                dismiss = "<C-]>",
+              },
+            },
+            filetypes = {
+              yaml = true,
+              markdown = true,
+              help = false,
+              gitcommit = false,
+              gitrebase = false,
+              hgcommit = false,
+              svn = false,
+              cvs = false,
+              ["."] = false,
+            },
+            copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.20.0/bin/node", -- Node.js version must be > 22
+            server_opts_overrides = {},
+          })
+          vim.keymap.set("i", "<Tab>", function()
+            if require("copilot.suggestion").is_visible() then
+              require("copilot.suggestion").accept()
+            else
+              vim.api.nvim_feedkeys(
+                vim.api.nvim_replace_termcodes("<Tab>", true, false, true),
+                "n",
+                false
+              )
+            end
+          end, { desc = "Super Tab" })
+        end,
+      },
       "ravitemer/mcphub.nvim",
       {
         -- support for image pasting
