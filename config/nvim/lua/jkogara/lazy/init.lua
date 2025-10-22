@@ -11,6 +11,11 @@ return {
   {
     "andymass/vim-matchup",
     init = function()
+      -- modify your configuration vars here
+      vim.g.matchup_treesitter_stopline = 500
+
+      -- or call the setup function provided as a helper. It defines the
+      -- configuration vars for you
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
   },
@@ -25,6 +30,7 @@ return {
       "rcarriga/nvim-notify",
     },
   },
+  { "ThePrimeagen/git-worktree.nvim" },
   { "uarun/vim-protobuf" },
   { "jparise/vim-graphql" },
   { "tyru/open-browser.vim" },
