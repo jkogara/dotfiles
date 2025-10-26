@@ -12,8 +12,12 @@ vim.cmd("autocmd BufReadPost fugitive://* set bufhidden=delete")
 vim.keymap.set("n", "'", "<Nop>", { noremap = true, silent = true })
 
 -- configure next and previous diagnostic
-vim.keymap.set("n", "<C-i>", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<C-I>", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", function()
+  vim.diagnostic.jump({ count = 1 })
+end)
+vim.keymap.set("n", "[d", function()
+  vim.diagnostic.jump({ count = -1 })
+end)
 
 -- configure home and end keys for all terminal codes and modes
 vim.keymap.set("n", "<ESC>[H", "<Home>", { noremap = true, silent = true })

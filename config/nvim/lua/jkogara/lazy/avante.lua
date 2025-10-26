@@ -113,7 +113,7 @@ return {
               cvs = false,
               ["."] = false,
             },
-            copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.20.0/bin/node", -- Node.js version must be > 22
+            copilot_node_command = vim.fn.expand("$HOME") .. "/.nvm/versions/node/v22.21.0/bin/node", -- Node.js version must be > 22
             server_opts_overrides = {},
           })
           vim.keymap.set("i", "<Tab>", function()

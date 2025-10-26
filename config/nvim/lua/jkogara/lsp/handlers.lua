@@ -21,25 +21,28 @@ M.import_depdendencies = function()
 end
 
 M.setup_language_servers = function(defaults)
-  local lspconfig = require("lspconfig")
+  vim.lsp.config("*", defaults)
 
-  lspconfig.lua_ls.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.lua_ls"), defaults))
+  vim.lsp.config("lua_ls", require("jkogara.lsp.settings.lua_ls"))
+  vim.lsp.enable("lua_ls")
   -- lspconfig.solargraph.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.solargraph"), defaults))
-  lspconfig.ruby_lsp.setup({ init_options = { formatter = "rubocop_internal", linters = { "rubocop" } } }, defaults)
-  lspconfig.jsonls.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.jsonls"), defaults))
-  lspconfig.bashls.setup(defaults)
-  lspconfig.terraformls.setup({})
-  lspconfig.tailwindcss.setup({})
+  vim.lsp.config("ruby_lsp", { init_options = { formatter = "rubocop_internal", linters = { "rubocop" } } })
+  vim.lsp.enable("ruby_lsp")
+  -- lspconfig.jsonls.setup(vim.tbl_deep_extend("force", require("jkogara.lsp.settings.jsonls"), defaults))
+  vim.lsp.config("jsonls", require("jkogara.lsp.settings.jsonls"))
+  vim.lsp.enable("jsonls")
+  vim.lsp.enable("bashls")
+  vim.lsp.enable("terraformls")
+  vim.lsp.enable("tailwindcss")
   require("jkogara.lsp.settings.terraform")
-  lspconfig.dockerls.setup(defaults)
-  lspconfig.html.setup(defaults)
-  lspconfig.ts_ls.setup(defaults)
-  lspconfig.stimulus_ls.setup({})
-  lspconfig.yamlls.setup(defaults)
-  lspconfig.svelte.setup(defaults)
-  lspconfig.jedi_language_server.setup({})
-  lspconfig.eslint.setup({
-    --- ...
+  vim.lsp.enable("dockerls")
+  vim.lsp.enable("html")
+  vim.lsp.enable("tsserver")
+  vim.lsp.enable("stimulus_ls")
+  vim.lsp.enable("yamlls")
+  vim.lsp.enable("svelte")
+  vim.lsp.enable("jedi_language_server")
+  vim.lsp.config("eslint", {
     on_attach = function(client, bufnr)
       vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
@@ -47,6 +50,7 @@ M.setup_language_servers = function(defaults)
       })
     end,
   })
+  vim.lsp.enable("eslint")
 end
 
 M.default_on_attach = function(client, bufnr)
