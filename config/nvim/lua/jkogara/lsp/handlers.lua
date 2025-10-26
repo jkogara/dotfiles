@@ -42,6 +42,7 @@ M.setup_language_servers = function(defaults)
   vim.lsp.enable("yamlls")
   vim.lsp.enable("svelte")
   vim.lsp.enable("jedi_language_server")
+  vim.lsp.enable("typos_lsp")
   vim.lsp.config("eslint", {
     on_attach = function(client, bufnr)
       vim.api.nvim_create_autocmd("BufWritePre", {
